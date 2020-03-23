@@ -96,10 +96,10 @@ export class GanttActivityBarsComponent implements OnInit {
     @Input() zoom: any;
     @Input() zoomLevel: any;
 
-    private containerHeight: number = 0;
-    private containerWidth: number = 0;
+    containerHeight: number = 0;
+    containerWidth: number = 0;
 
-    constructor(private ganttService: GanttService) { }
+    constructor(public ganttService: GanttService) { }
 
     ngOnInit() {
         this.containerHeight = this.dimensions.height;
@@ -190,7 +190,7 @@ export class GanttActivityBarsComponent implements OnInit {
         return false;
     }
 
-    private drawBar(task: any, index: number) {
+    drawBar(task: any, index: number) {
         let style = {};
 
         if (this.zoomLevel === Zooming[Zooming.hours]) {
@@ -201,7 +201,7 @@ export class GanttActivityBarsComponent implements OnInit {
         return style;
     }
 
-    private drawProgress(task: any, bar: any): any {
+    drawProgress(task: any, bar: any): any {
         var barStyle = this.ganttService.getBarProgressStyle(task.status);
         var width = this.ganttService.calculateBarProgress(this.ganttService.getComputedStyle(bar, 'width'), task.percentComplete);
 

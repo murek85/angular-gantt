@@ -213,32 +213,36 @@ export class GanttActivityComponent implements OnInit, DoCheck {
 
     private upTriangle: string = '&#x25b2;' // BLACK UP-POINTING TRIANGLE
     private downTriangle: string = '&#x25bc;'; // BLACK DOWN-POINTING TRIANGLE
-    private zoom: EventEmitter<string> = new EventEmitter<string>();
-    private activityActions = {
+
+    zoom: EventEmitter<string> = new EventEmitter<string>();
+
+    activityActions = {
         expanded: false,
         expandedIcon: this.downTriangle
-    }
+    };
 
     private timeScale: any;
 
     private start: Date;
     private end: Date;
-    private containerHeight: any;
-    private containerWidth: any;
+    containerHeight: any;
+    containerWidth: any;
 
     private activityContainerSizes: any;
-    private ganttActivityHeight: any;
-    private ganttActivityWidth: any;
-    private zoomLevel: string = Zooming[Zooming.hours];
 
-    private treeExpanded = false;
+    ganttActivityHeight: any;
+    ganttActivityWidth: any;
+
+    zoomLevel: string = Zooming[Zooming.hours];
+
+    treeExpanded = false;
 
     private scale: any = {
         start: null,
         end: null
     };
 
-    private dimensions = {
+    dimensions = {
         height: 0,
         width: 0
     };
@@ -254,7 +258,7 @@ export class GanttActivityComponent implements OnInit, DoCheck {
 
     constructor(
         public elem: ElementRef,
-        private ganttService: GanttService) {
+        public ganttService: GanttService) {
     }
 
     ngOnInit() {
@@ -489,7 +493,7 @@ export class GanttActivityComponent implements OnInit, DoCheck {
         return '';
     }
 
-    private setGridScaleStyle() {
+    setGridScaleStyle() {
         var height = this.ganttService.rowHeight;
 
         if (this.zoomLevel === Zooming[Zooming.hours]) {

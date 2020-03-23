@@ -51,7 +51,7 @@ export class GanttTimeScaleComponent implements OnInit {
     @Input() zoom: any;
     @Input() zoomLevel: any;
 
-    constructor(private ganttService: GanttService) { }
+    constructor(public ganttService: GanttService) { }
 
     ngOnInit() {
         this.zoom.subscribe((zoomLevel: string) => {
@@ -59,13 +59,13 @@ export class GanttTimeScaleComponent implements OnInit {
         });
     }
 
-    private setTimescaleStyle() {
+    setTimescaleStyle() {
         return {
             'width': this.dimensions.width + 'px'
         };
     }
 
-    private setTimescaleLineStyle(borderTop: string) {
+    setTimescaleLineStyle(borderTop: string) {
         return {
             'height': this.ganttService.rowHeight + 'px',
             'line-height': this.ganttService.rowHeight + 'px',
@@ -74,7 +74,7 @@ export class GanttTimeScaleComponent implements OnInit {
         };
     }
 
-    private setTimescaleCellStyle() {
+    setTimescaleCellStyle() {
         var width = this.ganttService.cellWidth;
         var hoursInDay = 24;
         var hourSeperatorPixels = 23; // we don't include the first 
@@ -88,11 +88,11 @@ export class GanttTimeScaleComponent implements OnInit {
         };
     }
 
-    private isDayWeekend(date: Date): boolean {
+    isDayWeekend(date: Date): boolean {
         return this.ganttService.isDayWeekend(date);
     }
 
-    private getHours(): string[] {
+    getHours(): string[] {
         return this.ganttService.getHours(this.timeScale.length);
     }
 }

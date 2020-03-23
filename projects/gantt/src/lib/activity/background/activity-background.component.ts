@@ -44,10 +44,10 @@ export class GanttActivityBackgroundComponent implements OnInit {
 
     @ViewChild('bg') bg: ElementRef;
 
-    private rows: any[] = [];
-    private cells: any[] = [];
+    rows: any[] = [];
+    cells: any[] = [];
 
-    constructor(private ganttService: GanttService) { }
+    constructor(public ganttService: GanttService) { }
 
     ngOnInit() {
         this.drawGrid();
@@ -62,13 +62,13 @@ export class GanttActivityBackgroundComponent implements OnInit {
         return this.ganttService.isDayWeekend(date);
     }
 
-    private setRowStyle() {
+    setRowStyle() {
         return {
             'height': this.ganttService.rowHeight + 'px'
         };
     }
 
-    private setCellStyle() {
+    setCellStyle() {
         var width = this.ganttService.cellWidth;
 
         if (this.zoomLevel === Zooming[Zooming.hours]) {

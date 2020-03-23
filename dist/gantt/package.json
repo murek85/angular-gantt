@@ -1,0 +1,21 @@
+{
+  "name": "gantt",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
+  },
+  "main": "bundles/gantt.umd.js",
+  "module": "fesm5/gantt.js",
+  "es2015": "fesm2015/gantt.js",
+  "esm5": "esm5/gantt.js",
+  "esm2015": "esm2015/gantt.js",
+  "fesm5": "fesm5/gantt.js",
+  "fesm2015": "fesm2015/gantt.js",
+  "typings": "gantt.d.ts",
+  "metadata": "gantt.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

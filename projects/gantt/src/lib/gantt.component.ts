@@ -27,8 +27,8 @@ import { IGanttOptions, Project } from './shared/interfaces';
     providers: []
 })
 export class GanttComponent implements OnInit {
-    private _project: Project;
-    private _options: IGanttOptions;
+    _project: Project;
+    _options: IGanttOptions;
 
     //TODO(dale): this may be causing an issue in the tree builder?
     @Input()
@@ -79,7 +79,7 @@ export class GanttComponent implements OnInit {
             name: '',
             startDate: null,
             tasks: []
-        }
+        };
     }
 
     gridRowClicked(task: any) {
