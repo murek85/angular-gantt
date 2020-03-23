@@ -6,6 +6,20 @@ import { Injectable, Pipe, Component, Input, EventEmitter, Output, ElementRef, C
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @enum {number} */
+const Zooming = {
+    hours: 0,
+    days: 1,
+    weeks: 2,
+};
+Zooming[Zooming.hours] = 'hours';
+Zooming[Zooming.days] = 'days';
+Zooming[Zooming.weeks] = 'weeks';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class GanttConfig {
     constructor() {
         this.cellWidth = 76;
@@ -845,7 +859,7 @@ GanttComponent.decorators = [
             font-size: 13px;
             border: 1px solid #cecece;
             position: relative;
-            white-space: nowrap;   
+            white-space: nowrap;
             margin-top: 0px;
         }
     `]
@@ -886,7 +900,7 @@ GanttHeaderComponent.decorators = [
         }
 
         .gantt-header-title {
-            padding: 12px;   
+            padding: 12px;
             display: flex;
             flex-wrap:wrap;
             font-family: Arial, Helvetica, sans-serif;
@@ -925,7 +939,7 @@ GanttFooterComponent.decorators = [
         }
 
         .gantt-footer-actions {
-            float:right;
+            float: right;
         }
     `]
             }] }
@@ -935,20 +949,6 @@ GanttFooterComponent.ctorParameters = () => [];
 GanttFooterComponent.propDecorators = {
     project: [{ type: Input }]
 };
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {number} */
-const Zooming = {
-    hours: 0,
-    days: 1,
-    weeks: 2,
-};
-Zooming[Zooming.hours] = 'hours';
-Zooming[Zooming.days] = 'days';
-Zooming[Zooming.weeks] = 'weeks';
 
 /**
  * @fileoverview added by tsickle
@@ -985,9 +985,7 @@ class GanttActivityComponent {
         this.data = [];
         this.gridColumns = [
             { name: '', left: 0, width: 16 },
-            { name: 'Task', left: 20, width: 330 },
-            { name: '%', left: 8, width: 40 },
-            { name: 'Duration', left: 14, width: 140 }
+            { name: 'Task', left: 20, width: 330 }
         ];
     }
     /**
@@ -1276,8 +1274,7 @@ class GanttActivityComponent {
         }
         return {
             'height': height + 'px',
-            'line-height': height + 'px',
-            'width': this.ganttService.gridWidth + 'px'
+            'line-height': height + 'px'
         };
     }
     /**
@@ -1313,21 +1310,9 @@ GanttActivityComponent.decorators = [
                 selector: 'gantt-activity',
                 template: `
     <div class="actions-bar">
-        <div style="float: right">
-            <label>
-                <button (click)="zoomTasks('hours')"
-                    style="background-color: whitesmoke; border: none; font-size: 16px; cursor: pointer">Hour</button>
-            </label>
-            <label>
-                <button (click)="zoomTasks('days')"
-                    style="background-color: whitesmoke; border: none; font-size: 16px; cursor: pointer">Day</button>
-            </label>
-            <button (click)="expand()"
-                style="background-color: whitesmoke; border: none; font-size: 21px; cursor: pointer"
-                [innerHTML]="activityActions.expandedIcon"></button>
-        </div>
+        <div style="float: right"></div>
     </div>
-    <div class="grid" #ganttGrid [ngStyle]="{ 'height': ganttActivityHeight, 'width': ganttService.gridWidth + 'px'}">
+    <div class="grid" #ganttGrid [ngStyle]="{ 'height': ganttActivityHeight }">
     <div class="grid-scale" [ngStyle]="setGridScaleStyle()">
         <div class="grid-head-cell"
             *ngFor="let column of gridColumns" [style.width]="column.width + 'px'"
@@ -1335,16 +1320,7 @@ GanttActivityComponent.decorators = [
 
             <label>
                 {{column.name}}
-                <span *ngIf="column.name === 'Duration'"
-                    style="font-weight:bold">{{ ganttService.calculateTotalDuration(ganttService.TASK_CACHE) }}</span>
             </label>
-        </div>
-        <div class="grid-head-cell">
-            <button (click)="toggleAllChildren()"
-                style="background-color: whitesmoke; border: none; font-size: 21px; cursor: pointer">
-
-                {{ treeExpanded ? '&#x25b2;' : '&#x25bc;' }}
-            </button>
         </div>
     </div>
     <div class="grid-data"
@@ -1353,33 +1329,23 @@ GanttActivityComponent.decorators = [
 
     <div #row
         *ngFor="let data of ganttService.groupData(ganttService.TASK_CACHE)"
-        (click)="toggleChildren(row, data)" class="grid_row"
+        (click)="toggleChildren(row, data)" class="grid-row"
         [ngStyle]="setGridRowStyle(ganttService.isParent(data.treePath))"
         [attr.data-id]="ganttService.setIdPrefix(data.id)"
         [attr.data-isParent]="ganttService.isParent(data.treePath)"
         [attr.data-parentid]="ganttService.setIdPrefix(data.parentId)">
 
-            <div class="grid-cell" [ngStyle]="{ 'width': gridColumns[0].width + 'px' }">
-                <div [innerHTML]="getStatusIcon(data.status, data.percentComplete)"
-                    [style.color]="getStatusIconColor(data.status, data.percentComplete)"></div>
-            </div>
             <div class="grid-cell"
                 [ngStyle]="{ 'width': gridColumns[1].width + 'px', 'padding-left': ganttService.isChild(data.treePath) }">
 
                 <div class="gantt-tree-content">{{data.name}}</div>
-            </div>
-            <div class="grid-cell" [ngStyle]="{ 'width': gridColumns[2].width + 'px' }">
-                <div>{{ data.percentComplete }}</div>
-            </div>
-            <div class="grid-cell" [ngStyle]="{ 'width': gridColumns[3].width + 'px'}">
-                <div> {{ ganttService.calculateDuration(data) }}</div>
             </div>
         </div>
     </div>
     </div>
     <div class="gantt-activity"
         (window:resize)="onResize($event)"
-        [ngStyle]="{ 'height': ganttActivityHeight, 'width': ganttActivityWidth - 18 + 'px'}">
+        [ngStyle]="{ 'height': ganttActivityHeight, 'width': ganttActivityWidth + 36 + 'px'}">
 
         <time-scale [zoom]="zoom"
             [zoomLevel]="zoomLevel"
@@ -2111,6 +2077,6 @@ GanttModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { GanttModule, GanttActivityBackgroundComponent as ɵe, GanttActivityBarsComponent as ɵf, GanttActivityComponent as ɵb, GanttActivityModule as ɵa, GanttTimeScaleComponent as ɵd, GanttFooterComponent as ɵi, GanttComponent as ɵg, GanttHeaderComponent as ɵh, GroupByPipe as ɵj, GanttService as ɵc };
+export { Zooming, GanttModule, GanttActivityBackgroundComponent as ɵe, GanttActivityBarsComponent as ɵf, GanttActivityComponent as ɵb, GanttActivityModule as ɵa, GanttTimeScaleComponent as ɵd, GanttFooterComponent as ɵi, GanttComponent as ɵg, GanttHeaderComponent as ɵh, GroupByPipe as ɵj, GanttService as ɵc };
 
-//# sourceMappingURL=gantt.js.map
+//# sourceMappingURL=angular-gantt.js.map

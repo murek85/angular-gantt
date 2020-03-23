@@ -1,5 +1,5 @@
 export interface Project {
-    id: string;
+    id?: string;
     name: string;
     startDate?: Date;
     tasks: Task[];
@@ -12,7 +12,7 @@ export interface Task {
     name: string;
     resource?: string;
     start: Date;
-    end?: Date; 
+    end?: Date;
     percentComplete?: number;
     status?: string;
 }

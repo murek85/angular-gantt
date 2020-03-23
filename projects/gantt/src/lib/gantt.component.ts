@@ -20,7 +20,7 @@ import { IGanttOptions, Project } from './shared/interfaces';
             font-size: 13px;
             border: 1px solid #cecece;
             position: relative;
-            white-space: nowrap;   
+            white-space: nowrap;
             margin-top: 0px;
         }
     `],

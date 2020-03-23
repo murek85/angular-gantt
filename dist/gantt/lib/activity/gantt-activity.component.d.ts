@@ -56,7 +56,6 @@ export declare class GanttActivityComponent implements OnInit, DoCheck {
     setGridScaleStyle(): {
         'height': string;
         'line-height': string;
-        'width': string;
     };
     private calculateContainerHeight;
     private calculateContainerWidth;

@@ -6,6 +6,20 @@ import { Injectable, Pipe, Component, Input, EventEmitter, Output, ElementRef, C
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @enum {number} */
+var Zooming = {
+    hours: 0,
+    days: 1,
+    weeks: 2,
+};
+Zooming[Zooming.hours] = 'hours';
+Zooming[Zooming.days] = 'days';
+Zooming[Zooming.weeks] = 'weeks';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var GanttConfig = /** @class */ (function () {
     function GanttConfig() {
         this.cellWidth = 76;
@@ -1068,7 +1082,7 @@ var GanttComponent = /** @class */ (function () {
                     selector: 'gantt',
                     template: "\n        <div style=\"width: 100%\">\n            <div class=\"gantt_container\" (window:resize)=\"onResize($event)\">\n                <gantt-header [name]=\"_project.name\" [startDate]=\"_project.startDate\"></gantt-header>\n                <gantt-activity [project]=\"_project\" [options]=\"_options\" (onGridRowClick)=\"gridRowClicked($event)\"></gantt-activity>\n                <gantt-footer [project]=\"_project\"></gantt-footer>\n            </div>\n        </div>\n    ",
                     providers: [],
-                    styles: ["\n        .gantt_container {\n            font-family: Arial;\n            font-size: 13px;\n            border: 1px solid #cecece;\n            position: relative;\n            white-space: nowrap;   \n            margin-top: 0px;\n        }\n    "]
+                    styles: ["\n        .gantt_container {\n            font-family: Arial;\n            font-size: 13px;\n            border: 1px solid #cecece;\n            position: relative;\n            white-space: nowrap;\n            margin-top: 0px;\n        }\n    "]
                 }] }
     ];
     /** @nocollapse */
@@ -1094,7 +1108,7 @@ var GanttHeaderComponent = /** @class */ (function () {
         { type: Component, args: [{
                     selector: 'gantt-header',
                     template: "\n        <div class=\"gantt-header\">\n            <div class=\"gantt-header-title\">\n                <div style=\"flex:1\">{{ name }}</div>\n                <div>Started: {{ startDate | date: 'medium'}}</div>\n            </div>\n        </div>\n    ",
-                    styles: ["\n        .gantt-header {\n            background-color: whitesmoke;\n            height: 40px;\n            border-bottom: 1px solid #e0e0e0;\n        }\n\n        .gantt-header-title {\n            padding: 12px;   \n            display: flex;\n            flex-wrap:wrap;\n            font-family: Arial, Helvetica, sans-serif;\n            font-size: 16px;\n        }\n\n        .gantt-header-actions {\n            display: inline;\n            float: right;\n            padding: 6px;\n        }\n    "]
+                    styles: ["\n        .gantt-header {\n            background-color: whitesmoke;\n            height: 40px;\n            border-bottom: 1px solid #e0e0e0;\n        }\n\n        .gantt-header-title {\n            padding: 12px;\n            display: flex;\n            flex-wrap:wrap;\n            font-family: Arial, Helvetica, sans-serif;\n            font-size: 16px;\n        }\n\n        .gantt-header-actions {\n            display: inline;\n            float: right;\n            padding: 6px;\n        }\n    "]
                 }] }
     ];
     GanttHeaderComponent.propDecorators = {
@@ -1115,7 +1129,7 @@ var GanttFooterComponent = /** @class */ (function () {
         { type: Component, args: [{
                     selector: 'gantt-footer',
                     template: "<div class=\"gantt-footer\"></div>",
-                    styles: ["\n        .gantt-footer {\n            background-color: whitesmoke;\n            height: 36px;\n            border-top: 1px solid #e0e0e0;\n        }\n\n        .gantt-footer-actions {\n            float:right;\n        }\n    "]
+                    styles: ["\n        .gantt-footer {\n            background-color: whitesmoke;\n            height: 36px;\n            border-top: 1px solid #e0e0e0;\n        }\n\n        .gantt-footer-actions {\n            float: right;\n        }\n    "]
                 }] }
     ];
     /** @nocollapse */
@@ -1125,20 +1139,6 @@ var GanttFooterComponent = /** @class */ (function () {
     };
     return GanttFooterComponent;
 }());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {number} */
-var Zooming = {
-    hours: 0,
-    days: 1,
-    weeks: 2,
-};
-Zooming[Zooming.hours] = 'hours';
-Zooming[Zooming.days] = 'days';
-Zooming[Zooming.weeks] = 'weeks';
 
 /**
  * @fileoverview added by tsickle
@@ -1171,9 +1171,7 @@ var GanttActivityComponent = /** @class */ (function () {
         this.data = [];
         this.gridColumns = [
             { name: '', left: 0, width: 16 },
-            { name: 'Task', left: 20, width: 330 },
-            { name: '%', left: 8, width: 40 },
-            { name: 'Duration', left: 14, width: 140 }
+            { name: 'Task', left: 20, width: 330 }
         ];
     }
     /**
@@ -1537,8 +1535,7 @@ var GanttActivityComponent = /** @class */ (function () {
         }
         return {
             'height': height + 'px',
-            'line-height': height + 'px',
-            'width': this.ganttService.gridWidth + 'px'
+            'line-height': height + 'px'
         };
     };
     /**
@@ -1583,7 +1580,7 @@ var GanttActivityComponent = /** @class */ (function () {
     GanttActivityComponent.decorators = [
         { type: Component, args: [{
                     selector: 'gantt-activity',
-                    template: "\n    <div class=\"actions-bar\">\n        <div style=\"float: right\">\n            <label>\n                <button (click)=\"zoomTasks('hours')\"\n                    style=\"background-color: whitesmoke; border: none; font-size: 16px; cursor: pointer\">Hour</button>\n            </label>\n            <label>\n                <button (click)=\"zoomTasks('days')\"\n                    style=\"background-color: whitesmoke; border: none; font-size: 16px; cursor: pointer\">Day</button>\n            </label>\n            <button (click)=\"expand()\"\n                style=\"background-color: whitesmoke; border: none; font-size: 21px; cursor: pointer\"\n                [innerHTML]=\"activityActions.expandedIcon\"></button>\n        </div>\n    </div>\n    <div class=\"grid\" #ganttGrid [ngStyle]=\"{ 'height': ganttActivityHeight, 'width': ganttService.gridWidth + 'px'}\">\n    <div class=\"grid-scale\" [ngStyle]=\"setGridScaleStyle()\">\n        <div class=\"grid-head-cell\"\n            *ngFor=\"let column of gridColumns\" [style.width]=\"column.width + 'px'\"\n            [style.left]=\"column.left + 'px'\">\n\n            <label>\n                {{column.name}}\n                <span *ngIf=\"column.name === 'Duration'\"\n                    style=\"font-weight:bold\">{{ ganttService.calculateTotalDuration(ganttService.TASK_CACHE) }}</span>\n            </label>\n        </div>\n        <div class=\"grid-head-cell\">\n            <button (click)=\"toggleAllChildren()\"\n                style=\"background-color: whitesmoke; border: none; font-size: 21px; cursor: pointer\">\n\n                {{ treeExpanded ? '&#x25b2;' : '&#x25bc;' }}\n            </button>\n        </div>\n    </div>\n    <div class=\"grid-data\"\n        #ganttGridData\n        [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight() }\">\n\n    <div #row\n        *ngFor=\"let data of ganttService.groupData(ganttService.TASK_CACHE)\"\n        (click)=\"toggleChildren(row, data)\" class=\"grid_row\"\n        [ngStyle]=\"setGridRowStyle(ganttService.isParent(data.treePath))\"\n        [attr.data-id]=\"ganttService.setIdPrefix(data.id)\"\n        [attr.data-isParent]=\"ganttService.isParent(data.treePath)\"\n        [attr.data-parentid]=\"ganttService.setIdPrefix(data.parentId)\">\n\n            <div class=\"grid-cell\" [ngStyle]=\"{ 'width': gridColumns[0].width + 'px' }\">\n                <div [innerHTML]=\"getStatusIcon(data.status, data.percentComplete)\"\n                    [style.color]=\"getStatusIconColor(data.status, data.percentComplete)\"></div>\n            </div>\n            <div class=\"grid-cell\"\n                [ngStyle]=\"{ 'width': gridColumns[1].width + 'px', 'padding-left': ganttService.isChild(data.treePath) }\">\n\n                <div class=\"gantt-tree-content\">{{data.name}}</div>\n            </div>\n            <div class=\"grid-cell\" [ngStyle]=\"{ 'width': gridColumns[2].width + 'px' }\">\n                <div>{{ data.percentComplete }}</div>\n            </div>\n            <div class=\"grid-cell\" [ngStyle]=\"{ 'width': gridColumns[3].width + 'px'}\">\n                <div> {{ ganttService.calculateDuration(data) }}</div>\n            </div>\n        </div>\n    </div>\n    </div>\n    <div class=\"gantt-activity\"\n        (window:resize)=\"onResize($event)\"\n        [ngStyle]=\"{ 'height': ganttActivityHeight, 'width': ganttActivityWidth - 18 + 'px'}\">\n\n        <time-scale [zoom]=\"zoom\"\n            [zoomLevel]=\"zoomLevel\"\n            [timeScale]=\"ganttService.TIME_SCALE\"\n            [dimensions]=\"dimensions\"></time-scale>\n        <div class=\"gantt-activity-area\"\n            #ganttActivityArea\n            [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight(), 'width': containerWidth + 'px'}\">\n\n            <activity-background [zoom]=\"zoom\"\n                [zoomLevel]=\"zoomLevel\"\n                [timeScale]=\"ganttService.TIME_SCALE\"\n                [tasks]=\"ganttService.TASK_CACHE\"></activity-background>\n            <activity-bars [zoom]=\"zoom\"\n                [zoomLevel]=\"zoomLevel\"\n                [timeScale]=\"ganttService.TIME_SCALE\"\n                [dimensions]=\"dimensions\"\n                [tasks]=\"ganttService.TASK_CACHE\"></activity-bars>\n        </div>\n    </div>\n    <div class=\"gantt-vertical-scroll\"\n        #verticalScroll\n        (scroll)=\"onVerticalScroll(verticalScroll, ganttGrid, ganttActivityArea)\"\n        [ngStyle]=\"{'display': activityActions.expanded === true ? 'none' : 'block' }\">\n\n        <div [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight() }\"></div>\n    </div>\n    ",
+                    template: "\n    <div class=\"actions-bar\">\n        <div style=\"float: right\"></div>\n    </div>\n    <div class=\"grid\" #ganttGrid [ngStyle]=\"{ 'height': ganttActivityHeight }\">\n    <div class=\"grid-scale\" [ngStyle]=\"setGridScaleStyle()\">\n        <div class=\"grid-head-cell\"\n            *ngFor=\"let column of gridColumns\" [style.width]=\"column.width + 'px'\"\n            [style.left]=\"column.left + 'px'\">\n\n            <label>\n                {{column.name}}\n            </label>\n        </div>\n    </div>\n    <div class=\"grid-data\"\n        #ganttGridData\n        [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight() }\">\n\n    <div #row\n        *ngFor=\"let data of ganttService.groupData(ganttService.TASK_CACHE)\"\n        (click)=\"toggleChildren(row, data)\" class=\"grid-row\"\n        [ngStyle]=\"setGridRowStyle(ganttService.isParent(data.treePath))\"\n        [attr.data-id]=\"ganttService.setIdPrefix(data.id)\"\n        [attr.data-isParent]=\"ganttService.isParent(data.treePath)\"\n        [attr.data-parentid]=\"ganttService.setIdPrefix(data.parentId)\">\n\n            <div class=\"grid-cell\"\n                [ngStyle]=\"{ 'width': gridColumns[1].width + 'px', 'padding-left': ganttService.isChild(data.treePath) }\">\n\n                <div class=\"gantt-tree-content\">{{data.name}}</div>\n            </div>\n        </div>\n    </div>\n    </div>\n    <div class=\"gantt-activity\"\n        (window:resize)=\"onResize($event)\"\n        [ngStyle]=\"{ 'height': ganttActivityHeight, 'width': ganttActivityWidth + 36 + 'px'}\">\n\n        <time-scale [zoom]=\"zoom\"\n            [zoomLevel]=\"zoomLevel\"\n            [timeScale]=\"ganttService.TIME_SCALE\"\n            [dimensions]=\"dimensions\"></time-scale>\n        <div class=\"gantt-activity-area\"\n            #ganttActivityArea\n            [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight(), 'width': containerWidth + 'px'}\">\n\n            <activity-background [zoom]=\"zoom\"\n                [zoomLevel]=\"zoomLevel\"\n                [timeScale]=\"ganttService.TIME_SCALE\"\n                [tasks]=\"ganttService.TASK_CACHE\"></activity-background>\n            <activity-bars [zoom]=\"zoom\"\n                [zoomLevel]=\"zoomLevel\"\n                [timeScale]=\"ganttService.TIME_SCALE\"\n                [dimensions]=\"dimensions\"\n                [tasks]=\"ganttService.TASK_CACHE\"></activity-bars>\n        </div>\n    </div>\n    <div class=\"gantt-vertical-scroll\"\n        #verticalScroll\n        (scroll)=\"onVerticalScroll(verticalScroll, ganttGrid, ganttActivityArea)\"\n        [ngStyle]=\"{'display': activityActions.expanded === true ? 'none' : 'block' }\">\n\n        <div [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight() }\"></div>\n    </div>\n    ",
                     changeDetection: ChangeDetectionStrategy.Default,
                     styles: ["\n        .gantt-activity {\n            /*overflow-x: hidden;*/\n            overflow-x: auto;\n            height: 250px;\n            overflow-y: hidden;\n            overflow-x: scroll;\n            display: inline-block;\n            vertical-align: top;\n            position:relative;\n        }\n        .gantt-activity-area {\n            position: relative;\n            overflow-x: hidden;\n            overflow-y: hidden;\n            -webkit-user-select: none;\n        }\n        .gantt-vertical-scroll {\n            background-color: transparent;\n            overflow-x: hidden;\n            overflow-y: scroll;\n            position: absolute;\n            right: 0;\n            display: block;\n            height: 283px;\n            width: 18px;\n            top: 70px;\n        }\n        .grid {\n            overflow-x: hidden;\n            overflow-y: hidden;\n            display: inline-block;\n            vertical-align: top;\n            border-right: 1px solid #cecece;\n        }\n        .grid-scale {\n            color: #6b6b6b;\n            font-size: 12px;\n            border-bottom: 1px solid #e0e0e0;\n            background-color: whitesmoke;\n        }\n        .grid-head-cell {\n            /*color: #a6a6a6;*/\n            border-top: none !important;\n            border-right: none !important;\n            line-height: inherit;\n            box-sizing: border-box;\n            display: inline-block;\n            vertical-align: top;\n            border-right: 1px solid #cecece;\n            /*text-align: center;*/\n            position: relative;\n            cursor: default;\n            height: 100%;\n            -moz-user-select: -moz-none;\n            -webkit-user-select: none;\n            overflow: hidden;\n        }\n        .grid-data {\n            overflow:hidden;\n        }\n        .grid-row {\n            box-sizing: border-box;\n            border-bottom: 1px solid #e0e0e0;\n            background-color: #fff;\n            position: relative;\n            -webkit-user-select: none;\n        }\n        .grid-row:hover {\n            background-color: #eeeeee;\n        }\n        .grid-cell {\n            border-right: none;\n            color: #454545;\n            display: inline-block;\n            vertical-align: top;\n            padding-left: 6px;\n            padding-right: 6px;\n            height: 100%;\n            overflow: hidden;\n            white-space: nowrap;\n            font-size: 13px;\n            box-sizing: border-box;\n        }\n        .actions-bar {\n            /*border-top: 1px solid #cecece;*/\n            border-bottom: 1px solid #e0e0e0;\n            clear: both;\n            /*margin-top: 90px;*/\n            height: 28px;\n            background: whitesmoke;\n            color: #494949;\n            font-family: Arial, sans-serif;\n            font-size: 13px;\n            padding-left: 15px;\n            line-height: 25px;\n        }\n        .gantt-tree-content {\n            padding-left:15px;\n        }\n    "]
                 }] }
@@ -2124,6 +2121,6 @@ var GanttModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { GanttModule, GanttActivityBackgroundComponent as ɵe, GanttActivityBarsComponent as ɵf, GanttActivityComponent as ɵb, GanttActivityModule as ɵa, GanttTimeScaleComponent as ɵd, GanttFooterComponent as ɵi, GanttComponent as ɵg, GanttHeaderComponent as ɵh, GroupByPipe as ɵj, GanttService as ɵc };
+export { Zooming, GanttModule, GanttActivityBackgroundComponent as ɵe, GanttActivityBarsComponent as ɵf, GanttActivityComponent as ɵb, GanttActivityModule as ɵa, GanttTimeScaleComponent as ɵd, GanttFooterComponent as ɵi, GanttComponent as ɵg, GanttHeaderComponent as ɵh, GroupByPipe as ɵj, GanttService as ɵc };
 
-//# sourceMappingURL=gantt.js.map
+//# sourceMappingURL=angular-gantt.js.map

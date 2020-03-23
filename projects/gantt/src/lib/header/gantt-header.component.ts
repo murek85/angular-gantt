@@ -18,7 +18,7 @@ import { Component, Input } from '@angular/core';
         }
 
         .gantt-header-title {
-            padding: 12px;   
+            padding: 12px;
             display: flex;
             flex-wrap:wrap;
             font-family: Arial, Helvetica, sans-serif;

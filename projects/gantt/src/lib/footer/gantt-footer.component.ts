@@ -11,7 +11,7 @@ import { Component, Input } from '@angular/core';
         }
 
         .gantt-footer-actions {
-            float:right;
+            float: right;
         }
     `]
 })
