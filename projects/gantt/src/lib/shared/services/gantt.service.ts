@@ -205,12 +205,12 @@ export class GanttService {
         return { height: this.activityHeight, width: width };
     }
 
-    public calculateGanttActivityWidth(ganttActions: HTMLElement, ganttGridElem: HTMLElement): any {
-        return `${ganttActions.offsetWidth - ganttGridElem.offsetWidth}px`;
+    public calculateGanttActivityWidth(elem: HTMLElement): any {
+        return `calc(100% - ${(elem.offsetWidth + 1)}px)`;
     }
 
-    public calculateGanttActivityHeight(ganttGridElem: HTMLElement): any {
-        return `${ganttGridElem.offsetHeight}px`;
+    public calculateGanttActivityHeight(elem: HTMLElement): any {
+        return `${elem.offsetHeight}px`;
     }
 
     /** Set the vertical scroll top positions for gantt */

@@ -38,7 +38,7 @@ import { GanttService } from '../shared/services/gantt.service';
     </div>
     <div class="gantt-activity"
         (window:resize)="onResize($event)"
-        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': 'calc(100% - ' + (ganttGridData.offsetWidth + 1) + 'px)' }">
+        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': 'calc(100% - ' + (columnsWidth() + 1) + 'px)' }">
 
         <time-scale [timeScale]="ganttService.TIME_SCALE"
             [dimensions]="dimensions"></time-scale>
@@ -265,6 +265,10 @@ export class GanttActivityComponent implements OnInit, DoCheck {
             'height': height + 'px',
             'line-height': height + 'px'
         };
+    }
+
+    public columnsWidth() {
+        return this.gridColumns.map(column => { return column.width }).reduce((pv, cv) => pv + cv, 0);
     }
 
     private calculateContainerHeight(): number {

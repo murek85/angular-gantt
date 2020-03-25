@@ -303,19 +303,18 @@ class GanttService {
         return { height: this.activityHeight, width: width };
     }
     /**
-     * @param {?} ganttActions
-     * @param {?} ganttGridElem
+     * @param {?} elem
      * @return {?}
      */
-    calculateGanttActivityWidth(ganttActions, ganttGridElem) {
-        return `${ganttActions.offsetWidth - ganttGridElem.offsetWidth}px`;
+    calculateGanttActivityWidth(elem) {
+        return `calc(100% - ${(elem.offsetWidth + 1)}px)`;
     }
     /**
-     * @param {?} ganttGridElem
+     * @param {?} elem
      * @return {?}
      */
-    calculateGanttActivityHeight(ganttGridElem) {
-        return `${ganttGridElem.offsetHeight}px`;
+    calculateGanttActivityHeight(elem) {
+        return `${elem.offsetHeight}px`;
     }
     /**
      * Set the vertical scroll top positions for gantt
@@ -732,6 +731,12 @@ class GanttActivityComponent {
         };
     }
     /**
+     * @return {?}
+     */
+    columnsWidth() {
+        return this.gridColumns.map(column => { return column.width; }).reduce((pv, cv) => pv + cv, 0);
+    }
+    /**
      * @private
      * @return {?}
      */
@@ -791,7 +796,7 @@ GanttActivityComponent.decorators = [
     </div>
     <div class="gantt-activity"
         (window:resize)="onResize($event)"
-        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': 'calc(100% - ' + (ganttGridData.offsetWidth + 1) + 'px)' }">
+        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': 'calc(100% - ' + (columnsWidth() + 1) + 'px)' }">
 
         <time-scale [timeScale]="ganttService.TIME_SCALE"
             [dimensions]="dimensions"></time-scale>

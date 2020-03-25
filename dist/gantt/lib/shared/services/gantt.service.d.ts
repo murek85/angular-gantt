@@ -47,8 +47,8 @@ export declare class GanttService {
     calculateContainerWidth(): number;
     calculateContainerHeight(): number;
     calculateActivityContainerDimensions(): any;
-    calculateGanttActivityWidth(ganttActions: HTMLElement, ganttGridElem: HTMLElement): any;
-    calculateGanttActivityHeight(ganttGridElem: HTMLElement): any;
+    calculateGanttActivityWidth(elem: HTMLElement): any;
+    calculateGanttActivityHeight(elem: HTMLElement): any;
     /** Set the vertical scroll top positions for gantt */
     scrollTop(verticalScrollElem: any, ganttGridElem: any, ganttActivityAreaElem: any): void;
     /** Group data by id , only supports one level*/

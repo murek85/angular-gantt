@@ -38,6 +38,7 @@ export declare class GanttActivityComponent implements OnInit, DoCheck {
         'height': string;
         'line-height': string;
     };
+    columnsWidth(): any;
     private calculateContainerHeight;
     private calculateContainerWidth;
     private setSizes;
