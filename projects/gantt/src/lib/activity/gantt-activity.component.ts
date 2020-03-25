@@ -38,7 +38,7 @@ import { GanttService } from '../shared/services/gantt.service';
     </div>
     <div class="gantt-activity"
         (window:resize)="onResize($event)"
-        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': ganttActivityWidth + 36 + 'px' }">
+        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': 'calc(100% - ' + (ganttGridData.offsetWidth + 1) + 'px)' }">
 
         <time-scale [timeScale]="ganttService.TIME_SCALE"
             [dimensions]="dimensions"></time-scale>
@@ -111,7 +111,7 @@ import { GanttService } from '../shared/services/gantt.service';
             overflow: hidden;
         }
         .grid-data {
-            overflow:hidden;
+            overflow: hidden;
         }
         .grid-row {
             box-sizing: border-box;
@@ -163,19 +163,12 @@ export class GanttActivityComponent implements OnInit, DoCheck {
     @Output() onGridRowClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onPopoverOpen: EventEmitter<any> = new EventEmitter<any>();
 
-    private upTriangle = '&#x25b2;'; // BLACK UP-POINTING TRIANGLE
-    private downTriangle = '&#x25bc;'; // BLACK DOWN-POINTING TRIANGLE
-
     private start: Date;
     private end: Date;
     private timeScale: any;
 
     private activityContainerSizes: any;
 
-    activityActions = {
-        expanded: false,
-        expandedIcon: this.downTriangle
-    };
     containerHeight: any;
     containerWidth: any;
 

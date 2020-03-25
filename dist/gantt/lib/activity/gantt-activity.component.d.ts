@@ -7,16 +7,10 @@ export declare class GanttActivityComponent implements OnInit, DoCheck {
     options: any;
     onGridRowClick: EventEmitter<any>;
     onPopoverOpen: EventEmitter<any>;
-    private upTriangle;
-    private downTriangle;
     private start;
     private end;
     private timeScale;
     private activityContainerSizes;
-    activityActions: {
-        expanded: boolean;
-        expandedIcon: string;
-    };
     containerHeight: any;
     containerWidth: any;
     ganttActivityHeight: any;

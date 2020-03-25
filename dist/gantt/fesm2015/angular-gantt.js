@@ -44,7 +44,7 @@ class GanttService {
         this.barLineHeight = 0;
         this.barTop = 0;
         this.barMoveable = false;
-        this.gridWidth = 542; //188
+        this.gridWidth = 0; //188
         //188
         this.gridHeight = 332;
         /** @type {?} */
@@ -618,13 +618,6 @@ class GanttActivityComponent {
         this.ganttService = ganttService;
         this.onGridRowClick = new EventEmitter();
         this.onPopoverOpen = new EventEmitter();
-        this.upTriangle = '&#x25b2;'; // BLACK UP-POINTING TRIANGLE
-        // BLACK UP-POINTING TRIANGLE
-        this.downTriangle = '&#x25bc;'; // BLACK DOWN-POINTING TRIANGLE
-        this.activityActions = {
-            expanded: false,
-            expandedIcon: this.downTriangle
-        };
         this.scale = {
             start: null,
             end: null
@@ -798,7 +791,7 @@ GanttActivityComponent.decorators = [
     </div>
     <div class="gantt-activity"
         (window:resize)="onResize($event)"
-        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': ganttActivityWidth + 36 + 'px' }">
+        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': 'calc(100% - ' + (ganttGridData.offsetWidth + 1) + 'px)' }">
 
         <time-scale [timeScale]="ganttService.TIME_SCALE"
             [dimensions]="dimensions"></time-scale>
@@ -872,7 +865,7 @@ GanttActivityComponent.decorators = [
             overflow: hidden;
         }
         .grid-data {
-            overflow:hidden;
+            overflow: hidden;
         }
         .grid-row {
             box-sizing: border-box;

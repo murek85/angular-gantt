@@ -14,7 +14,7 @@ export class GanttService {
     public barLineHeight = 0;
     public barTop = 0;
     public barMoveable = false;
-    public gridWidth = 542; //188
+    public gridWidth = 0; //188
     public gridHeight = 332;
     public TASK_CACHE: any[];
     public TIME_SCALE: any[];
