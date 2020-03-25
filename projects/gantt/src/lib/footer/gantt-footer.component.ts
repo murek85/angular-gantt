@@ -9,7 +9,6 @@ import { Component, Input } from '@angular/core';
             height: 36px;
             border-top: 1px solid #e0e0e0;
         }
-
         .gantt-footer-actions {
             float: right;
         }

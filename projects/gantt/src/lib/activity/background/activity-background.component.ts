@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { GanttService } from '../../shared/services/gantt.service';
-import { Zooming } from '../../shared/interfaces';
 
 @Component({
     selector: 'activity-background',
@@ -8,16 +7,18 @@ import { Zooming } from '../../shared/interfaces';
     <div #bg class="gantt-activity-bg">
         <div class="gantt-activity-row"
             [ngStyle]="setRowStyle()"
-            *ngFor="let row of ganttService.groupData(tasks)">
+            *ngFor="let row of tasks">
 
             <div class="gantt-activity-cell"
                 [ngStyle]="setCellStyle()"
-                *ngFor="let cell of cells; let l = last"
-                [ngClass]="[(isDayWeekend(cell)) ? 'weekend' : '', l ? 'last-column-cell' : '']"></div>
+                *ngFor="let cell of cells; let i = index; let l = last" [ngClass]="(i % 2) ? 'weekend' : ''" ></div>
         </div>
     </div>
     `,
     styles: [`
+        .weekend {
+            background-color: whitesmoke;
+        }
         .gantt-activity-bg {
             overflow: hidden;
         }
@@ -31,16 +32,11 @@ import { Zooming } from '../../shared/interfaces';
             height: 100%;
             border-right: 1px solid #ebebeb;
         }
-        .weekend {
-            background-color: whitesmoke;
-        }
     `]
 })
 export class GanttActivityBackgroundComponent implements OnInit {
     @Input() tasks: any;
     @Input() timeScale: any;
-    @Input() zoom: any;
-    @Input() zoomLevel: string;
 
     @ViewChild('bg') bg: ElementRef;
 
@@ -51,11 +47,6 @@ export class GanttActivityBackgroundComponent implements OnInit {
 
     ngOnInit() {
         this.drawGrid();
-
-        this.zoom.subscribe((zoomLevel: string) => {
-            this.zoomLevel = zoomLevel;
-            this.drawGrid();
-        });
     }
 
     isDayWeekend(date: Date): boolean {
@@ -69,28 +60,12 @@ export class GanttActivityBackgroundComponent implements OnInit {
     }
 
     setCellStyle() {
-        var width = this.ganttService.cellWidth;
-
-        if (this.zoomLevel === Zooming[Zooming.hours]) {
-            width = this.ganttService.hourCellWidth;
-        }
-
         return {
-            'width': width + 'px'
+            'width': this.ganttService.cellWidth + 'px'
         };
     }
 
     private drawGrid(): void {
-        if (this.zoomLevel === Zooming[Zooming.hours]) {
-            this.cells = [];
-
-            this.timeScale.forEach((date: any) => {
-                for (var i = 0; i <= 23; i++) {
-                    this.cells.push(date);
-                }
-            });
-        } else {
-            this.cells = this.timeScale;
-        }
+        this.cells = this.timeScale;
     }
 }

@@ -10,5 +10,4 @@ export { GanttTimeScaleComponent as ɵd } from './lib/activity/time-scale/gantt-
 export { GanttFooterComponent as ɵi } from './lib/footer/gantt-footer.component';
 export { GanttComponent as ɵg } from './lib/gantt.component';
 export { GanttHeaderComponent as ɵh } from './lib/header/gantt-header.component';
-export { GroupByPipe as ɵj } from './lib/shared/pipes/groupBy.pipe';
 export { GanttService as ɵc } from './lib/shared/services/gantt.service';

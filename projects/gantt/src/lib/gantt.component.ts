@@ -6,16 +6,16 @@ import { IGanttOptions, Project } from './shared/interfaces';
 @Component({
     selector: 'gantt',
     template: `
-        <div style="width: 100%">
-            <div class="gantt_container" (window:resize)="onResize($event)">
-                <gantt-header [name]="_project.name" [startDate]="_project.startDate"></gantt-header>
+        <div [ngStyle]="{ 'width': '100%' }">
+            <div class="gantt-container" (window:resize)="onResize($event)">
+                <!--<gantt-header [name]="_project.name" [startDate]="_project.startDate"></gantt-header>-->
                 <gantt-activity [project]="_project" [options]="_options" (onGridRowClick)="gridRowClicked($event)"></gantt-activity>
-                <gantt-footer [project]="_project"></gantt-footer>
+                <!--<gantt-footer [project]="_project"></gantt-footer>-->
             </div>
         </div>
     `,
     styles: [`
-        .gantt_container {
+        .gantt-container {
             font-family: Arial;
             font-size: 13px;
             border: 1px solid #cecece;
@@ -30,7 +30,6 @@ export class GanttComponent implements OnInit {
     _project: Project;
     _options: IGanttOptions;
 
-    //TODO(dale): this may be causing an issue in the tree builder?
     @Input()
     set project(project: any) {
         if (project) {
@@ -53,23 +52,21 @@ export class GanttComponent implements OnInit {
 
     @Output() onGridRowClick: EventEmitter<any> = new EventEmitter<any>();
 
-    private ganttContainerWidth: number;
+    ganttContainerWidth: number;
 
-    constructor(private ganttService: GanttService) { }
+    constructor(public ganttService: GanttService) { }
 
     ngOnInit() {
-
-     }
+    }
 
     setSizes(): void {
         this.ganttContainerWidth = this.ganttService.calculateContainerWidth();
     }
 
     setDefaultOptions() {
-        var scale = this.ganttService.calculateGridScale(this._project.tasks);
-
+        const scale = this.ganttService.calculateGridScale(this._project.tasks);
         this._options = {
-            scale: scale
+            scale
         };
     }
 

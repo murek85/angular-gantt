@@ -4,8 +4,6 @@ export declare class GanttActivityBackgroundComponent implements OnInit {
     ganttService: GanttService;
     tasks: any;
     timeScale: any;
-    zoom: any;
-    zoomLevel: string;
     bg: ElementRef;
     rows: any[];
     cells: any[];

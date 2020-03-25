@@ -11,6 +11,7 @@ export declare class GanttService {
     barTop: number;
     barMoveable: boolean;
     gridWidth: number;
+    gridHeight: number;
     private barStyles;
     TASK_CACHE: any[];
     TIME_SCALE: any[];
@@ -20,10 +21,8 @@ export declare class GanttService {
     /** Calculates the height of the gantt grid, activity and vertical scroll */
     calculateGanttHeight(): string;
     private calculateBarLeftDelta;
-    isParent(treePath: string): boolean;
-    isChild(treePath: string): "0px" | "20px";
     /** Calculate the bar styles */
-    calculateBar(task: any, index: number, scale: any, hours?: boolean): {
+    calculateBar(task: any, index: number, scale: any): {
         'top': string;
         'left': string;
         'height': string;
@@ -40,13 +39,6 @@ export declare class GanttService {
     calculateBarProgress(width: number, percent: number): string;
     /** Calculates the difference in two dates and returns number of days */
     calculateDiffDays(start: Date, end: Date): number;
-    /** Calculates the difference in two dates and returns number of hours */
-    calculateDuration(task: any): string;
-    calculateTotalDuration(tasks: any[]): string;
-    /** Calculate the total percentage of a group of tasks */
-    calculateTotalPercentage(node: any): number;
-    /** Calculate the total percent of the parent task */
-    calculateParentTotalPercentage(parent: any, tasks: any[]): any;
     /** Calculate the gantt scale range given the start and end date of tasks*/
     calculateScale(start?: Date, end?: Date): any[];
     /** Determines whether given date is a weekend */
@@ -56,21 +48,20 @@ export declare class GanttService {
     removeDays(date: Date, days: number): Date;
     /** Calculates the grid scale for gantt based on tasks start and end dates */
     calculateGridScale(tasks: Task[]): IScale;
-    /** Create an hours array for use in time scale component */
-    getHours(cols: number): string[];
     getComputedStyle(element: any, attribute: any): number;
     calculateContainerWidth(): number;
+    calculateContainerHeight(): number;
     calculateActivityContainerDimensions(): any;
+    calculateGanttActivityWidth(ganttActions: HTMLElement, ganttGridElem: HTMLElement): any;
+    calculateGanttActivityHeight(ganttGridElem: HTMLElement): any;
     /** Set the vertical scroll top positions for gantt */
     scrollTop(verticalScrollElem: any, ganttGridElem: any, ganttActivityAreaElem: any): void;
     /** Group data by id , only supports one level*/
     groupData(tasks: any): any;
-    /** Create tree of data */
-    transformData(input: any): any;
     /** Checks whether any new data needs to be added to task cache  */
-    doTaskCheck(tasks: any[], treeExpanded: boolean): boolean;
+    doTaskCheck(tasks: any[]): boolean;
     /** Set a id prefix so CSS3 query selector can work with ids that contain numbers */
     setIdPrefix(id: string): string;
     /** Set the scroll top property of a native DOM element */
-    private setScrollTop;
+    setScrollTop(scrollTop: number, element: any): void;
 }

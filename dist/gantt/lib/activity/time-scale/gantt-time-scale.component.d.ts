@@ -4,8 +4,6 @@ export declare class GanttTimeScaleComponent implements OnInit {
     ganttService: GanttService;
     timeScale: any;
     dimensions: any;
-    zoom: any;
-    zoomLevel: any;
     constructor(ganttService: GanttService);
     ngOnInit(): void;
     setTimescaleStyle(): {
@@ -21,5 +19,4 @@ export declare class GanttTimeScaleComponent implements OnInit {
         'width': string;
     };
     isDayWeekend(date: Date): boolean;
-    getHours(): string[];
 }

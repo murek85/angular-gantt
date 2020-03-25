@@ -7,19 +7,15 @@ export interface Project {
 
 export interface Task {
     id: string;
-    treePath: string;
-    parentId: string;
     name: string;
     resource?: string;
     start: Date;
     end?: Date;
-    percentComplete?: number;
     status?: string;
 }
 
 export interface IGanttOptions {
     scale?: IScale;
-    zooming?: string;
 }
 
 export interface IScale {
@@ -32,10 +28,4 @@ export interface IBarStyle {
     backgroundColor: string;
     border: string;
     progressBackgroundColor: string;
-}
-
-export enum Zooming {
-    hours,
-    days,
-    weeks
 }

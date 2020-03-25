@@ -16,7 +16,6 @@ import { Component, Input } from '@angular/core';
             height: 40px;
             border-bottom: 1px solid #e0e0e0;
         }
-
         .gantt-header-title {
             padding: 12px;
             display: flex;
@@ -24,7 +23,6 @@ import { Component, Input } from '@angular/core';
             font-family: Arial, Helvetica, sans-serif;
             font-size: 16px;
         }
-
         .gantt-header-actions {
             display: inline;
             float: right;

@@ -1,20 +1,17 @@
-import { Component, OnInit, Input, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { GanttService } from '../../shared/services/gantt.service';
-import { Zooming } from '../../shared/interfaces';
 
 @Component({
     selector: 'time-scale',
     template: `
         <div class="time-scale" [ngStyle]="setTimescaleStyle()">
             <div class="time-scale-line" [ngStyle]="setTimescaleLineStyle('none')">
-                <div class="time-scale-cell" *ngFor="let date of timeScale" 
-                    [ngStyle]="setTimescaleCellStyle()"
-                    [ngClass]="(isDayWeekend(date)) ? 'weekend' : ''">{{date | date: 'dd-MM-yyyy'}}</div>
+                <div class="time-scale-cell" *ngFor="let date of timeScale; let i = index"
+                    [ngClass]="(i % 2) ? 'weekend' : ''" [ngStyle]="setTimescaleCellStyle()">{{date | date: 'dd-MM'}}</div>
             </div>
-            <div *ngIf="zoomLevel === 'hours'" class="time-scale-line" [ngStyle]="setTimescaleLineStyle('1px solid #cecece')">
-                <div class="time-scale-cell"
-                    *ngFor="let hour of getHours()"
-                    [ngStyle]="{ 'width': ganttService.hourCellWidth + 'px' }">{{hour}}</div>
+            <div class="time-scale-line" [ngStyle]="setTimescaleLineStyle('none')">
+                <div class="time-scale-cell" *ngFor="let date of timeScale; let i = index"
+                [ngClass]="(i % 2) ? 'weekend' : ''" [ngStyle]="setTimescaleCellStyle()">{{i + 1}}</div>
             </div>
         </div>`,
     styles: [`
@@ -23,11 +20,12 @@ import { Zooming } from '../../shared/interfaces';
         }
         .time-scale {
             font-size: 12px;
-            border-bottom: 1px solid #cecece;
             background-color: #fff;
+            border-bottom: 1px solid #cecece;
         }
         .time-scale-line {
             box-sizing: border-box;
+            border-bottom: 1px solid #cecece;
         }
         .time-scale-line:first-child {
             border-top: none;
@@ -48,20 +46,15 @@ import { Zooming } from '../../shared/interfaces';
 export class GanttTimeScaleComponent implements OnInit {
     @Input() timeScale: any;
     @Input() dimensions: any;
-    @Input() zoom: any;
-    @Input() zoomLevel: any;
 
     constructor(public ganttService: GanttService) { }
 
     ngOnInit() {
-        this.zoom.subscribe((zoomLevel: string) => {
-            this.zoomLevel = zoomLevel;
-        });
     }
 
     setTimescaleStyle() {
         return {
-            'width': this.dimensions.width + 'px'
+            'width': (this.dimensions.width + 36) + 'px'
         };
     }
 
@@ -75,24 +68,12 @@ export class GanttTimeScaleComponent implements OnInit {
     }
 
     setTimescaleCellStyle() {
-        var width = this.ganttService.cellWidth;
-        var hoursInDay = 24;
-        var hourSeperatorPixels = 23; // we don't include the first 
-
-        if (this.zoomLevel ===  Zooming[Zooming.hours]) {
-            width = this.ganttService.hourCellWidth * hoursInDay + hourSeperatorPixels; 
-        }
-
         return {
-            'width': width + 'px'
+            'width': this.ganttService.cellWidth + 'px'
         };
     }
 
     isDayWeekend(date: Date): boolean {
         return this.ganttService.isDayWeekend(date);
-    }
-
-    getHours(): string[] {
-        return this.ganttService.getHours(this.timeScale.length);
     }
 }
