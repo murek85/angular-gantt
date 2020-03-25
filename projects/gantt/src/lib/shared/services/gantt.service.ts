@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GanttConfig } from './gantt-config.service';
-import { IBarStyle, Task, IScale, Zooming } from '../interfaces';
-import { GroupByPipe } from '../../shared/pipes/groupBy.pipe';
+import { IBarStyle, Task, IScale } from '../interfaces';
 
 @Injectable()
 export class GanttService {
