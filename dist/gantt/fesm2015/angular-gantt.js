@@ -1,6 +1,8 @@
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Injectable, Component, Input, EventEmitter, Output, ElementRef, ChangeDetectionStrategy, ViewChild, NgModule } from '@angular/core';
+import { MatCardModule } from '@angular/material';
+import { MdePopoverModule } from '@material-extended/mde';
+import { Injectable, Component, Input, EventEmitter, Output, ElementRef, ChangeDetectionStrategy, ViewChild, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -17,7 +19,7 @@ class GanttConfig {
         this.rowHeight = 30;
         this.activityHeight = 420;
         this.barHeight = 25;
-        this.barLineHeight = 30;
+        this.barLineHeight = 35;
         this.barMoveable = false;
     }
 }
@@ -45,12 +47,6 @@ class GanttService {
         this.gridWidth = 542; //188
         //188
         this.gridHeight = 332;
-        this.barStyles = [
-            { status: "information", backgroundColor: "rgb(18,195, 244)", border: "1px solid #2196F3", progressBackgroundColor: "#2196F3" },
-            { status: "warning", backgroundColor: "#FFA726", border: "1px solid #EF6C00", progressBackgroundColor: "#EF6C00" },
-            { status: "error", backgroundColor: "#EF5350", border: "1px solid #C62828", progressBackgroundColor: "#C62828" },
-            { status: "completed", backgroundColor: "#66BB6A", border: "1px solid #2E7D32", progressBackgroundColor: "#2E7D32" }
-        ];
         /** @type {?} */
         const ganttConfig = new GanttConfig();
         this.rowHeight = ganttConfig.rowHeight;
@@ -137,7 +133,7 @@ class GanttService {
      */
     calculateBar(task, index, scale) {
         /** @type {?} */
-        const barStyle = this.getBarStyle(task.status);
+        const barStyle = this.getBarStyle(task.color);
         return {
             'top': this.barTop * index + 2 + 'px',
             'left': this.calculateBarLeft(task.start, scale) + 'px',
@@ -145,69 +141,21 @@ class GanttService {
             'line-height': this.barLineHeight + 'px',
             'width': this.calculateBarWidth(task.start, task.end) + 'px',
             'background-color': barStyle["background-color"],
-            'border': barStyle["border"]
+            'border-left': barStyle["border-left"]
         };
     }
     /**
      * Get the bar style based on task status
      * @private
-     * @param {?=} taskStatus
+     * @param {?} color
      * @return {?}
      */
-    getBarStyle(taskStatus = "") {
+    getBarStyle(color) {
         /** @type {?} */
         const style = {};
-        try {
-            taskStatus = taskStatus.toLowerCase();
-        }
-        catch (err) {
-            taskStatus = "";
-        }
-        switch (taskStatus) {
-            default:
-                style["background-color"] = "rgb(18,195, 244)";
-                style["border"] = "1px solid #2196F3";
-                break;
-        }
+        style["background-color"] = color.secondary;
+        style["border-left"] = `5px solid ${color.primary}`;
         return style;
-    }
-    /**
-     * Get the progresss bar background colour based on task status
-     * @param {?=} taskStatus
-     * @return {?}
-     */
-    getBarProgressStyle(taskStatus = "") {
-        /** @type {?} */
-        const style = {};
-        try {
-            taskStatus = taskStatus.toLowerCase();
-        }
-        catch (err) {
-            taskStatus = "";
-        }
-        switch (taskStatus) {
-            default:
-                style["background-color"] = this.barStyles[0].progressBackgroundColor;
-                break;
-        }
-        return style;
-    }
-    /**
-     * Calculates the bar progress width in pixels given task percent complete
-     * @param {?} width
-     * @param {?} percent
-     * @return {?}
-     */
-    calculateBarProgress(width, percent) {
-        if (typeof percent === "number") {
-            if (percent > 100) {
-                percent = 100;
-            }
-            /** @type {?} */
-            const progress = (width / 100) * percent - 2;
-            return `${progress}px`;
-        }
-        return `${0}px`;
     }
     /**
      * Calculates the difference in two dates and returns number of days
@@ -459,6 +407,7 @@ class GanttComponent {
     constructor(ganttService) {
         this.ganttService = ganttService;
         this.onGridRowClick = new EventEmitter();
+        this.onPopoverOpen = new EventEmitter();
     }
     /**
      * @param {?} project
@@ -532,6 +481,13 @@ class GanttComponent {
         this.onGridRowClick.emit(task);
     }
     /**
+     * @param {?} task
+     * @return {?}
+     */
+    popoverOpened(task) {
+        this.onPopoverOpen.emit(task);
+    }
+    /**
      * @param {?} $event
      * @return {?}
      */
@@ -546,7 +502,7 @@ GanttComponent.decorators = [
         <div [ngStyle]="{ 'width': '100%' }">
             <div class="gantt-container" (window:resize)="onResize($event)">
                 <!--<gantt-header [name]="_project.name" [startDate]="_project.startDate"></gantt-header>-->
-                <gantt-activity [project]="_project" [options]="_options" (onGridRowClick)="gridRowClicked($event)"></gantt-activity>
+                <gantt-activity [project]="_project" [options]="_options" (onGridRowClick)="gridRowClicked($event)" (onPopoverOpen)="popoverOpened($event)"></gantt-activity>
                 <!--<gantt-footer [project]="_project"></gantt-footer>-->
             </div>
         </div>
@@ -571,7 +527,8 @@ GanttComponent.ctorParameters = () => [
 GanttComponent.propDecorators = {
     project: [{ type: Input }],
     options: [{ type: Input }],
-    onGridRowClick: [{ type: Output }]
+    onGridRowClick: [{ type: Output }],
+    onPopoverOpen: [{ type: Output }]
 };
 
 /**
@@ -659,6 +616,7 @@ class GanttActivityComponent {
         this.elem = elem;
         this.ganttService = ganttService;
         this.onGridRowClick = new EventEmitter();
+        this.onPopoverOpen = new EventEmitter();
         this.upTriangle = '&#x25b2;'; // BLACK UP-POINTING TRIANGLE
         // BLACK UP-POINTING TRIANGLE
         this.downTriangle = '&#x25bc;'; // BLACK DOWN-POINTING TRIANGLE
@@ -718,9 +676,19 @@ class GanttActivityComponent {
      * @param {?} task
      * @return {?}
      */
-    toggleChildren(task) {
+    gridRowClick(task) {
         try {
             this.onGridRowClick.emit(task);
+        }
+        catch (err) { }
+    }
+    /**
+     * @param {?} task
+     * @return {?}
+     */
+    popoverOpen(task) {
+        try {
+            this.onPopoverOpen.emit(task);
         }
         catch (err) { }
     }
@@ -838,7 +806,8 @@ GanttActivityComponent.decorators = [
             <activity-bars [timeScale]="ganttService.TIME_SCALE"
                 [dimensions]="dimensions"
                 [tasks]="ganttService.TASK_CACHE"
-                (onGridRowClick)="toggleChildren($event)"></activity-bars>
+                (onGridRowClick)="gridRowClick($event)"
+                (onPopoverOpen)="popoverOpen($event)"></activity-bars>
         </div>
     </div>
     `,
@@ -951,7 +920,8 @@ GanttActivityComponent.ctorParameters = () => [
 GanttActivityComponent.propDecorators = {
     project: [{ type: Input }],
     options: [{ type: Input }],
-    onGridRowClick: [{ type: Output }]
+    onGridRowClick: [{ type: Output }],
+    onPopoverOpen: [{ type: Output }]
 };
 
 /**
@@ -1164,6 +1134,7 @@ class GanttActivityBarsComponent {
     constructor(ganttService) {
         this.ganttService = ganttService;
         this.onGridRowClick = new EventEmitter();
+        this.onPopoverOpen = new EventEmitter();
         this.containerHeight = 0;
         this.containerWidth = 0;
     }
@@ -1189,9 +1160,19 @@ class GanttActivityBarsComponent {
      * @param {?} task
      * @return {?}
      */
-    toggleChildren(task) {
+    gridRowClicked(task) {
         try {
             this.onGridRowClick.emit(task);
+        }
+        catch (err) { }
+    }
+    /**
+     * @param {?} task
+     * @return {?}
+     */
+    popoverOpened(task) {
+        try {
+            this.onPopoverOpen.emit(task);
         }
         catch (err) { }
     }
@@ -1222,18 +1203,69 @@ GanttActivityBarsComponent.decorators = [
         [ngStyle]="{ 'height': containerHeight + 'px', 'width': containerWidth + 'px' }">
 
         <div #bar class="gantt-activity-line"
-            *ngFor="let task of tasks; let i = index" (click)="toggleChildren(task)"
+            *ngFor="let task of tasks; let i = index" (click)="gridRowClicked(task)"
             [ngStyle]="drawBar(task, i)">
 
-            <div class="gantt-activity-content"></div>
-            <div class="gantt-activity-link-control gantt-activity-right" style="height: 26px; line-height: 30px">
-                <div class="gantt-link-point"></div>
-            </div>
-            <div class="gantt-activity-link-control gantt-activity-left" style="height: 26px; line-height: 30px">
-                <div class="gantt-link-point"></div>
+            <div #popoverTrigger="mdePopoverTrigger"
+                [mdePopoverTriggerFor]="taskPopover"
+                [mdePopoverBackdropCloseOnClick]="false"
+                mdePopoverOffsetX="-15"
+                mdePopoverOffsetY="0"
+                (opened)="popoverOpened(task)">
+
+                <mde-popover #taskPopover="mdePopover" 
+                    [mdePopoverEnterDelay]="100"
+                    [mdePopoverLeaveDelay]="0"
+                    [mdePopoverPositionY]="'above'"
+                    [mdePopoverOverlapTrigger]="false"
+                    [mdePopoverDisableAnimation]="false"
+                    [mdeFocusTrapEnabled]="false"
+                    [mdePopoverArrowWidth]="12"
+                    [mdePopoverArrowColor]="task.color?.primary"
+                    mdePopoverPlacement="bottom">
+
+                    <ng-container *ngTemplateOutlet="templatePopoverTask; context: {task: task}"></ng-container>
+                </mde-popover>
+
+                <div class="gantt-activity-content"></div>
+                <div class="gantt-activity-link-control gantt-activity-right" style="height: 26px; line-height: 30px">
+                    <div class="gantt-link-point"></div>
+                </div>
+                <div class="gantt-activity-link-control gantt-activity-left" style="height: 26px; line-height: 30px">
+                    <div class="gantt-link-point"></div>
+                </div>
             </div>
         </div>
     </div>
+
+    <ng-template #templatePopoverTask let-data="task">
+        <mat-card *ngIf="data" class="mat-elevation-z6" 
+            [ngStyle]="{ 
+                borderBottomColor: data.color?.primary,
+                borderBottomWidth: '.25em',
+                borderBottomStyle: 'solid' 
+            }" style="width: 320px; max-width: 320px;">
+
+            <mat-card-header>
+                <div mat-card-avatar [ngStyle]="{ borderColor: data.color?.primary }" style="width: 0; height: calc(10vh - 30px); border-radius: 0; border-style: solid;"></div>
+                <mat-card-title>
+                    <span style="font-size: 80%;">{{data.name}}</span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <span>{{data.start | date:'yyyy-MM-dd'}} - {{data.end | date:'yyyy-MM-dd'}}</span>
+                </mat-card-subtitle>
+                <mat-card-subtitle>
+                    <span style="padding-left: .75em; padding-right: 1em; font-stretch: condensed;">&#x336;</span>
+                    <span>{{data.resource}}</span>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <footer *ngIf="data.description">
+                    <span [innerHTML]="data.description"></span>
+                </footer>
+            </mat-card-content>
+        </mat-card>
+    </ng-template>
     `,
                 providers: [
                     GanttService
@@ -1243,31 +1275,10 @@ GanttActivityBarsComponent.decorators = [
         /*border-radius: 2px;*/
         position: absolute;
         box-sizing: border-box;
-        background-color: rgb(18,195,244);
-        border: 1px solid #2196F3;
         -webkit-user-select: none;
     }
     .gantt-activity-line:hover {
         cursor: pointer;
-    }
-    .gantt-activity-progress {
-        text-align: center;
-        z-index: 0;
-        background: #2196F3;
-        position: absolute;
-        min-height: 18px;
-        display: block;
-        height: 18px;
-    }
-    .gantt-activity-progress-drag {
-        height: 8px;
-        width: 8px;
-        bottom: -4px;
-        margin-left: 4px;
-        background-position: bottom;
-        background-image: "";
-        background-repeat: no-repeat;
-        z-index: 2;
     }
     .gantt-activity-content {
         font-size: 12px;
@@ -1309,7 +1320,8 @@ GanttActivityBarsComponent.propDecorators = {
     timeScale: [{ type: Input }],
     dimensions: [{ type: Input }],
     tasks: [{ type: Input }],
-    onGridRowClick: [{ type: Output }]
+    onGridRowClick: [{ type: Output }],
+    onPopoverOpen: [{ type: Output }]
 };
 
 /**
@@ -1322,6 +1334,8 @@ GanttActivityModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
                     CommonModule,
+                    MatCardModule,
+                    MdePopoverModule
                 ],
                 exports: [
                     GanttActivityComponent,
@@ -1361,6 +1375,9 @@ GanttModule.decorators = [
                     GanttFooterComponent
                 ],
                 providers: [GanttService],
+                schemas: [
+                    CUSTOM_ELEMENTS_SCHEMA
+                ]
             },] }
 ];
 

@@ -8,49 +8,79 @@ import { GanttService } from '../../shared/services/gantt.service';
         [ngStyle]="{ 'height': containerHeight + 'px', 'width': containerWidth + 'px' }">
 
         <div #bar class="gantt-activity-line"
-            *ngFor="let task of tasks; let i = index" (click)="toggleChildren(task)"
+            *ngFor="let task of tasks; let i = index" (click)="gridRowClicked(task)"
             [ngStyle]="drawBar(task, i)">
 
-            <div class="gantt-activity-content"></div>
-            <div class="gantt-activity-link-control gantt-activity-right" style="height: 26px; line-height: 30px">
-                <div class="gantt-link-point"></div>
-            </div>
-            <div class="gantt-activity-link-control gantt-activity-left" style="height: 26px; line-height: 30px">
-                <div class="gantt-link-point"></div>
+            <div #popoverTrigger="mdePopoverTrigger"
+                [mdePopoverTriggerFor]="taskPopover"
+                [mdePopoverBackdropCloseOnClick]="false"
+                mdePopoverOffsetX="-15"
+                mdePopoverOffsetY="0"
+                (opened)="popoverOpened(task)">
+
+                <mde-popover #taskPopover="mdePopover" 
+                    [mdePopoverEnterDelay]="100"
+                    [mdePopoverLeaveDelay]="0"
+                    [mdePopoverPositionY]="'above'"
+                    [mdePopoverOverlapTrigger]="false"
+                    [mdePopoverDisableAnimation]="false"
+                    [mdeFocusTrapEnabled]="false"
+                    [mdePopoverArrowWidth]="12"
+                    [mdePopoverArrowColor]="task.color?.primary"
+                    mdePopoverPlacement="bottom">
+
+                    <ng-container *ngTemplateOutlet="templatePopoverTask; context: {task: task}"></ng-container>
+                </mde-popover>
+
+                <div class="gantt-activity-content"></div>
+                <div class="gantt-activity-link-control gantt-activity-right" style="height: 26px; line-height: 30px">
+                    <div class="gantt-link-point"></div>
+                </div>
+                <div class="gantt-activity-link-control gantt-activity-left" style="height: 26px; line-height: 30px">
+                    <div class="gantt-link-point"></div>
+                </div>
             </div>
         </div>
     </div>
+
+    <ng-template #templatePopoverTask let-data="task">
+        <mat-card *ngIf="data" class="mat-elevation-z6" 
+            [ngStyle]="{ 
+                borderBottomColor: data.color?.primary,
+                borderBottomWidth: '.25em',
+                borderBottomStyle: 'solid' 
+            }" style="width: 320px; max-width: 320px;">
+
+            <mat-card-header>
+                <div mat-card-avatar [ngStyle]="{ borderColor: data.color?.primary }" style="width: 0; height: calc(10vh - 30px); border-radius: 0; border-style: solid;"></div>
+                <mat-card-title>
+                    <span style="font-size: 80%;">{{data.name}}</span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <span>{{data.start | date:'yyyy-MM-dd'}} - {{data.end | date:'yyyy-MM-dd'}}</span>
+                </mat-card-subtitle>
+                <mat-card-subtitle>
+                    <span style="padding-left: .75em; padding-right: 1em; font-stretch: condensed;">&#x336;</span>
+                    <span>{{data.resource}}</span>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <footer *ngIf="data.description">
+                    <span [innerHTML]="data.description"></span>
+                </footer>
+            </mat-card-content>
+        </mat-card>
+    </ng-template>
     `,
     styles: [`
     .gantt-activity-line {
         /*border-radius: 2px;*/
         position: absolute;
         box-sizing: border-box;
-        background-color: rgb(18,195,244);
-        border: 1px solid #2196F3;
         -webkit-user-select: none;
     }
     .gantt-activity-line:hover {
         cursor: pointer;
-    }
-    .gantt-activity-progress {
-        text-align: center;
-        z-index: 0;
-        background: #2196F3;
-        position: absolute;
-        min-height: 18px;
-        display: block;
-        height: 18px;
-    }
-    .gantt-activity-progress-drag {
-        height: 8px;
-        width: 8px;
-        bottom: -4px;
-        margin-left: 4px;
-        background-position: bottom;
-        background-image: "";
-        background-repeat: no-repeat;
-        z-index: 2;
     }
     .gantt-activity-content {
         font-size: 12px;
@@ -92,6 +122,7 @@ export class GanttActivityBarsComponent implements OnInit {
     @Input() tasks: any;
 
     @Output() onGridRowClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onPopoverOpen: EventEmitter<any> = new EventEmitter<any>();
 
     containerHeight = 0;
     containerWidth = 0;
@@ -110,9 +141,15 @@ export class GanttActivityBarsComponent implements OnInit {
         return style;
     }
 
-    toggleChildren(task: any) {
+    gridRowClicked(task: any) {
         try {
             this.onGridRowClick.emit(task);
+        } catch (err) { }
+    }
+
+    popoverOpened(task: any) {
+        try {
+            this.onPopoverOpen.emit(task);
         } catch (err) { }
     }
 

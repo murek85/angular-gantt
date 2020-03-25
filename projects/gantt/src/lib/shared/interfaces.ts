@@ -9,9 +9,10 @@ export interface Task {
     id: string;
     name: string;
     resource?: string;
+    description?: string;
     start: Date;
     end?: Date;
-    status?: string;
+    color?: any;
 }
 
 export interface IGanttOptions {
@@ -21,11 +22,4 @@ export interface IGanttOptions {
 export interface IScale {
     start?: Date;
     end?: Date;
-}
-
-export interface IBarStyle {
-    status: string;
-    backgroundColor: string;
-    border: string;
-    progressBackgroundColor: string;
 }

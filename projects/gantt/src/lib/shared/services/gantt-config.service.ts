@@ -6,6 +6,6 @@ export class GanttConfig {
     public rowHeight = 30;
     public activityHeight = 420;
     public barHeight = 25;
-    public barLineHeight = 30;
+    public barLineHeight = 35;
     public barMoveable = false;
 }

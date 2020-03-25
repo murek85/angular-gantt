@@ -11,5 +11,5 @@
 </div>
 
 <div style="margin: 0 4.75em 2em; display: flex;">
-    <gantt [project]="project" [options]="options" (onGridRowClick)="gridRowClicked($event)"></gantt>
+    <gantt [project]="project" [options]="options" (onGridRowClick)="gridRowClicked($event)" (onPopoverOpen)="popoverOpened($event)"></gantt>
 </div>

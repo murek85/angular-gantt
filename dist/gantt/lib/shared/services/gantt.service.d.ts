@@ -12,7 +12,6 @@ export declare class GanttService {
     barMoveable: boolean;
     gridWidth: number;
     gridHeight: number;
-    private barStyles;
     TASK_CACHE: any[];
     TIME_SCALE: any[];
     constructor();
@@ -29,14 +28,10 @@ export declare class GanttService {
         'line-height': string;
         'width': string;
         'background-color': any;
-        'border': any;
+        'border-left': any;
     };
     /** Get the bar style based on task status */
     private getBarStyle;
-    /** Get the progresss bar background colour based on task status */
-    getBarProgressStyle(taskStatus?: string): any;
-    /** Calculates the bar progress width in pixels given task percent complete */
-    calculateBarProgress(width: number, percent: number): string;
     /** Calculates the difference in two dates and returns number of days */
     calculateDiffDays(start: Date, end: Date): number;
     /** Calculate the gantt scale range given the start and end date of tasks*/

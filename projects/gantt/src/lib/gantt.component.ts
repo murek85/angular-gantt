@@ -9,7 +9,7 @@ import { IGanttOptions, Project } from './shared/interfaces';
         <div [ngStyle]="{ 'width': '100%' }">
             <div class="gantt-container" (window:resize)="onResize($event)">
                 <!--<gantt-header [name]="_project.name" [startDate]="_project.startDate"></gantt-header>-->
-                <gantt-activity [project]="_project" [options]="_options" (onGridRowClick)="gridRowClicked($event)"></gantt-activity>
+                <gantt-activity [project]="_project" [options]="_options" (onGridRowClick)="gridRowClicked($event)" (onPopoverOpen)="popoverOpened($event)"></gantt-activity>
                 <!--<gantt-footer [project]="_project"></gantt-footer>-->
             </div>
         </div>
@@ -51,6 +51,7 @@ export class GanttComponent implements OnInit {
     get options() { return this._options; }
 
     @Output() onGridRowClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onPopoverOpen: EventEmitter<any> = new EventEmitter<any>();
 
     ganttContainerWidth: number;
 
@@ -81,6 +82,10 @@ export class GanttComponent implements OnInit {
 
     gridRowClicked(task: any) {
         this.onGridRowClick.emit(task);
+    }
+
+    popoverOpened(task: any) {
+        this.onPopoverOpen.emit(task);
     }
 
     onResize($event: any): void {

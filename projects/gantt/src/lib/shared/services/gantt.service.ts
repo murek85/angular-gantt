@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GanttConfig } from './gantt-config.service';
-import { IBarStyle, Task, IScale } from '../interfaces';
+import { Task, IScale } from '../interfaces';
 
 @Injectable()
 export class GanttService {
@@ -16,12 +16,6 @@ export class GanttService {
     public barMoveable = false;
     public gridWidth = 542; //188
     public gridHeight = 332;
-    private barStyles: IBarStyle[] = [
-        { status: "information", backgroundColor: "rgb(18,195, 244)", border: "1px solid #2196F3", progressBackgroundColor: "#2196F3" },
-        { status: "warning", backgroundColor: "#FFA726", border: "1px solid #EF6C00", progressBackgroundColor: "#EF6C00" },
-        { status: "error", backgroundColor: "#EF5350", border: "1px solid #C62828", progressBackgroundColor: "#C62828" },
-        { status: "completed", backgroundColor: "#66BB6A", border: "1px solid #2E7D32", progressBackgroundColor: "#2E7D32" }
-    ];
     public TASK_CACHE: any[];
     public TIME_SCALE: any[];
 
@@ -89,7 +83,7 @@ export class GanttService {
 
     /** Calculate the bar styles */
     public calculateBar(task: any, index: number, scale: any) {
-        const barStyle = this.getBarStyle(task.status);
+        const barStyle = this.getBarStyle(task.color);
         return {
             'top': this.barTop * index + 2 + 'px',
             'left': this.calculateBarLeft(task.start, scale) + 'px',
@@ -97,59 +91,17 @@ export class GanttService {
             'line-height': this.barLineHeight + 'px',
             'width': this.calculateBarWidth(task.start, task.end) + 'px',
             'background-color': barStyle["background-color"],
-            'border': barStyle["border"]
+            'border-left': barStyle["border-left"]
         };
     }
 
     /** Get the bar style based on task status */
-    private getBarStyle(taskStatus: string = ""): any {
+    private getBarStyle(color: any): any {
         const style = {};
-
-        try {
-            taskStatus = taskStatus.toLowerCase();
-        } catch (err) {
-            taskStatus = "";
-        }
-
-        switch (taskStatus) {
-            default:
-                style["background-color"] = "rgb(18,195, 244)";
-                style["border"] = "1px solid #2196F3";
-                break;
-        }
+        style["background-color"] = color.secondary;
+        style["border-left"] = `5px solid ${color.primary}`;
 
         return style;
-    }
-
-    /** Get the progresss bar background colour based on task status */
-    public getBarProgressStyle(taskStatus: string = ""): any {
-        const style = {};
-
-        try {
-            taskStatus = taskStatus.toLowerCase();
-        } catch (err) {
-            taskStatus = "";
-        }
-
-        switch (taskStatus) {
-            default:
-                style["background-color"] = this.barStyles[0].progressBackgroundColor;
-                break;
-        }
-
-        return style;
-    }
-
-    /** Calculates the bar progress width in pixels given task percent complete */
-    public calculateBarProgress(width: number, percent: number): string {
-        if (typeof percent === "number") {
-            if (percent > 100) {
-                percent = 100;
-            }
-            const progress: number = (width / 100) * percent - 2;
-            return `${progress}px`;
-        }
-        return `${0}px`;
     }
 
     /** Calculates the difference in two dates and returns number of days */

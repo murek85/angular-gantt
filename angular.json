@@ -58,7 +58,7 @@
               "projects/demos/src/assets"
             ],
             "styles": [
-              "projects/demos/src/styles.css"
+              "projects/demos/src/styles.scss"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -115,7 +115,7 @@
             "tsConfig": "projects/demos/tsconfig.spec.json",
             "karmaConfig": "projects/demos/karma.conf.js",
             "styles": [
-              "projects/demos/src/styles.css"
+              "projects/demos/src/styles.scss"
             ],
             "scripts": [],
             "assets": [
@@ -139,5 +139,10 @@
       }
     }
   },
-  "defaultProject": "gantt"
+  "defaultProject": "gantt",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

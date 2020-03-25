@@ -6,6 +6,7 @@ export declare class GanttActivityComponent implements OnInit, DoCheck {
     project: any;
     options: any;
     onGridRowClick: EventEmitter<any>;
+    onPopoverOpen: EventEmitter<any>;
     private upTriangle;
     private downTriangle;
     private start;
@@ -32,7 +33,8 @@ export declare class GanttActivityComponent implements OnInit, DoCheck {
     ngDoCheck(): void;
     /** On vertical scroll set the scroll top of grid and activity  */
     onVerticalScroll(verticalScroll: any, ganttGrid: any, ganttActivityArea: any): void;
-    toggleChildren(task: any): void;
+    gridRowClick(task: any): void;
+    popoverOpen(task: any): void;
     /** On resize of browser window dynamically adjust gantt activity height and width */
     onResize(event: any): void;
     setScale(): void;

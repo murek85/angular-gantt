@@ -6,11 +6,13 @@ export declare class GanttActivityBarsComponent implements OnInit {
     dimensions: any;
     tasks: any;
     onGridRowClick: EventEmitter<any>;
+    onPopoverOpen: EventEmitter<any>;
     containerHeight: number;
     containerWidth: number;
     constructor(ganttService: GanttService);
     ngOnInit(): void;
     drawBar(task: any, index: number): {};
-    toggleChildren(task: any): void;
+    gridRowClicked(task: any): void;
+    popoverOpened(task: any): void;
     private addMouseEventListeners;
 }

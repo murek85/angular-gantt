@@ -47,7 +47,8 @@ import { GanttService } from '../shared/services/gantt.service';
             <activity-bars [timeScale]="ganttService.TIME_SCALE"
                 [dimensions]="dimensions"
                 [tasks]="ganttService.TASK_CACHE"
-                (onGridRowClick)="toggleChildren($event)"></activity-bars>
+                (onGridRowClick)="gridRowClick($event)"
+                (onPopoverOpen)="popoverOpen($event)"></activity-bars>
         </div>
     </div>
     `,
@@ -156,6 +157,7 @@ export class GanttActivityComponent implements OnInit, DoCheck {
     @Input() options: any;
 
     @Output() onGridRowClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onPopoverOpen: EventEmitter<any> = new EventEmitter<any>();
 
     private upTriangle = '&#x25b2;'; // BLACK UP-POINTING TRIANGLE
     private downTriangle = '&#x25bc;'; // BLACK DOWN-POINTING TRIANGLE
@@ -224,9 +226,15 @@ export class GanttActivityComponent implements OnInit, DoCheck {
         this.ganttService.scrollTop(verticalScroll, ganttGrid, ganttActivityArea);
     }
 
-    toggleChildren(task) {
+    gridRowClick(task) {
         try {
             this.onGridRowClick.emit(task);
+        } catch (err) { }
+    }
+
+    popoverOpen(task) {
+        try {
+            this.onPopoverOpen.emit(task);
         } catch (err) { }
     }
 

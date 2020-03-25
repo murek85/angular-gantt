@@ -8,6 +8,7 @@ export declare class GanttComponent implements OnInit {
     project: any;
     options: any;
     onGridRowClick: EventEmitter<any>;
+    onPopoverOpen: EventEmitter<any>;
     ganttContainerWidth: number;
     constructor(ganttService: GanttService);
     ngOnInit(): void;
@@ -15,5 +16,6 @@ export declare class GanttComponent implements OnInit {
     setDefaultOptions(): void;
     setDefaultProject(): void;
     gridRowClicked(task: any): void;
+    popoverOpened(task: any): void;
     onResize($event: any): void;
 }
