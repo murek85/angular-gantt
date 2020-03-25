@@ -25,9 +25,13 @@ import { GanttService } from '../shared/services/gantt.service';
                 [ngStyle]="setGridRowStyle()">
 
                 <div class="grid-cell"
-                    [ngStyle]="{ 'width': gridColumns[1].width + 'px', 'padding-left': 2 + 'px' }">
+                    [ngStyle]="{ 'width': gridColumns[1].width + 'px', 'padding-left': 0 }">
 
-                    <div class="gantt-tree-content">{{data.name}}</div>
+                    <div class="gantt-tree-content">
+                        <span [ngStyle]="{ borderLeftColor: data.color.primary, borderLeftWidth: .35 + 'em', 
+                            borderLeftStyle: 'solid', paddingRight: .5 + 'em'}"></span>
+                        <span>{{data.name}}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -218,7 +222,7 @@ export class GanttActivityComponent implements OnInit, DoCheck {
     /** Custom model check */
     ngDoCheck() {
         // do a check to see whether any new tasks have been added. If the task is a child then push into array if tree expanded?
-        this.ganttService.doTaskCheck(this.project.tasks);
+        this.ganttService.doTaskCheck(this.project.tasks, this.options.scale);
     }
 
     /** On vertical scroll set the scroll top of grid and activity  */

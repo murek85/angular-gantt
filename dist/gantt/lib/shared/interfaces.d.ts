@@ -1,11 +1,9 @@
 export interface Project {
-    id?: string;
     name: string;
     startDate?: Date;
     tasks: Task[];
 }
 export interface Task {
-    id: string;
     name: string;
     resource?: string;
     description?: string;

@@ -73,7 +73,6 @@ export class GanttComponent implements OnInit {
 
     setDefaultProject() {
         this._project = {
-            id: '',
             name: '',
             startDate: null,
             tasks: []

@@ -54,7 +54,7 @@ export declare class GanttService {
     /** Group data by id , only supports one level*/
     groupData(tasks: any): any;
     /** Checks whether any new data needs to be added to task cache  */
-    doTaskCheck(tasks: any[]): boolean;
+    doTaskCheck(tasks: any[], scale: any): boolean;
     /** Set a id prefix so CSS3 query selector can work with ids that contain numbers */
     setIdPrefix(id: string): string;
     /** Set the scroll top property of a native DOM element */

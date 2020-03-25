@@ -231,7 +231,7 @@ export class GanttService {
     }
 
     /** Checks whether any new data needs to be added to task cache  */
-    public doTaskCheck(tasks: any[]): boolean {
+    public doTaskCheck(tasks: any[], scale: any): boolean {
         // const cachedTaskIds = this.TASK_CACHE.map((task: any) => { return task.id });
         // const itemsToCache: any[] = [];
 
@@ -252,7 +252,9 @@ export class GanttService {
 
         this.TASK_CACHE = tasks;
 
-        return false;
+        this.TIME_SCALE = this.calculateScale(scale.start, scale.end);
+
+        return true;
     }
 
     /** Set a id prefix so CSS3 query selector can work with ids that contain numbers */

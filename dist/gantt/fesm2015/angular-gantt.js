@@ -346,9 +346,10 @@ class GanttService {
     /**
      * Checks whether any new data needs to be added to task cache
      * @param {?} tasks
+     * @param {?} scale
      * @return {?}
      */
-    doTaskCheck(tasks) {
+    doTaskCheck(tasks, scale) {
         // const cachedTaskIds = this.TASK_CACHE.map((task: any) => { return task.id });
         // const itemsToCache: any[] = [];
         // only look at tasks that are not cached
@@ -364,7 +365,8 @@ class GanttService {
         //     return true;
         // }
         this.TASK_CACHE = tasks;
-        return false;
+        this.TIME_SCALE = this.calculateScale(scale.start, scale.end);
+        return true;
     }
     /**
      * Set a id prefix so CSS3 query selector can work with ids that contain numbers
@@ -467,7 +469,6 @@ class GanttComponent {
      */
     setDefaultProject() {
         this._project = {
-            id: '',
             name: '',
             startDate: null,
             tasks: []
@@ -660,7 +661,7 @@ class GanttActivityComponent {
      */
     ngDoCheck() {
         // do a check to see whether any new tasks have been added. If the task is a child then push into array if tree expanded?
-        this.ganttService.doTaskCheck(this.project.tasks);
+        this.ganttService.doTaskCheck(this.project.tasks, this.options.scale);
     }
     /**
      * On vertical scroll set the scroll top of grid and activity
@@ -784,9 +785,13 @@ GanttActivityComponent.decorators = [
                 [ngStyle]="setGridRowStyle()">
 
                 <div class="grid-cell"
-                    [ngStyle]="{ 'width': gridColumns[1].width + 'px', 'padding-left': 2 + 'px' }">
+                    [ngStyle]="{ 'width': gridColumns[1].width + 'px', 'padding-left': 0 }">
 
-                    <div class="gantt-tree-content">{{data.name}}</div>
+                    <div class="gantt-tree-content">
+                        <span [ngStyle]="{ borderLeftColor: data.color.primary, borderLeftWidth: .35 + 'em', 
+                            borderLeftStyle: 'solid', paddingRight: .5 + 'em'}"></span>
+                        <span>{{data.name}}</span>
+                    </div>
                 </div>
             </div>
         </div>
