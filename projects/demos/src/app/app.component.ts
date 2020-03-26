@@ -12,7 +12,11 @@ export class AppComponent implements OnInit {
     scale: {
         start: new Date(2020, 0, 1),
         end: new Date(2020, 11, 31)
-    }
+    },
+    gridColumns: [
+      { left: 0, width: 16 },
+      { name: 'Grupa asortymentów', left: 0, width: 330 }
+    ]
   };
 
   project: Project = {
@@ -53,10 +57,9 @@ export class AppComponent implements OnInit {
   };
 
   ngOnInit() {
-    // this.loadBigDataSet(100);
   }
 
-  createTask(element: any) {
+  createTask(elem: any) {
 
     this.options.scale.start = new Date(2019, 0, 1);
     this.options.scale.end = new Date(2019, 11, 31);

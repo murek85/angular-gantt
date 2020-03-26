@@ -1,26 +1,27 @@
 import { OnInit, EventEmitter, ElementRef, DoCheck } from '@angular/core';
 import { GanttService } from '../shared/services/gantt.service';
+import { IGridColumn, IGanttOptions, Project } from '../shared/interfaces';
 export declare class GanttActivityComponent implements OnInit, DoCheck {
     elem: ElementRef;
     ganttService: GanttService;
-    project: any;
-    options: any;
+    project: Project;
+    options: IGanttOptions;
     onGridRowClick: EventEmitter<any>;
     onPopoverOpen: EventEmitter<any>;
     private start;
     private end;
     private timeScale;
+    private scale;
     private activityContainerSizes;
     containerHeight: any;
     containerWidth: any;
     ganttActivityHeight: any;
     ganttActivityWidth: any;
-    private scale;
     dimensions: {
         height: number;
         width: number;
     };
-    gridColumns: any[];
+    gridColumns: IGridColumn[];
     constructor(elem: ElementRef, ganttService: GanttService);
     ngOnInit(): void;
     /** Custom model check */
@@ -38,7 +39,7 @@ export declare class GanttActivityComponent implements OnInit, DoCheck {
         'height': string;
         'line-height': string;
     };
-    columnsWidth(): any;
+    calculateColumnsWidth(): string;
     private calculateContainerHeight;
     private calculateContainerWidth;
     private setSizes;

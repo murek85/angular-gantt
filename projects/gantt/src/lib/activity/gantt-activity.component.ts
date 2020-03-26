@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef,  ChangeDetectionStrategy, OnChanges, DoCheck } from '@angular/core';
 
 import { GanttService } from '../shared/services/gantt.service';
+import { IGridColumn, IGanttOptions, Project, IScale } from '../shared/interfaces';
 
 @Component({
     selector: 'gantt-activity',
@@ -38,7 +39,7 @@ import { GanttService } from '../shared/services/gantt.service';
     </div>
     <div class="gantt-activity"
         (window:resize)="onResize($event)"
-        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': 'calc(100% - ' + (columnsWidth() + 1) + 'px)' }">
+        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': calculateColumnsWidth() }">
 
         <time-scale [timeScale]="ganttService.TIME_SCALE"
             [dimensions]="dimensions"></time-scale>
@@ -157,8 +158,8 @@ import { GanttService } from '../shared/services/gantt.service';
     changeDetection: ChangeDetectionStrategy.Default
 })
 export class GanttActivityComponent implements OnInit, DoCheck {
-    @Input() project: any;
-    @Input() options: any;
+    @Input() project: Project;
+    @Input() options: IGanttOptions;
 
     @Output() onGridRowClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onPopoverOpen: EventEmitter<any> = new EventEmitter<any>();
@@ -166,6 +167,11 @@ export class GanttActivityComponent implements OnInit, DoCheck {
     private start: Date;
     private end: Date;
     private timeScale: any;
+
+    private scale: IScale = {
+        start: null,
+        end: null
+    };
 
     private activityContainerSizes: any;
 
@@ -175,19 +181,14 @@ export class GanttActivityComponent implements OnInit, DoCheck {
     ganttActivityHeight: any;
     ganttActivityWidth: any;
 
-    private scale: any = {
-        start: null,
-        end: null
-    };
-
     dimensions = {
         height: 0,
         width: 0
     };
 
-    public gridColumns: any[] = [
+    gridColumns: IGridColumn[] = [
         { name: '', left: 0, width: 16 },
-        { name: 'Grupa asortymentów', left: 0, width: 330 }
+        { name: 'Zadanie', left: 0, width: 330 }
     ];
 
     constructor(
@@ -205,6 +206,8 @@ export class GanttActivityComponent implements OnInit, DoCheck {
         this.containerWidth = this.calculateContainerWidth();
         this.containerHeight = this.calculateContainerHeight();
         this.activityContainerSizes = this.ganttService.calculateActivityContainerDimensions();
+
+        this.gridColumns = this.options.gridColumns ? this.options.gridColumns : this.gridColumns;
 
         // important that these are called last as it relies on values calculated above.
         this.setScale();
@@ -267,8 +270,9 @@ export class GanttActivityComponent implements OnInit, DoCheck {
         };
     }
 
-    public columnsWidth() {
-        return this.gridColumns.map(column => { return column.width }).reduce((pv, cv) => pv + cv, 0);
+    calculateColumnsWidth() {
+        const ganttActivityWidth = this.gridColumns.map(column => { return column.width }).reduce((pv, cv) => pv + cv, 0) + 1;
+        return `calc(100% - ${(ganttActivityWidth)}px)`;
     }
 
     private calculateContainerHeight(): number {

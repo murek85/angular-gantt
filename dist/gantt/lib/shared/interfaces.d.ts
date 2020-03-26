@@ -13,8 +13,14 @@ export interface Task {
 }
 export interface IGanttOptions {
     scale?: IScale;
+    gridColumns?: IGridColumn[];
 }
 export interface IScale {
     start?: Date;
     end?: Date;
+}
+export interface IGridColumn {
+    name?: string;
+    left: number;
+    width: number;
 }

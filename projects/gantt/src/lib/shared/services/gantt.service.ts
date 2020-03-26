@@ -200,8 +200,6 @@ export class GanttService {
         this.windowInnerWidth = window.innerWidth;
         const width = window.innerWidth - this.gridWidth - scrollWidth;
 
-        const height = window.innerHeight - this.gridHeight;
-
         return { height: this.activityHeight, width: width };
     }
 

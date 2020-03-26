@@ -66,8 +66,14 @@ export class GanttComponent implements OnInit {
 
     setDefaultOptions() {
         const scale = this.ganttService.calculateGridScale(this._project.tasks);
+        const gridColumns = [
+            { name: '', left: 0, width: 16 },
+            { name: 'Zadanie', left: 0, width: 330 }
+        ];
+
         this._options = {
-            scale
+            scale,
+            gridColumns
         };
     }
 

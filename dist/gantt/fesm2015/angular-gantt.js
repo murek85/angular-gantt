@@ -298,8 +298,6 @@ class GanttService {
         this.windowInnerWidth = window.innerWidth;
         /** @type {?} */
         const width = window.innerWidth - this.gridWidth - scrollWidth;
-        /** @type {?} */
-        const height = window.innerHeight - this.gridHeight;
         return { height: this.activityHeight, width: width };
     }
     /**
@@ -459,8 +457,14 @@ class GanttComponent {
     setDefaultOptions() {
         /** @type {?} */
         const scale = this.ganttService.calculateGridScale(this._project.tasks);
+        /** @type {?} */
+        const gridColumns = [
+            { name: '', left: 0, width: 16 },
+            { name: 'Zadanie', left: 0, width: 330 }
+        ];
         this._options = {
-            scale
+            scale,
+            gridColumns
         };
     }
     /**
@@ -627,7 +631,7 @@ class GanttActivityComponent {
         };
         this.gridColumns = [
             { name: '', left: 0, width: 16 },
-            { name: 'Grupa asortymentów', left: 0, width: 330 }
+            { name: 'Zadanie', left: 0, width: 330 }
         ];
     }
     /**
@@ -642,6 +646,7 @@ class GanttActivityComponent {
         this.containerWidth = this.calculateContainerWidth();
         this.containerHeight = this.calculateContainerHeight();
         this.activityContainerSizes = this.ganttService.calculateActivityContainerDimensions();
+        this.gridColumns = this.options.gridColumns ? this.options.gridColumns : this.gridColumns;
         // important that these are called last as it relies on values calculated above.
         this.setScale();
         this.setDimensions();
@@ -733,8 +738,10 @@ class GanttActivityComponent {
     /**
      * @return {?}
      */
-    columnsWidth() {
-        return this.gridColumns.map(column => { return column.width; }).reduce((pv, cv) => pv + cv, 0);
+    calculateColumnsWidth() {
+        /** @type {?} */
+        const ganttActivityWidth = this.gridColumns.map(column => { return column.width; }).reduce((pv, cv) => pv + cv, 0) + 1;
+        return `calc(100% - ${(ganttActivityWidth)}px)`;
     }
     /**
      * @private
@@ -796,7 +803,7 @@ GanttActivityComponent.decorators = [
     </div>
     <div class="gantt-activity"
         (window:resize)="onResize($event)"
-        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': 'calc(100% - ' + (columnsWidth() + 1) + 'px)' }">
+        [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': calculateColumnsWidth() }">
 
         <time-scale [timeScale]="ganttService.TIME_SCALE"
             [dimensions]="dimensions"></time-scale>
