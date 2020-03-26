@@ -1,17 +1,22 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GanttService } from '../../shared/services/gantt.service';
+import { IScale } from '../../shared/interfaces';
 
 @Component({
     selector: 'time-scale',
     template: `
         <div class="time-scale" [ngStyle]="setTimescaleStyle()">
-            <div class="time-scale-line" [ngStyle]="setTimescaleLineStyle('none')">
-                <div class="time-scale-cell" *ngFor="let date of timeScale; let i = index"
-                    [ngClass]="(i % 2) ? 'weekend' : ''" [ngStyle]="setTimescaleCellStyle()">{{date | date: 'dd-MM'}}</div>
+            <!--<div class="time-scale-line" [ngStyle]="setTimescaleMonthLineStyle('none')">
+                <div class="time-scale-cell" *ngFor="let scale of timeScaleMonth; let i = index"
+                    [ngClass]="(i % 2) ? 'weekend' : ''" [style.width.px]="scale.width">{{scale.start | date: 'dd-MM'}}</div>
+            </div>-->
+            <div class="time-scale-line" [ngStyle]="setTimescaleWeekendLineStyle('none')">
+                <div class="time-scale-cell" *ngFor="let date of timeScaleWeekend; let i = index"
+                    [ngClass]="(i % 2) ? 'weekend' : ''" [ngStyle]="setTimescaleWeekendCellStyle()">{{date | date: 'dd-MM'}}</div>
             </div>
-            <div class="time-scale-line" [ngStyle]="setTimescaleLineStyle('none')">
-                <div class="time-scale-cell" *ngFor="let date of timeScale; let i = index"
-                [ngClass]="(i % 2) ? 'weekend' : ''" [ngStyle]="setTimescaleCellStyle()">{{i + 1}}</div>
+            <div class="time-scale-line" [ngStyle]="setTimescaleWeekendLineStyle('none')">
+                <div class="time-scale-cell" *ngFor="let date of timeScaleWeekend; let i = index"
+                [ngClass]="(i % 2) ? 'weekend' : ''" [ngStyle]="setTimescaleWeekendCellStyle()">{{i + 1}}</div>
             </div>
         </div>`,
     styles: [`
@@ -44,8 +49,10 @@ import { GanttService } from '../../shared/services/gantt.service';
     ]
 })
 export class GanttTimeScaleComponent implements OnInit {
-    @Input() timeScale: any;
+    @Input() timeScaleMonth: any;
+    @Input() timeScaleWeekend: any;
     @Input() dimensions: any;
+    @Input() scale: IScale;
 
     constructor(public ganttService: GanttService) { }
 
@@ -58,7 +65,7 @@ export class GanttTimeScaleComponent implements OnInit {
         };
     }
 
-    setTimescaleLineStyle(borderTop: string) {
+    setTimescaleMonthLineStyle(borderTop: string) {
         return {
             'height': this.ganttService.rowHeight + 'px',
             'line-height': this.ganttService.rowHeight + 'px',
@@ -67,7 +74,22 @@ export class GanttTimeScaleComponent implements OnInit {
         };
     }
 
-    setTimescaleCellStyle() {
+    setTimescaleMonthCellStyle() {
+        return {
+            'width': this.ganttService.cellWidth + 'px'
+        };
+    }
+
+    setTimescaleWeekendLineStyle(borderTop: string) {
+        return {
+            'height': this.ganttService.rowHeight + 'px',
+            'line-height': this.ganttService.rowHeight + 'px',
+            'position': 'relative',
+            'border-top': borderTop
+        };
+    }
+
+    setTimescaleWeekendCellStyle() {
         return {
             'width': this.ganttService.cellWidth + 'px'
         };

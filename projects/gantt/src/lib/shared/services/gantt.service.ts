@@ -18,6 +18,7 @@ export class GanttService {
     public gridHeight = 332;
     public TASK_CACHE: any[];
     public TIME_SCALE: any[];
+    public MONTH_SCALE: any[];
 
     constructor() {
         const ganttConfig = new GanttConfig();
@@ -131,6 +132,21 @@ export class GanttService {
         }
     }
 
+    public calculateMonthScale(start: Date = new Date(), end: Date = this.addDays(start, 7)) {
+        let scale: any[] = [];
+        try {
+            // while (start.getTime() <= end.getTime()) {
+            //     scale.push({ start: start, width: this.calculateCellMonthWidth(start, end) });
+            //     start = this.addDays(start, new Date(start.getFullYear(), start.getMonth() + 1, 0).getDate());
+            // }
+            scale = this.calculateCellMonthWidth(start, end);
+            return scale;
+
+        } catch (err) {
+            return scale;
+        }
+    }
+
     /** Determines whether given date is a weekend */
     public isDayWeekend(date: Date): boolean {
         const day = date.getDay();
@@ -211,6 +227,38 @@ export class GanttService {
         return `${elem.offsetHeight}px`;
     }
 
+    public calculateCellMonthWidth(minDate: Date, maxDate: Date) {
+        var i, result = [];
+        var startDate = minDate;
+        var endDate = maxDate;
+        var monthDiff = this.calculateDiffMonths(startDate, endDate);
+        var dayDiff = this.calculateDiffDays(startDate, endDate);
+
+        for (i = 0; i < monthDiff; i++) {        
+            var startOfMonth = i === 0 ? startDate : new Date(startDate.getFullYear(), i, 1);
+            var endOfMonth = i === monthDiff - 1 ? endDate : new Date(startDate.getFullYear(), i + 1, 0);
+            var dayInMonth = this.calculateDiffDays(startOfMonth, endOfMonth) + (i !== monthDiff - 1 && 1);
+            var width = Math.floor(dayInMonth / dayDiff * 2E3) * 1.025;
+
+            result.push({ start: startOfMonth, end: endOfMonth, width: width });
+        }
+
+        return result;
+    }
+
+    private calculateDiffMonths(start, end) {
+        var months = end.getMonth() - start.getMonth() + (12 * (end.getFullYear() - start.getFullYear()));
+
+        if(end.getDate() < start.getDate()) {
+            var newFrom = new Date(end.getFullYear(), end.getMonth(),start.getDate());
+            if (end < newFrom  && end.getMonth() == newFrom.getMonth() && end.getYear() % 4 != 0) {
+                months--;
+            }
+        }
+
+        return months + 1;
+    }
+
     /** Set the vertical scroll top positions for gantt */
     public scrollTop(verticalScrollElem: any, ganttGridElem: any, ganttActivityAreaElem: any) {
         const verticalScrollTop = verticalScrollElem.scrollTop;
@@ -251,6 +299,7 @@ export class GanttService {
         this.TASK_CACHE = tasks;
 
         this.TIME_SCALE = this.calculateScale(scale.start, scale.end);
+        this.MONTH_SCALE = this.calculateMonthScale(scale.start, scale.end);
 
         return true;
     }

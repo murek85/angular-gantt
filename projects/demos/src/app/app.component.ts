@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   };
 
   project: Project = {
-    name: 'Angular2 Gantt',
+    name: 'Angular Gantt',
     startDate: new Date(2020, 0, 1),
     tasks: [
       {

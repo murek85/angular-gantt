@@ -41,8 +41,10 @@ import { IGridColumn, IGanttOptions, Project, IScale } from '../shared/interface
         (window:resize)="onResize($event)"
         [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': calculateColumnsWidth() }">
 
-        <time-scale [timeScale]="ganttService.TIME_SCALE"
-            [dimensions]="dimensions"></time-scale>
+        <time-scale [timeScaleMonth]="ganttService.MONTH_SCALE"
+            [timeScaleWeekend]="ganttService.TIME_SCALE"
+            [dimensions]="dimensions"
+            [scale]="options.scale"></time-scale>
         <div class="gantt-activity-area"
             #ganttActivityArea
             [ngStyle]="{ 'height': ganttService.calculateGanttHeight(), 'width': containerWidth + 36 + 'px' }">
