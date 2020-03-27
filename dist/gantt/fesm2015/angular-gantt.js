@@ -199,6 +199,26 @@ class GanttService {
         }
     }
     /**
+     * @param {?=} start
+     * @param {?=} end
+     * @return {?}
+     */
+    calculateMonthScale(start = new Date(), end = this.addDays(start, 7)) {
+        /** @type {?} */
+        let scale = [];
+        try {
+            // while (start.getTime() <= end.getTime()) {
+            //     scale.push({ start: start, width: this.calculateCellMonthWidth(start, end) });
+            //     start = this.addDays(start, new Date(start.getFullYear(), start.getMonth() + 1, 0).getDate());
+            // }
+            scale = this.calculateCellMonthWidth(start, end);
+            return scale;
+        }
+        catch (err) {
+            return scale;
+        }
+    }
+    /**
      * Determines whether given date is a weekend
      * @param {?} date
      * @return {?}
@@ -315,6 +335,55 @@ class GanttService {
         return `${elem.offsetHeight}px`;
     }
     /**
+     * @param {?} minDate
+     * @param {?} maxDate
+     * @return {?}
+     */
+    calculateCellMonthWidth(minDate, maxDate) {
+        /** @type {?} */
+        var i;
+        /** @type {?} */
+        var result = [];
+        /** @type {?} */
+        var startDate = minDate;
+        /** @type {?} */
+        var endDate = maxDate;
+        /** @type {?} */
+        var monthDiff = this.calculateDiffMonths(startDate, endDate);
+        /** @type {?} */
+        var dayDiff = this.calculateDiffDays(startDate, endDate);
+        for (i = 0; i < monthDiff; i++) {
+            /** @type {?} */
+            var startOfMonth = i === 0 ? startDate : new Date(startDate.getFullYear(), i, 1);
+            /** @type {?} */
+            var endOfMonth = i === monthDiff - 1 ? endDate : new Date(startDate.getFullYear(), i + 1, 0);
+            /** @type {?} */
+            var dayInMonth = this.calculateDiffDays(startOfMonth, endOfMonth) + (i !== monthDiff - 1 && 1);
+            /** @type {?} */
+            var width = Math.floor(dayInMonth / dayDiff * 2E3) * 1.025;
+            result.push({ start: startOfMonth, end: endOfMonth, width: width });
+        }
+        return result;
+    }
+    /**
+     * @private
+     * @param {?} start
+     * @param {?} end
+     * @return {?}
+     */
+    calculateDiffMonths(start, end) {
+        /** @type {?} */
+        var months = end.getMonth() - start.getMonth() + (12 * (end.getFullYear() - start.getFullYear()));
+        if (end.getDate() < start.getDate()) {
+            /** @type {?} */
+            var newFrom = new Date(end.getFullYear(), end.getMonth(), start.getDate());
+            if (end < newFrom && end.getMonth() == newFrom.getMonth() && end.getYear() % 4 != 0) {
+                months--;
+            }
+        }
+        return months + 1;
+    }
+    /**
      * Set the vertical scroll top positions for gantt
      * @param {?} verticalScrollElem
      * @param {?} ganttGridElem
@@ -363,6 +432,7 @@ class GanttService {
         // }
         this.TASK_CACHE = tasks;
         this.TIME_SCALE = this.calculateScale(scale.start, scale.end);
+        this.MONTH_SCALE = this.calculateMonthScale(scale.start, scale.end);
         return true;
     }
     /**
@@ -805,8 +875,10 @@ GanttActivityComponent.decorators = [
         (window:resize)="onResize($event)"
         [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': calculateColumnsWidth() }">
 
-        <time-scale [timeScale]="ganttService.TIME_SCALE"
-            [dimensions]="dimensions"></time-scale>
+        <time-scale [timeScaleMonth]="ganttService.MONTH_SCALE"
+            [timeScaleWeekend]="ganttService.TIME_SCALE"
+            [dimensions]="dimensions"
+            [scale]="options.scale"></time-scale>
         <div class="gantt-activity-area"
             #ganttActivityArea
             [ngStyle]="{ 'height': ganttService.calculateGanttHeight(), 'width': containerWidth + 36 + 'px' }">
@@ -962,7 +1034,7 @@ class GanttTimeScaleComponent {
      * @param {?} borderTop
      * @return {?}
      */
-    setTimescaleLineStyle(borderTop) {
+    setTimescaleMonthLineStyle(borderTop) {
         return {
             'height': this.ganttService.rowHeight + 'px',
             'line-height': this.ganttService.rowHeight + 'px',
@@ -973,7 +1045,27 @@ class GanttTimeScaleComponent {
     /**
      * @return {?}
      */
-    setTimescaleCellStyle() {
+    setTimescaleMonthCellStyle() {
+        return {
+            'width': this.ganttService.cellWidth + 'px'
+        };
+    }
+    /**
+     * @param {?} borderTop
+     * @return {?}
+     */
+    setTimescaleWeekendLineStyle(borderTop) {
+        return {
+            'height': this.ganttService.rowHeight + 'px',
+            'line-height': this.ganttService.rowHeight + 'px',
+            'position': 'relative',
+            'border-top': borderTop
+        };
+    }
+    /**
+     * @return {?}
+     */
+    setTimescaleWeekendCellStyle() {
         return {
             'width': this.ganttService.cellWidth + 'px'
         };
@@ -991,13 +1083,17 @@ GanttTimeScaleComponent.decorators = [
                 selector: 'time-scale',
                 template: `
         <div class="time-scale" [ngStyle]="setTimescaleStyle()">
-            <div class="time-scale-line" [ngStyle]="setTimescaleLineStyle('none')">
-                <div class="time-scale-cell" *ngFor="let date of timeScale; let i = index"
-                    [ngClass]="(i % 2) ? 'weekend' : ''" [ngStyle]="setTimescaleCellStyle()">{{date | date: 'dd-MM'}}</div>
+            <!--<div class="time-scale-line" [ngStyle]="setTimescaleMonthLineStyle('none')">
+                <div class="time-scale-cell" *ngFor="let scale of timeScaleMonth; let i = index"
+                    [ngClass]="(i % 2) ? 'weekend' : ''" [style.width.px]="scale.width">{{scale.start | date: 'dd-MM'}}</div>
+            </div>-->
+            <div class="time-scale-line" [ngStyle]="setTimescaleWeekendLineStyle('none')">
+                <div class="time-scale-cell" *ngFor="let date of timeScaleWeekend; let i = index"
+                    [ngClass]="(i % 2) ? 'weekend' : ''" [ngStyle]="setTimescaleWeekendCellStyle()">{{date | date: 'dd-MM'}}</div>
             </div>
-            <div class="time-scale-line" [ngStyle]="setTimescaleLineStyle('none')">
-                <div class="time-scale-cell" *ngFor="let date of timeScale; let i = index"
-                [ngClass]="(i % 2) ? 'weekend' : ''" [ngStyle]="setTimescaleCellStyle()">{{i + 1}}</div>
+            <div class="time-scale-line" [ngStyle]="setTimescaleWeekendLineStyle('none')">
+                <div class="time-scale-cell" *ngFor="let date of timeScaleWeekend; let i = index"
+                [ngClass]="(i % 2) ? 'weekend' : ''" [ngStyle]="setTimescaleWeekendCellStyle()">{{i + 1}}</div>
             </div>
         </div>`,
                 providers: [
@@ -1034,8 +1130,10 @@ GanttTimeScaleComponent.ctorParameters = () => [
     { type: GanttService }
 ];
 GanttTimeScaleComponent.propDecorators = {
-    timeScale: [{ type: Input }],
-    dimensions: [{ type: Input }]
+    timeScaleMonth: [{ type: Input }],
+    timeScaleWeekend: [{ type: Input }],
+    dimensions: [{ type: Input }],
+    scale: [{ type: Input }]
 };
 
 /**

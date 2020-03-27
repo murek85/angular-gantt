@@ -1,6 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "paths": {
+      "angular-gantt": ["../dist/gantt/*"]
+    },
     "outDir": "../../out-tsc/lib",
     "target": "es2015",
     "module": "es2015",

@@ -14,6 +14,7 @@ export declare class GanttService {
     gridHeight: number;
     TASK_CACHE: any[];
     TIME_SCALE: any[];
+    MONTH_SCALE: any[];
     constructor();
     private calculateBarWidth;
     private calculateBarLeft;
@@ -36,6 +37,7 @@ export declare class GanttService {
     calculateDiffDays(start: Date, end: Date): number;
     /** Calculate the gantt scale range given the start and end date of tasks*/
     calculateScale(start?: Date, end?: Date): any[];
+    calculateMonthScale(start?: Date, end?: Date): any[];
     /** Determines whether given date is a weekend */
     isDayWeekend(date: Date): boolean;
     /** Add x number of days to a date object */
@@ -49,6 +51,8 @@ export declare class GanttService {
     calculateActivityContainerDimensions(): any;
     calculateGanttActivityWidth(elem: HTMLElement): any;
     calculateGanttActivityHeight(elem: HTMLElement): any;
+    calculateCellMonthWidth(minDate: Date, maxDate: Date): any[];
+    private calculateDiffMonths;
     /** Set the vertical scroll top positions for gantt */
     scrollTop(verticalScrollElem: any, ganttGridElem: any, ganttActivityAreaElem: any): void;
     /** Group data by id , only supports one level*/

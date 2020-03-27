@@ -252,6 +252,33 @@ var GanttService = /** @class */ (function () {
             return scale;
         }
     };
+    /**
+     * @param {?=} start
+     * @param {?=} end
+     * @return {?}
+     */
+    GanttService.prototype.calculateMonthScale = /**
+     * @param {?=} start
+     * @param {?=} end
+     * @return {?}
+     */
+    function (start, end) {
+        if (start === void 0) { start = new Date(); }
+        if (end === void 0) { end = this.addDays(start, 7); }
+        /** @type {?} */
+        var scale = [];
+        try {
+            // while (start.getTime() <= end.getTime()) {
+            //     scale.push({ start: start, width: this.calculateCellMonthWidth(start, end) });
+            //     start = this.addDays(start, new Date(start.getFullYear(), start.getMonth() + 1, 0).getDate());
+            // }
+            scale = this.calculateCellMonthWidth(start, end);
+            return scale;
+        }
+        catch (err) {
+            return scale;
+        }
+    };
     /** Determines whether given date is a weekend */
     /**
      * Determines whether given date is a weekend
@@ -420,6 +447,66 @@ var GanttService = /** @class */ (function () {
     function (elem) {
         return elem.offsetHeight + "px";
     };
+    /**
+     * @param {?} minDate
+     * @param {?} maxDate
+     * @return {?}
+     */
+    GanttService.prototype.calculateCellMonthWidth = /**
+     * @param {?} minDate
+     * @param {?} maxDate
+     * @return {?}
+     */
+    function (minDate, maxDate) {
+        /** @type {?} */
+        var i;
+        /** @type {?} */
+        var result = [];
+        /** @type {?} */
+        var startDate = minDate;
+        /** @type {?} */
+        var endDate = maxDate;
+        /** @type {?} */
+        var monthDiff = this.calculateDiffMonths(startDate, endDate);
+        /** @type {?} */
+        var dayDiff = this.calculateDiffDays(startDate, endDate);
+        for (i = 0; i < monthDiff; i++) {
+            /** @type {?} */
+            var startOfMonth = i === 0 ? startDate : new Date(startDate.getFullYear(), i, 1);
+            /** @type {?} */
+            var endOfMonth = i === monthDiff - 1 ? endDate : new Date(startDate.getFullYear(), i + 1, 0);
+            /** @type {?} */
+            var dayInMonth = this.calculateDiffDays(startOfMonth, endOfMonth) + (i !== monthDiff - 1 && 1);
+            /** @type {?} */
+            var width = Math.floor(dayInMonth / dayDiff * 2E3) * 1.025;
+            result.push({ start: startOfMonth, end: endOfMonth, width: width });
+        }
+        return result;
+    };
+    /**
+     * @private
+     * @param {?} start
+     * @param {?} end
+     * @return {?}
+     */
+    GanttService.prototype.calculateDiffMonths = /**
+     * @private
+     * @param {?} start
+     * @param {?} end
+     * @return {?}
+     */
+    function (start, end) {
+        /** @type {?} */
+        var months = end.getMonth() - start.getMonth() + (12 * (end.getFullYear() - start.getFullYear()));
+        if (end.getDate() < start.getDate()) {
+            /** @type {?} */
+            var newFrom = new Date(end.getFullYear(), end.getMonth(), start.getDate());
+            if (end < newFrom && end.getMonth() == newFrom.getMonth() && end.getYear() % 4 != 0) {
+                months--;
+            }
+        }
+        return months + 1;
+    };
     /** Set the vertical scroll top positions for gantt */
     /**
      * Set the vertical scroll top positions for gantt
@@ -490,6 +577,7 @@ var GanttService = /** @class */ (function () {
         // }
         this.TASK_CACHE = tasks;
         this.TIME_SCALE = this.calculateScale(scale.start, scale.end);
+        this.MONTH_SCALE = this.calculateMonthScale(scale.start, scale.end);
         return true;
     };
     /** Set a id prefix so CSS3 query selector can work with ids that contain numbers */
@@ -955,7 +1043,7 @@ var GanttActivityComponent = /** @class */ (function () {
     GanttActivityComponent.decorators = [
         { type: Component, args: [{
                     selector: 'gantt-activity',
-                    template: "\n    <div class=\"grid\" #ganttGrid>\n        <div class=\"grid-scale\" [ngStyle]=\"setGridScaleStyle()\">\n            <div class=\"grid-head-cell\"\n                *ngFor=\"let column of gridColumns\" [style.width]=\"column.width + 'px'\"\n                [style.left]=\"column.left + 'px'\">\n\n                <label>\n                    {{column.name}}\n                </label>\n            </div>\n        </div>\n        <div class=\"grid-data\"\n            #ganttGridData\n            [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight() }\">\n\n            <div #row\n                *ngFor=\"let data of ganttService.TASK_CACHE\" class=\"grid-row\"\n                [ngStyle]=\"setGridRowStyle()\">\n\n                <div class=\"grid-cell\"\n                    [ngStyle]=\"{ 'width': gridColumns[1].width + 'px', 'padding-left': 0 }\">\n\n                    <div class=\"gantt-tree-content\">\n                        <span [ngStyle]=\"{ borderLeftColor: data.color.primary, borderLeftWidth: .35 + 'em', \n                            borderLeftStyle: 'solid', paddingRight: .5 + 'em'}\"></span>\n                        <span>{{data.name}}</span>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div class=\"gantt-activity\"\n        (window:resize)=\"onResize($event)\"\n        [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight() + 60, 'width': calculateColumnsWidth() }\">\n\n        <time-scale [timeScale]=\"ganttService.TIME_SCALE\"\n            [dimensions]=\"dimensions\"></time-scale>\n        <div class=\"gantt-activity-area\"\n            #ganttActivityArea\n            [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight(), 'width': containerWidth + 36 + 'px' }\">\n\n            <activity-background [timeScale]=\"ganttService.TIME_SCALE\"\n                [tasks]=\"ganttService.TASK_CACHE\"></activity-background>\n            <activity-bars [timeScale]=\"ganttService.TIME_SCALE\"\n                [dimensions]=\"dimensions\"\n                [tasks]=\"ganttService.TASK_CACHE\"\n                (onGridRowClick)=\"gridRowClick($event)\"\n                (onPopoverOpen)=\"popoverOpen($event)\"></activity-bars>\n        </div>\n    </div>\n    ",
+                    template: "\n    <div class=\"grid\" #ganttGrid>\n        <div class=\"grid-scale\" [ngStyle]=\"setGridScaleStyle()\">\n            <div class=\"grid-head-cell\"\n                *ngFor=\"let column of gridColumns\" [style.width]=\"column.width + 'px'\"\n                [style.left]=\"column.left + 'px'\">\n\n                <label>\n                    {{column.name}}\n                </label>\n            </div>\n        </div>\n        <div class=\"grid-data\"\n            #ganttGridData\n            [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight() }\">\n\n            <div #row\n                *ngFor=\"let data of ganttService.TASK_CACHE\" class=\"grid-row\"\n                [ngStyle]=\"setGridRowStyle()\">\n\n                <div class=\"grid-cell\"\n                    [ngStyle]=\"{ 'width': gridColumns[1].width + 'px', 'padding-left': 0 }\">\n\n                    <div class=\"gantt-tree-content\">\n                        <span [ngStyle]=\"{ borderLeftColor: data.color.primary, borderLeftWidth: .35 + 'em', \n                            borderLeftStyle: 'solid', paddingRight: .5 + 'em'}\"></span>\n                        <span>{{data.name}}</span>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div class=\"gantt-activity\"\n        (window:resize)=\"onResize($event)\"\n        [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight() + 60, 'width': calculateColumnsWidth() }\">\n\n        <time-scale [timeScaleMonth]=\"ganttService.MONTH_SCALE\"\n            [timeScaleWeekend]=\"ganttService.TIME_SCALE\"\n            [dimensions]=\"dimensions\"\n            [scale]=\"options.scale\"></time-scale>\n        <div class=\"gantt-activity-area\"\n            #ganttActivityArea\n            [ngStyle]=\"{ 'height': ganttService.calculateGanttHeight(), 'width': containerWidth + 36 + 'px' }\">\n\n            <activity-background [timeScale]=\"ganttService.TIME_SCALE\"\n                [tasks]=\"ganttService.TASK_CACHE\"></activity-background>\n            <activity-bars [timeScale]=\"ganttService.TIME_SCALE\"\n                [dimensions]=\"dimensions\"\n                [tasks]=\"ganttService.TASK_CACHE\"\n                (onGridRowClick)=\"gridRowClick($event)\"\n                (onPopoverOpen)=\"popoverOpen($event)\"></activity-bars>\n        </div>\n    </div>\n    ",
                     changeDetection: ChangeDetectionStrategy.Default,
                     styles: ["\n        .gantt-activity {\n            overflow-y: hidden;\n            overflow-x: scroll;\n            display: inline-block;\n            vertical-align: top;\n            position: relative;\n        }\n        .gantt-activity-area {\n            position: relative;\n            overflow-x: hidden;\n            overflow-y: hidden;\n            -webkit-user-select: none;\n        }\n        .gantt-vertical-scroll {\n            background-color: transparent;\n            overflow-x: hidden;\n            overflow-y: scroll;\n            position: absolute;\n            right: -10px;\n            display: block;\n            top: -1px;\n            border: 1px solid #cecece;\n        }\n        .grid {\n            overflow-x: hidden;\n            overflow-y: hidden;\n            display: inline-block;\n            vertical-align: top;\n            border-right: 1px solid #cecece;\n        }\n        .grid-scale {\n            color: #6b6b6b;\n            font-size: 12px;\n            border-bottom: 1px solid #e0e0e0;\n            background-color: whitesmoke;\n        }\n        .grid-head-cell {\n            /*color: #a6a6a6;*/\n            border-top: none !important;\n            border-right: none !important;\n            line-height: inherit;\n            box-sizing: border-box;\n            display: inline-block;\n            vertical-align: top;\n            border-right: 1px solid #cecece;\n            /*text-align: center;*/\n            position: relative;\n            cursor: default;\n            height: 100%;\n            -moz-user-select: -moz-none;\n            -webkit-user-select: none;\n            overflow: hidden;\n        }\n        .grid-data {\n            overflow: hidden;\n        }\n        .grid-row {\n            box-sizing: border-box;\n            border-bottom: 1px solid #e0e0e0;\n            background-color: #fff;\n            position: relative;\n            -webkit-user-select: none;\n        }\n        .grid-row:hover {\n            background-color: #eeeeee;\n            cursor: pointer;\n        }\n        .grid-cell {\n            border-right: none;\n            color: #454545;\n            display: inline-block;\n            vertical-align: top;\n            padding-left: 6px;\n            padding-right: 6px;\n            height: 100%;\n            overflow: hidden;\n            white-space: nowrap;\n            font-size: 13px;\n            box-sizing: border-box;\n        }\n        .actions-bar {\n            /*border-top: 1px solid #cecece;*/\n            border-bottom: 1px solid #e0e0e0;\n            clear: both;\n            /*margin-top: 90px;*/\n            height: 28px;\n            background: whitesmoke;\n            color: #494949;\n            font-family: Arial, sans-serif;\n            font-size: 13px;\n            padding-left: 15px;\n            line-height: 25px;\n        }\n        .gantt-tree-content {\n            padding-left: 15px;\n        }\n    "]
                 }] }
@@ -1005,7 +1093,7 @@ var GanttTimeScaleComponent = /** @class */ (function () {
      * @param {?} borderTop
      * @return {?}
      */
-    GanttTimeScaleComponent.prototype.setTimescaleLineStyle = /**
+    GanttTimeScaleComponent.prototype.setTimescaleMonthLineStyle = /**
      * @param {?} borderTop
      * @return {?}
      */
@@ -1020,7 +1108,34 @@ var GanttTimeScaleComponent = /** @class */ (function () {
     /**
      * @return {?}
      */
-    GanttTimeScaleComponent.prototype.setTimescaleCellStyle = /**
+    GanttTimeScaleComponent.prototype.setTimescaleMonthCellStyle = /**
+     * @return {?}
+     */
+    function () {
+        return {
+            'width': this.ganttService.cellWidth + 'px'
+        };
+    };
+    /**
+     * @param {?} borderTop
+     * @return {?}
+     */
+    GanttTimeScaleComponent.prototype.setTimescaleWeekendLineStyle = /**
+     * @param {?} borderTop
+     * @return {?}
+     */
+    function (borderTop) {
+        return {
+            'height': this.ganttService.rowHeight + 'px',
+            'line-height': this.ganttService.rowHeight + 'px',
+            'position': 'relative',
+            'border-top': borderTop
+        };
+    };
+    /**
+     * @return {?}
+     */
+    GanttTimeScaleComponent.prototype.setTimescaleWeekendCellStyle = /**
      * @return {?}
      */
     function () {
@@ -1042,7 +1157,7 @@ var GanttTimeScaleComponent = /** @class */ (function () {
     GanttTimeScaleComponent.decorators = [
         { type: Component, args: [{
                     selector: 'time-scale',
-                    template: "\n        <div class=\"time-scale\" [ngStyle]=\"setTimescaleStyle()\">\n            <div class=\"time-scale-line\" [ngStyle]=\"setTimescaleLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let date of timeScale; let i = index\"\n                    [ngClass]=\"(i % 2) ? 'weekend' : ''\" [ngStyle]=\"setTimescaleCellStyle()\">{{date | date: 'dd-MM'}}</div>\n            </div>\n            <div class=\"time-scale-line\" [ngStyle]=\"setTimescaleLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let date of timeScale; let i = index\"\n                [ngClass]=\"(i % 2) ? 'weekend' : ''\" [ngStyle]=\"setTimescaleCellStyle()\">{{i + 1}}</div>\n            </div>\n        </div>",
+                    template: "\n        <div class=\"time-scale\" [ngStyle]=\"setTimescaleStyle()\">\n            <!--<div class=\"time-scale-line\" [ngStyle]=\"setTimescaleMonthLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let scale of timeScaleMonth; let i = index\"\n                    [ngClass]=\"(i % 2) ? 'weekend' : ''\" [style.width.px]=\"scale.width\">{{scale.start | date: 'dd-MM'}}</div>\n            </div>-->\n            <div class=\"time-scale-line\" [ngStyle]=\"setTimescaleWeekendLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let date of timeScaleWeekend; let i = index\"\n                    [ngClass]=\"(i % 2) ? 'weekend' : ''\" [ngStyle]=\"setTimescaleWeekendCellStyle()\">{{date | date: 'dd-MM'}}</div>\n            </div>\n            <div class=\"time-scale-line\" [ngStyle]=\"setTimescaleWeekendLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let date of timeScaleWeekend; let i = index\"\n                [ngClass]=\"(i % 2) ? 'weekend' : ''\" [ngStyle]=\"setTimescaleWeekendCellStyle()\">{{i + 1}}</div>\n            </div>\n        </div>",
                     providers: [
                         GanttService
                     ],
@@ -1054,8 +1169,10 @@ var GanttTimeScaleComponent = /** @class */ (function () {
         { type: GanttService }
     ]; };
     GanttTimeScaleComponent.propDecorators = {
-        timeScale: [{ type: Input }],
-        dimensions: [{ type: Input }]
+        timeScaleMonth: [{ type: Input }],
+        timeScaleWeekend: [{ type: Input }],
+        dimensions: [{ type: Input }],
+        scale: [{ type: Input }]
     };
     return GanttTimeScaleComponent;
 }());
