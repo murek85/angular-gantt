@@ -23,6 +23,7 @@ export declare class GanttActivityComponent implements OnInit, DoCheck {
     };
     gridColumns: IGridColumn[];
     constructor(elem: ElementRef, ganttService: GanttService);
+    doWheel(event: any, elem: HTMLElement): boolean;
     ngOnInit(): void;
     /** Custom model check */
     ngDoCheck(): void;

@@ -705,6 +705,22 @@ class GanttActivityComponent {
         ];
     }
     /**
+     * @param {?} event
+     * @param {?} elem
+     * @return {?}
+     */
+    doWheel(event, elem) {
+        event.preventDefault();
+        event.stopPropagation();
+        if ((event.wheelDelta || event.detail) > 0) {
+            elem.scrollLeft -= 100;
+        }
+        else {
+            elem.scrollLeft += 100;
+        }
+        return false;
+    }
+    /**
      * @return {?}
      */
     ngOnInit() {
@@ -871,7 +887,8 @@ GanttActivityComponent.decorators = [
             </div>
         </div>
     </div>
-    <div class="gantt-activity"
+    <div class="gantt-activity" #ganttActivity
+        (wheel)="doWheel($event, ganttActivity)"
         (window:resize)="onResize($event)"
         [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': calculateColumnsWidth() }">
 
