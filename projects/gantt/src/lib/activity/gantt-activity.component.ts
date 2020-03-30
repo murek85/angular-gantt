@@ -37,7 +37,8 @@ import { IGridColumn, IGanttOptions, Project, IScale } from '../shared/interface
             </div>
         </div>
     </div>
-    <div class="gantt-activity"
+    <div class="gantt-activity" #ganttActivity
+        (wheel)="doWheel($event, ganttActivity)"
         (window:resize)="onResize($event)"
         [ngStyle]="{ 'height': ganttService.calculateGanttHeight() + 60, 'width': calculateColumnsWidth() }">
 
@@ -196,6 +197,18 @@ export class GanttActivityComponent implements OnInit, DoCheck {
     constructor(
         public elem: ElementRef,
         public ganttService: GanttService) {
+    }
+
+    doWheel(event, elem: HTMLElement) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if ((event.wheelDelta || event.detail) > 0) {
+            elem.scrollLeft -= 100;
+        } else {
+            elem.scrollLeft += 100;
+        }
+        return false;
     }
 
     ngOnInit() {
