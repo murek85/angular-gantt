@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     startDate: new Date(2020, 0, 1),
     tasks: [
       {
-        name: '01-05 - 15-06',
+        name: '01-02 - 15-02',
         resource: 'res1',
         start: new Date('2020-02-01T00:00:00'),
         end: new Date('2020-02-15T23:59:59'),
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
         }
       },
       {
-        name: '01-05 - 15-06',
+        name: '01-03 - 15-03',
         resource: 'res1',
         start: new Date('2020-03-01T00:00:00'),
         end: new Date('2020-03-15T23:59:59'),
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
         }
       },
       {
-        name: '01-05 - 15-06',
+        name: '01-02 - 15-03',
         resource: 'res1',
         start: new Date('2020-02-01T00:00:00'),
         end: new Date('2020-03-15T23:59:59'),

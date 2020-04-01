@@ -15,7 +15,7 @@ import { Injectable, Component, Input, EventEmitter, Output, ElementRef, ChangeD
  */
 var GanttConfig = /** @class */ (function () {
     function GanttConfig() {
-        this.cellWidth = 38;
+        this.cellWidth = 76;
         this.rowHeight = 30;
         this.activityHeight = 420;
         this.barHeight = 25;
@@ -80,7 +80,7 @@ var GanttService = /** @class */ (function () {
         /** @type {?} */
         var days = this.calculateDiffDays(start, end);
         /** @type {?} */
-        var width = (days / 7 * this.cellWidth + days / 7);
+        var width = (days * this.cellWidth + days) / 7;
         return width;
     };
     /**
@@ -103,8 +103,11 @@ var GanttService = /** @class */ (function () {
                 start = new Date();
             }
             for (var i = 0; i < scale.length; i++) {
-                if ((start.getTime() >= scale[i].getTime() && start.getTime() < scale[i + 1].getTime())) {
-                    left = i * this.cellWidth + i + this.calculateBarLeftDelta(start) + ((7 / (scale[i + 1].getDate() - start.getDate()) / 7) * this.cellWidth) - this.cellWidth / 7;
+                if (start.getTime() >= scale[i].getTime() && start.getTime() < scale[i + 1].getTime()) {
+                    // left = i * this.cellWidth + i + this.calculateBarLeftDelta(start) +
+                    //    ((7 / (scale[i + 1].getDate() - start.getDate()) / 7) * this.cellWidth) - this.cellWidth / 7;
+                    left = i * this.cellWidth + ((this.cellWidth) * this.calculateDiffDays(scale[i], start) / 7) +
+                        i + this.calculateBarLeftDelta(start);
                     break;
                 }
             }
@@ -143,7 +146,7 @@ var GanttService = /** @class */ (function () {
         /** @type {?} */
         var secondsInHour = 3600;
         /** @type {?} */
-        var startHours = start.getHours() + start.getMinutes() / minutesInHour + start.getSeconds() / secondsInHour;
+        var startHours = (start.getHours() + start.getMinutes() / minutesInHour + start.getSeconds() / secondsInHour);
         offset = this.cellWidth / hoursInDay * startHours;
         return offset;
     };

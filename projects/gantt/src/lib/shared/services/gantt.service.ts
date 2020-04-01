@@ -42,7 +42,7 @@ export class GanttService {
         }
 
         const days = this.calculateDiffDays(start, end);
-        const width: number = (days / 7 * this.cellWidth + days / 7);
+        const width: number = (days * this.cellWidth + days) / 7;
         return width;
     }
 
@@ -54,10 +54,12 @@ export class GanttService {
                 start = new Date();
             }
 
-            for (var i = 0; i < scale.length; i++) {
-                if ((start.getTime() >= scale[i].getTime() && start.getTime() < scale[i + 1].getTime())) {
-                    
-                    left = i * this.cellWidth + i + this.calculateBarLeftDelta(start) + ((7 / (scale[i + 1].getDate() - start.getDate()) / 7) * this.cellWidth) - this.cellWidth / 7;
+            for (let i = 0; i < scale.length; i++) {
+                if (start.getTime() >= scale[i].getTime() && start.getTime() < scale[i + 1].getTime()) {
+                    // left = i * this.cellWidth + i + this.calculateBarLeftDelta(start) +
+                    //    ((7 / (scale[i + 1].getDate() - start.getDate()) / 7) * this.cellWidth) - this.cellWidth / 7;
+                    left = i * this.cellWidth + ((this.cellWidth) * this.calculateDiffDays(scale[i], start) / 7) +
+                        i + this.calculateBarLeftDelta(start);
                     break;
                 }
             }
@@ -76,7 +78,7 @@ export class GanttService {
         const minutesInHour = 60;
         const secondsInHour = 3600;
         const startHours: number =
-            start.getHours() + start.getMinutes() / minutesInHour + start.getSeconds() / secondsInHour;
+            (start.getHours() + start.getMinutes() / minutesInHour + start.getSeconds() / secondsInHour);
 
         offset = this.cellWidth / hoursInDay * startHours;
         return offset;
@@ -234,7 +236,7 @@ export class GanttService {
         var monthDiff = this.calculateDiffMonths(startDate, endDate);
         var dayDiff = this.calculateDiffDays(startDate, endDate);
 
-        for (i = 0; i < monthDiff; i++) {        
+        for (i = 0; i < monthDiff; i++) {
             var startOfMonth = i === 0 ? startDate : new Date(startDate.getFullYear(), i, 1);
             var endOfMonth = i === monthDiff - 1 ? endDate : new Date(startDate.getFullYear(), i + 1, 0);
             var dayInMonth = this.calculateDiffDays(startOfMonth, endOfMonth) + (i !== monthDiff - 1 && 1);
