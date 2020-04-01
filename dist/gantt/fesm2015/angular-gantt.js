@@ -15,7 +15,7 @@ import { Injectable, Component, Input, EventEmitter, Output, ElementRef, ChangeD
  */
 class GanttConfig {
     constructor() {
-        this.cellWidth = 76;
+        this.cellWidth = 38;
         this.rowHeight = 30;
         this.activityHeight = 420;
         this.barHeight = 25;

@@ -10,7 +10,7 @@
      */
     var GanttConfig = /** @class */ (function () {
         function GanttConfig() {
-            this.cellWidth = 76;
+            this.cellWidth = 38;
             this.rowHeight = 30;
             this.activityHeight = 420;
             this.barHeight = 25;
