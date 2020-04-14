@@ -52,7 +52,7 @@ import { GanttService } from '../../shared/services/gantt.service';
             }" style="width: 320px; max-width: 320px;">
 
             <mat-card-header>
-                <div mat-card-avatar [ngStyle]="{ borderColor: data.color?.primary }" style="width: 0; height: calc(10vh - 30px); border-radius: 0; border-style: solid;"></div>
+                <div mat-card-avatar [ngStyle]="{ borderColor: data.color?.primary }" style="width: 0; height: unset; margin-bottom: .7em; border-radius: 0; border-style: solid;"></div>
                 <mat-card-title>
                     <span style="font-size: 80%;">{{data.name}}</span>
                 </mat-card-title>
