@@ -18,7 +18,7 @@ import { GanttService } from '../../shared/services/gantt.service';
                 mdePopoverOffsetY="0"
                 (opened)="popoverOpened(task)">
 
-                <mde-popover #taskPopover="mdePopover" 
+                <mde-popover #taskPopover="mdePopover"
                     [mdePopoverEnterDelay]="100"
                     [mdePopoverLeaveDelay]="0"
                     [mdePopoverPositionY]="'above'"

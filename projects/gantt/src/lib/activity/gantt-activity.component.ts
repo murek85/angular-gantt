@@ -6,6 +6,7 @@ import { IGridColumn, IGanttOptions, Project, IScale } from '../shared/interface
 @Component({
     selector: 'gantt-activity',
     template: `
+
     <div class="grid" #ganttGrid>
         <div class="grid-scale" [ngStyle]="setGridScaleStyle()">
             <div class="grid-head-cell"
@@ -25,7 +26,47 @@ import { IGridColumn, IGanttOptions, Project, IScale } from '../shared/interface
                 *ngFor="let data of ganttService.TASK_CACHE" class="grid-row"
                 [ngStyle]="setGridRowStyle()">
 
+                <mde-popover #appPopover="mdePopover"
+                    [mdePopoverEnterDelay]="100"
+                    [mdePopoverLeaveDelay]="0"
+                    [mdePopoverPositionY]="'above'"
+                    [mdePopoverOverlapTrigger]="false"
+                    [mdePopoverDisableAnimation]="false"
+                    [mdePopoverArrowWidth]="8"
+                    [mdePopoverArrowColor]="'black'"
+                    mdePopoverPlacement="bottom">
+
+                    <mat-card style="max-width: 340px; padding: 3px 8px;
+                        color: #ffffff;
+                        text-align: center;
+                        background-color: #000000;
+                        border-radius: 4px;">
+                        <span style="z-index: 1070;
+                            display: block;
+                            font-family: 'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;
+                            font-style: normal;
+                            font-weight: normal;
+                            letter-spacing: normal;
+                            line-break: auto;
+                            line-height: 1.42857143;
+                            text-align: left;
+                            text-align: start;
+                            text-decoration: none;
+                            text-shadow: none;
+                            text-transform: none;
+                            white-space: normal;
+                            word-break: normal;
+                            word-spacing: normal;
+                            word-wrap: normal;
+                            font-size: 13px;">{{data.name}}</span>
+                    </mat-card>
+                </mde-popover>
+
                 <div class="grid-cell"
+                    [mdePopoverTriggerFor]="appPopover"
+                    [mdePopoverBackdropCloseOnClick]="false"
+                    mdePopoverOffsetX="25"
+                    mdePopoverOffsetY="0"
                     [ngStyle]="{ 'width': gridColumns[1].width + 'px', 'padding-left': 0 }">
 
                     <div class="gantt-tree-content">
