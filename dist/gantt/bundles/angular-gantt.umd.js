@@ -869,11 +869,23 @@
             function (event, elem) {
                 event.preventDefault();
                 event.stopPropagation();
-                if ((event.wheelDelta || event.detail) > 0) {
-                    elem.scrollLeft -= 100;
+                // chome
+                if (event.wheelDelta) {
+                    if ((event.wheelDelta || event.detail) > 0) {
+                        elem.scrollLeft -= 100;
+                    }
+                    else {
+                        elem.scrollLeft += 100;
+                    }
+                    // firefox
                 }
                 else {
-                    elem.scrollLeft += 100;
+                    if (event.deltaY > 0) {
+                        elem.scrollLeft += 100;
+                    }
+                    else {
+                        elem.scrollLeft -= 100;
+                    }
                 }
                 return false;
             };

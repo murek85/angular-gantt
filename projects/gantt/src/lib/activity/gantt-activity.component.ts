@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ElementRef,  ChangeDete
 
 import { GanttService } from '../shared/services/gantt.service';
 import { IGridColumn, IGanttOptions, Project, IScale } from '../shared/interfaces';
+import { EventManager } from '@angular/platform-browser';
 
 @Component({
     selector: 'gantt-activity',
@@ -244,10 +245,20 @@ export class GanttActivityComponent implements OnInit, DoCheck {
         event.preventDefault();
         event.stopPropagation();
 
-        if ((event.wheelDelta || event.detail) > 0) {
-            elem.scrollLeft -= 100;
+        // chome
+        if (event.wheelDelta) {
+            if ((event.wheelDelta || event.detail) > 0) {
+                elem.scrollLeft -= 100;
+            } else {
+                elem.scrollLeft += 100;
+            }
+        // firefox
         } else {
-            elem.scrollLeft += 100;
+            if (event.deltaY > 0) {
+                elem.scrollLeft += 100;
+            } else {
+                elem.scrollLeft -= 100;
+            }
         }
         return false;
     }
