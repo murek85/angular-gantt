@@ -17,5 +17,8 @@
       "gantt": ["dist/gantt"],
       "gantt/*": ["dist/gantt/*"]
     }
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false
   }
 }

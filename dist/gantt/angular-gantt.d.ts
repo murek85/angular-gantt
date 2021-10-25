@@ -1,5 +1,14 @@
 /**
  * Generated bundle index. Do not edit.
  */
-/// <amd-module name="angular-gantt" />
 export * from './public-api';
+export { GanttActivityBackgroundComponent as ɵe } from './lib/activity/background/activity-background.component';
+export { GanttActivityBarsComponent as ɵf } from './lib/activity/bars/activity-bars.component';
+export { GanttActivityComponent as ɵc } from './lib/activity/gantt-activity.component';
+export { GanttActivityModule as ɵb } from './lib/activity/gantt-activity.module';
+export { GanttTimeScaleComponent as ɵd } from './lib/activity/time-scale/gantt-time-scale.component';
+export { GanttFooterComponent as ɵh } from './lib/footer/gantt-footer.component';
+export { GanttHeaderComponent as ɵg } from './lib/header/gantt-header.component';
+export { GanttService as ɵa } from './lib/shared/services/gantt.service';
+
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYW5ndWxhci1nYW50dC5kLnRzIiwic291cmNlcyI6WyJhbmd1bGFyLWdhbnR0LmQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXHJcbiAqIEdlbmVyYXRlZCBidW5kbGUgaW5kZXguIERvIG5vdCBlZGl0LlxyXG4gKi9cclxuZXhwb3J0ICogZnJvbSAnLi9wdWJsaWMtYXBpJztcclxuZXhwb3J0IHsgR2FudHRBY3Rpdml0eUJhY2tncm91bmRDb21wb25lbnQgYXMgybVlIH0gZnJvbSAnLi9saWIvYWN0aXZpdHkvYmFja2dyb3VuZC9hY3Rpdml0eS1iYWNrZ3JvdW5kLmNvbXBvbmVudCc7XHJcbmV4cG9ydCB7IEdhbnR0QWN0aXZpdHlCYXJzQ29tcG9uZW50IGFzIMm1ZiB9IGZyb20gJy4vbGliL2FjdGl2aXR5L2JhcnMvYWN0aXZpdHktYmFycy5jb21wb25lbnQnO1xyXG5leHBvcnQgeyBHYW50dEFjdGl2aXR5Q29tcG9uZW50IGFzIMm1YyB9IGZyb20gJy4vbGliL2FjdGl2aXR5L2dhbnR0LWFjdGl2aXR5LmNvbXBvbmVudCc7XHJcbmV4cG9ydCB7IEdhbnR0QWN0aXZpdHlNb2R1bGUgYXMgybViIH0gZnJvbSAnLi9saWIvYWN0aXZpdHkvZ2FudHQtYWN0aXZpdHkubW9kdWxlJztcclxuZXhwb3J0IHsgR2FudHRUaW1lU2NhbGVDb21wb25lbnQgYXMgybVkIH0gZnJvbSAnLi9saWIvYWN0aXZpdHkvdGltZS1zY2FsZS9nYW50dC10aW1lLXNjYWxlLmNvbXBvbmVudCc7XHJcbmV4cG9ydCB7IEdhbnR0Rm9vdGVyQ29tcG9uZW50IGFzIMm1aCB9IGZyb20gJy4vbGliL2Zvb3Rlci9nYW50dC1mb290ZXIuY29tcG9uZW50JztcclxuZXhwb3J0IHsgR2FudHRIZWFkZXJDb21wb25lbnQgYXMgybVnIH0gZnJvbSAnLi9saWIvaGVhZGVyL2dhbnR0LWhlYWRlci5jb21wb25lbnQnO1xyXG5leHBvcnQgeyBHYW50dFNlcnZpY2UgYXMgybVhIH0gZnJvbSAnLi9saWIvc2hhcmVkL3NlcnZpY2VzL2dhbnR0LnNlcnZpY2UnO1xyXG4iXX0=
