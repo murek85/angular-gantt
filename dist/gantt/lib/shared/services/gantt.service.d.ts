@@ -1,4 +1,5 @@
 import { Task, IScale } from '../interfaces';
+import * as i0 from "@angular/core";
 export declare class GanttService {
     rowHeight: number;
     hourCellWidth: number;
@@ -23,11 +24,11 @@ export declare class GanttService {
     private calculateBarLeftDelta;
     /** Calculate the bar styles */
     calculateBar(task: any, index: number, scale: any): {
-        'top': string;
-        'left': string;
-        'height': string;
+        top: string;
+        left: string;
+        height: string;
         'line-height': string;
-        'width': string;
+        width: string;
         'background-color': any;
         'border-left': any;
     };
@@ -63,4 +64,6 @@ export declare class GanttService {
     setIdPrefix(id: string): string;
     /** Set the scroll top property of a native DOM element */
     setScrollTop(scrollTop: number, element: any): void;
+    static ɵfac: i0.ɵɵFactoryDef<GanttService, never>;
+    static ɵprov: i0.ɵɵInjectableDef<GanttService>;
 }

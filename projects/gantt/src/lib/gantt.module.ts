@@ -1,30 +1,28 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  NgModule,
+  CUSTOM_ELEMENTS_SCHEMA,
+  ModuleWithProviders,
+} from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
-import { GanttComponent } from './gantt.component';
-import { GanttHeaderComponent } from './header/gantt-header.component';
-import { GanttFooterComponent } from './footer/gantt-footer.component';
-import { GanttService } from './shared/services/gantt.service';
-import { GanttActivityModule } from './activity/gantt-activity.module';
+import { GanttComponent } from "./gantt.component";
+import { GanttHeaderComponent } from "./header/gantt-header.component";
+import { GanttFooterComponent } from "./footer/gantt-footer.component";
+import { GanttService } from "./shared/services/gantt.service";
+import { GanttActivityModule } from "./activity/gantt-activity.module";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        GanttActivityModule,
-    ],
-    exports: [
-        GanttComponent
-    ],
-    declarations: [
-        GanttComponent,
-        GanttHeaderComponent,
-        GanttFooterComponent
-    ],
-    providers: [GanttService],
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-    ]
+  imports: [CommonModule, FormsModule, GanttActivityModule],
+  exports: [GanttComponent],
+  declarations: [GanttComponent, GanttHeaderComponent, GanttFooterComponent],
+  providers: [GanttService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class GanttModule { }
+export class GanttModule {
+  static forRoot(): ModuleWithProviders<GanttModule> {
+    return {
+      ngModule: GanttModule,
+    };
+  }
+}

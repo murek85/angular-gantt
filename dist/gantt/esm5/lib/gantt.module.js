@@ -1,40 +1,34 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { GanttComponent } from './gantt.component';
-import { GanttHeaderComponent } from './header/gantt-header.component';
-import { GanttFooterComponent } from './footer/gantt-footer.component';
-import { GanttService } from './shared/services/gantt.service';
-import { GanttActivityModule } from './activity/gantt-activity.module';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { GanttComponent } from "./gantt.component";
+import { GanttHeaderComponent } from "./header/gantt-header.component";
+import { GanttFooterComponent } from "./footer/gantt-footer.component";
+import { GanttService } from "./shared/services/gantt.service";
+import { GanttActivityModule } from "./activity/gantt-activity.module";
+import * as i0 from "@angular/core";
 var GanttModule = /** @class */ (function () {
     function GanttModule() {
     }
-    GanttModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        FormsModule,
-                        GanttActivityModule,
-                    ],
-                    exports: [
-                        GanttComponent
-                    ],
-                    declarations: [
-                        GanttComponent,
-                        GanttHeaderComponent,
-                        GanttFooterComponent
-                    ],
-                    providers: [GanttService],
-                    schemas: [
-                        CUSTOM_ELEMENTS_SCHEMA
-                    ]
-                },] }
-    ];
+    GanttModule.forRoot = function () {
+        return {
+            ngModule: GanttModule,
+        };
+    };
+    /** @nocollapse */ GanttModule.ɵmod = i0.ɵɵdefineNgModule({ type: GanttModule });
+    /** @nocollapse */ GanttModule.ɵinj = i0.ɵɵdefineInjector({ factory: function GanttModule_Factory(t) { return new (t || GanttModule)(); }, providers: [GanttService], imports: [[CommonModule, FormsModule, GanttActivityModule]] });
     return GanttModule;
 }());
 export { GanttModule };
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2FudHQubW9kdWxlLmpzIiwic291cmNlUm9vdCI6Im5nOi8vYW5ndWxhci1nYW50dC8iLCJzb3VyY2VzIjpbImxpYi9nYW50dC5tb2R1bGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBLE9BQU8sRUFBRSxRQUFRLEVBQUUsc0JBQXNCLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDakUsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQy9DLE9BQU8sRUFBRSxXQUFXLEVBQUUsTUFBTSxnQkFBZ0IsQ0FBQztBQUU3QyxPQUFPLEVBQUUsY0FBYyxFQUFFLE1BQU0sbUJBQW1CLENBQUM7QUFDbkQsT0FBTyxFQUFFLG9CQUFvQixFQUFFLE1BQU0saUNBQWlDLENBQUM7QUFDdkUsT0FBTyxFQUFFLG9CQUFvQixFQUFFLE1BQU0saUNBQWlDLENBQUM7QUFDdkUsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLGlDQUFpQyxDQUFDO0FBQy9ELE9BQU8sRUFBRSxtQkFBbUIsRUFBRSxNQUFNLGtDQUFrQyxDQUFDO0FBRXZFO0lBQUE7SUFtQjJCLENBQUM7O2dCQW5CM0IsUUFBUSxTQUFDO29CQUNOLE9BQU8sRUFBRTt3QkFDTCxZQUFZO3dCQUNaLFdBQVc7d0JBQ1gsbUJBQW1CO3FCQUN0QjtvQkFDRCxPQUFPLEVBQUU7d0JBQ0wsY0FBYztxQkFDakI7b0JBQ0QsWUFBWSxFQUFFO3dCQUNWLGNBQWM7d0JBQ2Qsb0JBQW9CO3dCQUNwQixvQkFBb0I7cUJBQ3ZCO29CQUNELFNBQVMsRUFBRSxDQUFDLFlBQVksQ0FBQztvQkFDekIsT0FBTyxFQUFFO3dCQUNMLHNCQUFzQjtxQkFDekI7aUJBQ0o7O0lBQzBCLGtCQUFDO0NBQUEsQUFuQjVCLElBbUI0QjtTQUFmLFdBQVciLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZ01vZHVsZSwgQ1VTVE9NX0VMRU1FTlRTX1NDSEVNQSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG5pbXBvcnQgeyBDb21tb25Nb2R1bGUgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xyXG5pbXBvcnQgeyBGb3Jtc01vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2Zvcm1zJztcclxuXHJcbmltcG9ydCB7IEdhbnR0Q29tcG9uZW50IH0gZnJvbSAnLi9nYW50dC5jb21wb25lbnQnO1xyXG5pbXBvcnQgeyBHYW50dEhlYWRlckNvbXBvbmVudCB9IGZyb20gJy4vaGVhZGVyL2dhbnR0LWhlYWRlci5jb21wb25lbnQnO1xyXG5pbXBvcnQgeyBHYW50dEZvb3RlckNvbXBvbmVudCB9IGZyb20gJy4vZm9vdGVyL2dhbnR0LWZvb3Rlci5jb21wb25lbnQnO1xyXG5pbXBvcnQgeyBHYW50dFNlcnZpY2UgfSBmcm9tICcuL3NoYXJlZC9zZXJ2aWNlcy9nYW50dC5zZXJ2aWNlJztcclxuaW1wb3J0IHsgR2FudHRBY3Rpdml0eU1vZHVsZSB9IGZyb20gJy4vYWN0aXZpdHkvZ2FudHQtYWN0aXZpdHkubW9kdWxlJztcclxuXHJcbkBOZ01vZHVsZSh7XHJcbiAgICBpbXBvcnRzOiBbXHJcbiAgICAgICAgQ29tbW9uTW9kdWxlLFxyXG4gICAgICAgIEZvcm1zTW9kdWxlLFxyXG4gICAgICAgIEdhbnR0QWN0aXZpdHlNb2R1bGUsXHJcbiAgICBdLFxyXG4gICAgZXhwb3J0czogW1xyXG4gICAgICAgIEdhbnR0Q29tcG9uZW50XHJcbiAgICBdLFxyXG4gICAgZGVjbGFyYXRpb25zOiBbXHJcbiAgICAgICAgR2FudHRDb21wb25lbnQsXHJcbiAgICAgICAgR2FudHRIZWFkZXJDb21wb25lbnQsXHJcbiAgICAgICAgR2FudHRGb290ZXJDb21wb25lbnRcclxuICAgIF0sXHJcbiAgICBwcm92aWRlcnM6IFtHYW50dFNlcnZpY2VdLFxyXG4gICAgc2NoZW1hczogW1xyXG4gICAgICAgIENVU1RPTV9FTEVNRU5UU19TQ0hFTUFcclxuICAgIF1cclxufSlcclxuZXhwb3J0IGNsYXNzIEdhbnR0TW9kdWxlIHsgfVxyXG4iXX0=
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && i0.ɵɵsetNgModuleScope(GanttModule, { declarations: [GanttComponent, GanttHeaderComponent, GanttFooterComponent], imports: [CommonModule, FormsModule, GanttActivityModule], exports: [GanttComponent] }); })();
+/*@__PURE__*/ (function () { i0.ɵsetClassMetadata(GanttModule, [{
+        type: NgModule,
+        args: [{
+                imports: [CommonModule, FormsModule, GanttActivityModule],
+                exports: [GanttComponent],
+                declarations: [GanttComponent, GanttHeaderComponent, GanttFooterComponent],
+                providers: [GanttService],
+                schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            }]
+    }], null, null); })();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2FudHQubW9kdWxlLmpzIiwic291cmNlUm9vdCI6Im5nOi8vYW5ndWxhci1nYW50dC8iLCJzb3VyY2VzIjpbImxpYi9nYW50dC5tb2R1bGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUNMLFFBQVEsRUFDUixzQkFBc0IsR0FFdkIsTUFBTSxlQUFlLENBQUM7QUFDdkIsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQy9DLE9BQU8sRUFBRSxXQUFXLEVBQUUsTUFBTSxnQkFBZ0IsQ0FBQztBQUU3QyxPQUFPLEVBQUUsY0FBYyxFQUFFLE1BQU0sbUJBQW1CLENBQUM7QUFDbkQsT0FBTyxFQUFFLG9CQUFvQixFQUFFLE1BQU0saUNBQWlDLENBQUM7QUFDdkUsT0FBTyxFQUFFLG9CQUFvQixFQUFFLE1BQU0saUNBQWlDLENBQUM7QUFDdkUsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLGlDQUFpQyxDQUFDO0FBQy9ELE9BQU8sRUFBRSxtQkFBbUIsRUFBRSxNQUFNLGtDQUFrQyxDQUFDOztBQUV2RTtJQUFBO0tBYUM7SUFMUSxtQkFBTyxHQUFkO1FBQ0UsT0FBTztZQUNMLFFBQVEsRUFBRSxXQUFXO1NBQ3RCLENBQUM7SUFDSixDQUFDO3NFQUxVLFdBQVc7NEhBQVgsV0FBVyxtQkFIWCxDQUFDLFlBQVksQ0FBQyxZQUhoQixDQUFDLFlBQVksRUFBRSxXQUFXLEVBQUUsbUJBQW1CLENBQUM7c0JBZjNEO0NBMkJDLEFBYkQsSUFhQztTQU5ZLFdBQVc7d0ZBQVgsV0FBVyxtQkFKUCxjQUFjLEVBQUUsb0JBQW9CLEVBQUUsb0JBQW9CLGFBRi9ELFlBQVksRUFBRSxXQUFXLEVBQUUsbUJBQW1CLGFBQzlDLGNBQWM7a0RBS2IsV0FBVztjQVB2QixRQUFRO2VBQUM7Z0JBQ1IsT0FBTyxFQUFFLENBQUMsWUFBWSxFQUFFLFdBQVcsRUFBRSxtQkFBbUIsQ0FBQztnQkFDekQsT0FBTyxFQUFFLENBQUMsY0FBYyxDQUFDO2dCQUN6QixZQUFZLEVBQUUsQ0FBQyxjQUFjLEVBQUUsb0JBQW9CLEVBQUUsb0JBQW9CLENBQUM7Z0JBQzFFLFNBQVMsRUFBRSxDQUFDLFlBQVksQ0FBQztnQkFDekIsT0FBTyxFQUFFLENBQUMsc0JBQXNCLENBQUM7YUFDbEMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQge1xyXG4gIE5nTW9kdWxlLFxyXG4gIENVU1RPTV9FTEVNRU5UU19TQ0hFTUEsXHJcbiAgTW9kdWxlV2l0aFByb3ZpZGVycyxcclxufSBmcm9tIFwiQGFuZ3VsYXIvY29yZVwiO1xyXG5pbXBvcnQgeyBDb21tb25Nb2R1bGUgfSBmcm9tIFwiQGFuZ3VsYXIvY29tbW9uXCI7XHJcbmltcG9ydCB7IEZvcm1zTW9kdWxlIH0gZnJvbSBcIkBhbmd1bGFyL2Zvcm1zXCI7XHJcblxyXG5pbXBvcnQgeyBHYW50dENvbXBvbmVudCB9IGZyb20gXCIuL2dhbnR0LmNvbXBvbmVudFwiO1xyXG5pbXBvcnQgeyBHYW50dEhlYWRlckNvbXBvbmVudCB9IGZyb20gXCIuL2hlYWRlci9nYW50dC1oZWFkZXIuY29tcG9uZW50XCI7XHJcbmltcG9ydCB7IEdhbnR0Rm9vdGVyQ29tcG9uZW50IH0gZnJvbSBcIi4vZm9vdGVyL2dhbnR0LWZvb3Rlci5jb21wb25lbnRcIjtcclxuaW1wb3J0IHsgR2FudHRTZXJ2aWNlIH0gZnJvbSBcIi4vc2hhcmVkL3NlcnZpY2VzL2dhbnR0LnNlcnZpY2VcIjtcclxuaW1wb3J0IHsgR2FudHRBY3Rpdml0eU1vZHVsZSB9IGZyb20gXCIuL2FjdGl2aXR5L2dhbnR0LWFjdGl2aXR5Lm1vZHVsZVwiO1xyXG5cclxuQE5nTW9kdWxlKHtcclxuICBpbXBvcnRzOiBbQ29tbW9uTW9kdWxlLCBGb3Jtc01vZHVsZSwgR2FudHRBY3Rpdml0eU1vZHVsZV0sXHJcbiAgZXhwb3J0czogW0dhbnR0Q29tcG9uZW50XSxcclxuICBkZWNsYXJhdGlvbnM6IFtHYW50dENvbXBvbmVudCwgR2FudHRIZWFkZXJDb21wb25lbnQsIEdhbnR0Rm9vdGVyQ29tcG9uZW50XSxcclxuICBwcm92aWRlcnM6IFtHYW50dFNlcnZpY2VdLFxyXG4gIHNjaGVtYXM6IFtDVVNUT01fRUxFTUVOVFNfU0NIRU1BXSxcclxufSlcclxuZXhwb3J0IGNsYXNzIEdhbnR0TW9kdWxlIHtcclxuICBzdGF0aWMgZm9yUm9vdCgpOiBNb2R1bGVXaXRoUHJvdmlkZXJzPEdhbnR0TW9kdWxlPiB7XHJcbiAgICByZXR1cm4ge1xyXG4gICAgICBuZ01vZHVsZTogR2FudHRNb2R1bGUsXHJcbiAgICB9O1xyXG4gIH1cclxufVxyXG4iXX0=

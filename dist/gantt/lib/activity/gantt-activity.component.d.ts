@@ -1,6 +1,7 @@
 import { OnInit, EventEmitter, ElementRef, DoCheck } from '@angular/core';
 import { GanttService } from '../shared/services/gantt.service';
 import { IGridColumn, IGanttOptions, Project } from '../shared/interfaces';
+import * as i0 from "@angular/core";
 export declare class GanttActivityComponent implements OnInit, DoCheck {
     elem: ElementRef;
     ganttService: GanttService;
@@ -37,11 +38,13 @@ export declare class GanttActivityComponent implements OnInit, DoCheck {
     setDimensions(): void;
     setGridRowStyle(): any;
     setGridScaleStyle(): {
-        'height': string;
+        height: string;
         'line-height': string;
     };
     calculateColumnsWidth(): string;
     private calculateContainerHeight;
     private calculateContainerWidth;
     private setSizes;
+    static ɵfac: i0.ɵɵFactoryDef<GanttActivityComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDefWithMeta<GanttActivityComponent, "gantt-activity", never, { "project": "project"; "options": "options"; }, { "onGridRowClick": "onGridRowClick"; "onPopoverOpen": "onPopoverOpen"; }, never, never>;
 }

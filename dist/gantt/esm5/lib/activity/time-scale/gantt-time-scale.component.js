@@ -1,41 +1,44 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 import { Component, Input } from '@angular/core';
 import { GanttService } from '../../shared/services/gantt.service';
+import * as i0 from "@angular/core";
+import * as i1 from "../../shared/services/gantt.service";
+import * as i2 from "@angular/common";
+function GanttTimeScaleComponent_div_2_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵelementStart(0, "div", 3);
+    i0.ɵɵtext(1);
+    i0.ɵɵpipe(2, "date");
+    i0.ɵɵelementEnd();
+} if (rf & 2) {
+    var date_r2 = ctx.$implicit;
+    var i_r3 = ctx.index;
+    var ctx_r0 = i0.ɵɵnextContext();
+    i0.ɵɵproperty("ngClass", i_r3 % 2 ? "weekend" : "")("ngStyle", ctx_r0.setTimescaleWeekendCellStyle());
+    i0.ɵɵadvance(1);
+    i0.ɵɵtextInterpolate(i0.ɵɵpipeBind2(2, 3, date_r2, "dd-MM"));
+} }
+function GanttTimeScaleComponent_div_4_Template(rf, ctx) { if (rf & 1) {
+    i0.ɵɵelementStart(0, "div", 3);
+    i0.ɵɵtext(1);
+    i0.ɵɵelementEnd();
+} if (rf & 2) {
+    var i_r5 = ctx.index;
+    var ctx_r1 = i0.ɵɵnextContext();
+    i0.ɵɵproperty("ngClass", i_r5 % 2 ? "weekend" : "")("ngStyle", ctx_r1.setTimescaleWeekendCellStyle());
+    i0.ɵɵadvance(1);
+    i0.ɵɵtextInterpolate(i_r5 + 1);
+} }
 var GanttTimeScaleComponent = /** @class */ (function () {
     function GanttTimeScaleComponent(ganttService) {
         this.ganttService = ganttService;
     }
-    /**
-     * @return {?}
-     */
-    GanttTimeScaleComponent.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    GanttTimeScaleComponent.prototype.ngOnInit = function () {
     };
-    /**
-     * @return {?}
-     */
-    GanttTimeScaleComponent.prototype.setTimescaleStyle = /**
-     * @return {?}
-     */
-    function () {
+    GanttTimeScaleComponent.prototype.setTimescaleStyle = function () {
         return {
             'width': (this.dimensions.width + 36) + 'px'
         };
     };
-    /**
-     * @param {?} borderTop
-     * @return {?}
-     */
-    GanttTimeScaleComponent.prototype.setTimescaleMonthLineStyle = /**
-     * @param {?} borderTop
-     * @return {?}
-     */
-    function (borderTop) {
+    GanttTimeScaleComponent.prototype.setTimescaleMonthLineStyle = function (borderTop) {
         return {
             'height': this.ganttService.rowHeight + 'px',
             'line-height': this.ganttService.rowHeight + 'px',
@@ -43,26 +46,12 @@ var GanttTimeScaleComponent = /** @class */ (function () {
             'border-top': borderTop
         };
     };
-    /**
-     * @return {?}
-     */
-    GanttTimeScaleComponent.prototype.setTimescaleMonthCellStyle = /**
-     * @return {?}
-     */
-    function () {
+    GanttTimeScaleComponent.prototype.setTimescaleMonthCellStyle = function () {
         return {
             'width': this.ganttService.cellWidth + 'px'
         };
     };
-    /**
-     * @param {?} borderTop
-     * @return {?}
-     */
-    GanttTimeScaleComponent.prototype.setTimescaleWeekendLineStyle = /**
-     * @param {?} borderTop
-     * @return {?}
-     */
-    function (borderTop) {
+    GanttTimeScaleComponent.prototype.setTimescaleWeekendLineStyle = function (borderTop) {
         return {
             'height': this.ganttService.rowHeight + 'px',
             'line-height': this.ganttService.rowHeight + 'px',
@@ -70,61 +59,58 @@ var GanttTimeScaleComponent = /** @class */ (function () {
             'border-top': borderTop
         };
     };
-    /**
-     * @return {?}
-     */
-    GanttTimeScaleComponent.prototype.setTimescaleWeekendCellStyle = /**
-     * @return {?}
-     */
-    function () {
+    GanttTimeScaleComponent.prototype.setTimescaleWeekendCellStyle = function () {
         return {
             'width': this.ganttService.cellWidth + 'px'
         };
     };
-    /**
-     * @param {?} date
-     * @return {?}
-     */
-    GanttTimeScaleComponent.prototype.isDayWeekend = /**
-     * @param {?} date
-     * @return {?}
-     */
-    function (date) {
+    GanttTimeScaleComponent.prototype.isDayWeekend = function (date) {
         return this.ganttService.isDayWeekend(date);
     };
-    GanttTimeScaleComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'time-scale',
-                    template: "\n        <div class=\"time-scale\" [ngStyle]=\"setTimescaleStyle()\">\n            <!--<div class=\"time-scale-line\" [ngStyle]=\"setTimescaleMonthLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let scale of timeScaleMonth; let i = index\"\n                    [ngClass]=\"(i % 2) ? 'weekend' : ''\" [style.width.px]=\"scale.width\">{{scale.start | date: 'dd-MM'}}</div>\n            </div>-->\n            <div class=\"time-scale-line\" [ngStyle]=\"setTimescaleWeekendLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let date of timeScaleWeekend; let i = index\"\n                    [ngClass]=\"(i % 2) ? 'weekend' : ''\" [ngStyle]=\"setTimescaleWeekendCellStyle()\">{{date | date: 'dd-MM'}}</div>\n            </div>\n            <div class=\"time-scale-line\" [ngStyle]=\"setTimescaleWeekendLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let date of timeScaleWeekend; let i = index\"\n                [ngClass]=\"(i % 2) ? 'weekend' : ''\" [ngStyle]=\"setTimescaleWeekendCellStyle()\">{{i + 1}}</div>\n            </div>\n        </div>",
-                    providers: [
-                        GanttService
-                    ],
-                    styles: ["\n        .weekend {\n            background-color: whitesmoke;\n        }\n        .time-scale {\n            font-size: 12px;\n            background-color: #fff;\n            border-bottom: 1px solid #cecece;\n        }\n        .time-scale-line {\n            box-sizing: border-box;\n            border-bottom: 1px solid #cecece;\n        }\n        .time-scale-line:first-child {\n            border-top: none;\n        }\n        .time-scale-cell {\n            display: inline-block;\n            white-space: nowrap;\n            overflow: hidden;\n            border-right: 1px solid #cecece;\n            text-align: center;\n            height: 100%;\n        }"]
-                }] }
-    ];
-    /** @nocollapse */
-    GanttTimeScaleComponent.ctorParameters = function () { return [
-        { type: GanttService }
-    ]; };
-    GanttTimeScaleComponent.propDecorators = {
-        timeScaleMonth: [{ type: Input }],
-        timeScaleWeekend: [{ type: Input }],
-        dimensions: [{ type: Input }],
-        scale: [{ type: Input }]
-    };
+    /** @nocollapse */ GanttTimeScaleComponent.ɵfac = function GanttTimeScaleComponent_Factory(t) { return new (t || GanttTimeScaleComponent)(i0.ɵɵdirectiveInject(i1.GanttService)); };
+    /** @nocollapse */ GanttTimeScaleComponent.ɵcmp = i0.ɵɵdefineComponent({ type: GanttTimeScaleComponent, selectors: [["time-scale"]], inputs: { timeScaleMonth: "timeScaleMonth", timeScaleWeekend: "timeScaleWeekend", dimensions: "dimensions", scale: "scale" }, features: [i0.ɵɵProvidersFeature([
+                GanttService
+            ])], decls: 5, vars: 5, consts: [[1, "time-scale", 3, "ngStyle"], [1, "time-scale-line", 3, "ngStyle"], ["class", "time-scale-cell", 3, "ngClass", "ngStyle", 4, "ngFor", "ngForOf"], [1, "time-scale-cell", 3, "ngClass", "ngStyle"]], template: function GanttTimeScaleComponent_Template(rf, ctx) { if (rf & 1) {
+            i0.ɵɵelementStart(0, "div", 0);
+            i0.ɵɵelementStart(1, "div", 1);
+            i0.ɵɵtemplate(2, GanttTimeScaleComponent_div_2_Template, 3, 6, "div", 2);
+            i0.ɵɵelementEnd();
+            i0.ɵɵelementStart(3, "div", 1);
+            i0.ɵɵtemplate(4, GanttTimeScaleComponent_div_4_Template, 2, 3, "div", 2);
+            i0.ɵɵelementEnd();
+            i0.ɵɵelementEnd();
+        } if (rf & 2) {
+            i0.ɵɵproperty("ngStyle", ctx.setTimescaleStyle());
+            i0.ɵɵadvance(1);
+            i0.ɵɵproperty("ngStyle", ctx.setTimescaleWeekendLineStyle("none"));
+            i0.ɵɵadvance(1);
+            i0.ɵɵproperty("ngForOf", ctx.timeScaleWeekend);
+            i0.ɵɵadvance(1);
+            i0.ɵɵproperty("ngStyle", ctx.setTimescaleWeekendLineStyle("none"));
+            i0.ɵɵadvance(1);
+            i0.ɵɵproperty("ngForOf", ctx.timeScaleWeekend);
+        } }, directives: [i2.NgStyle, i2.NgForOf, i2.NgClass], pipes: [i2.DatePipe], styles: [".weekend[_ngcontent-%COMP%] {\n            background-color: whitesmoke;\n        }\n        .time-scale[_ngcontent-%COMP%] {\n            font-size: 12px;\n            background-color: #fff;\n            border-bottom: 1px solid #cecece;\n        }\n        .time-scale-line[_ngcontent-%COMP%] {\n            box-sizing: border-box;\n            border-bottom: 1px solid #cecece;\n        }\n        .time-scale-line[_ngcontent-%COMP%]:first-child {\n            border-top: none;\n        }\n        .time-scale-cell[_ngcontent-%COMP%] {\n            display: inline-block;\n            white-space: nowrap;\n            overflow: hidden;\n            border-right: 1px solid #cecece;\n            text-align: center;\n            height: 100%;\n        }"] });
     return GanttTimeScaleComponent;
 }());
 export { GanttTimeScaleComponent };
-if (false) {
-    /** @type {?} */
-    GanttTimeScaleComponent.prototype.timeScaleMonth;
-    /** @type {?} */
-    GanttTimeScaleComponent.prototype.timeScaleWeekend;
-    /** @type {?} */
-    GanttTimeScaleComponent.prototype.dimensions;
-    /** @type {?} */
-    GanttTimeScaleComponent.prototype.scale;
-    /** @type {?} */
-    GanttTimeScaleComponent.prototype.ganttService;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2FudHQtdGltZS1zY2FsZS5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9hbmd1bGFyLWdhbnR0LyIsInNvdXJjZXMiOlsibGliL2FjdGl2aXR5L3RpbWUtc2NhbGUvZ2FudHQtdGltZS1zY2FsZS5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQVUsS0FBSyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pELE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxxQ0FBcUMsQ0FBQztBQUduRTtJQW9ESSxpQ0FBbUIsWUFBMEI7UUFBMUIsaUJBQVksR0FBWixZQUFZLENBQWM7SUFBSSxDQUFDOzs7O0lBRWxELDBDQUFROzs7SUFBUjtJQUNBLENBQUM7Ozs7SUFFRCxtREFBaUI7OztJQUFqQjtRQUNJLE9BQU87WUFDSCxPQUFPLEVBQUUsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLEtBQUssR0FBRyxFQUFFLENBQUMsR0FBRyxJQUFJO1NBQy9DLENBQUM7SUFDTixDQUFDOzs7OztJQUVELDREQUEwQjs7OztJQUExQixVQUEyQixTQUFpQjtRQUN4QyxPQUFPO1lBQ0gsUUFBUSxFQUFFLElBQUksQ0FBQyxZQUFZLENBQUMsU0FBUyxHQUFHLElBQUk7WUFDNUMsYUFBYSxFQUFFLElBQUksQ0FBQyxZQUFZLENBQUMsU0FBUyxHQUFHLElBQUk7WUFDakQsVUFBVSxFQUFFLFVBQVU7WUFDdEIsWUFBWSxFQUFFLFNBQVM7U0FDMUIsQ0FBQztJQUNOLENBQUM7Ozs7SUFFRCw0REFBMEI7OztJQUExQjtRQUNJLE9BQU87WUFDSCxPQUFPLEVBQUUsSUFBSSxDQUFDLFlBQVksQ0FBQyxTQUFTLEdBQUcsSUFBSTtTQUM5QyxDQUFDO0lBQ04sQ0FBQzs7Ozs7SUFFRCw4REFBNEI7Ozs7SUFBNUIsVUFBNkIsU0FBaUI7UUFDMUMsT0FBTztZQUNILFFBQVEsRUFBRSxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsR0FBRyxJQUFJO1lBQzVDLGFBQWEsRUFBRSxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsR0FBRyxJQUFJO1lBQ2pELFVBQVUsRUFBRSxVQUFVO1lBQ3RCLFlBQVksRUFBRSxTQUFTO1NBQzFCLENBQUM7SUFDTixDQUFDOzs7O0lBRUQsOERBQTRCOzs7SUFBNUI7UUFDSSxPQUFPO1lBQ0gsT0FBTyxFQUFFLElBQUksQ0FBQyxZQUFZLENBQUMsU0FBUyxHQUFHLElBQUk7U0FDOUMsQ0FBQztJQUNOLENBQUM7Ozs7O0lBRUQsOENBQVk7Ozs7SUFBWixVQUFhLElBQVU7UUFDbkIsT0FBTyxJQUFJLENBQUMsWUFBWSxDQUFDLFlBQVksQ0FBQyxJQUFJLENBQUMsQ0FBQztJQUNoRCxDQUFDOztnQkEvRkosU0FBUyxTQUFDO29CQUNQLFFBQVEsRUFBRSxZQUFZO29CQUN0QixRQUFRLEVBQUUsNm1DQWNDO29CQTBCWCxTQUFTLEVBQUU7d0JBQ1AsWUFBWTtxQkFDZjs2QkEzQlEsbXFCQXVCSDtpQkFLVDs7OztnQkFoRFEsWUFBWTs7O2lDQWtEaEIsS0FBSzttQ0FDTCxLQUFLOzZCQUNMLEtBQUs7d0JBQ0wsS0FBSzs7SUE4Q1YsOEJBQUM7Q0FBQSxBQWhHRCxJQWdHQztTQWxEWSx1QkFBdUI7OztJQUNoQyxpREFBNkI7O0lBQzdCLG1EQUErQjs7SUFDL0IsNkNBQXlCOztJQUN6Qix3Q0FBdUI7O0lBRVgsK0NBQWlDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBPbkluaXQsIElucHV0IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XHJcbmltcG9ydCB7IEdhbnR0U2VydmljZSB9IGZyb20gJy4uLy4uL3NoYXJlZC9zZXJ2aWNlcy9nYW50dC5zZXJ2aWNlJztcclxuaW1wb3J0IHsgSVNjYWxlIH0gZnJvbSAnLi4vLi4vc2hhcmVkL2ludGVyZmFjZXMnO1xyXG5cclxuQENvbXBvbmVudCh7XHJcbiAgICBzZWxlY3RvcjogJ3RpbWUtc2NhbGUnLFxyXG4gICAgdGVtcGxhdGU6IGBcclxuICAgICAgICA8ZGl2IGNsYXNzPVwidGltZS1zY2FsZVwiIFtuZ1N0eWxlXT1cInNldFRpbWVzY2FsZVN0eWxlKClcIj5cclxuICAgICAgICAgICAgPCEtLTxkaXYgY2xhc3M9XCJ0aW1lLXNjYWxlLWxpbmVcIiBbbmdTdHlsZV09XCJzZXRUaW1lc2NhbGVNb250aExpbmVTdHlsZSgnbm9uZScpXCI+XHJcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwidGltZS1zY2FsZS1jZWxsXCIgKm5nRm9yPVwibGV0IHNjYWxlIG9mIHRpbWVTY2FsZU1vbnRoOyBsZXQgaSA9IGluZGV4XCJcclxuICAgICAgICAgICAgICAgICAgICBbbmdDbGFzc109XCIoaSAlIDIpID8gJ3dlZWtlbmQnIDogJydcIiBbc3R5bGUud2lkdGgucHhdPVwic2NhbGUud2lkdGhcIj57e3NjYWxlLnN0YXJ0IHwgZGF0ZTogJ2RkLU1NJ319PC9kaXY+XHJcbiAgICAgICAgICAgIDwvZGl2Pi0tPlxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzPVwidGltZS1zY2FsZS1saW5lXCIgW25nU3R5bGVdPVwic2V0VGltZXNjYWxlV2Vla2VuZExpbmVTdHlsZSgnbm9uZScpXCI+XHJcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwidGltZS1zY2FsZS1jZWxsXCIgKm5nRm9yPVwibGV0IGRhdGUgb2YgdGltZVNjYWxlV2Vla2VuZDsgbGV0IGkgPSBpbmRleFwiXHJcbiAgICAgICAgICAgICAgICAgICAgW25nQ2xhc3NdPVwiKGkgJSAyKSA/ICd3ZWVrZW5kJyA6ICcnXCIgW25nU3R5bGVdPVwic2V0VGltZXNjYWxlV2Vla2VuZENlbGxTdHlsZSgpXCI+e3tkYXRlIHwgZGF0ZTogJ2RkLU1NJ319PC9kaXY+XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzPVwidGltZS1zY2FsZS1saW5lXCIgW25nU3R5bGVdPVwic2V0VGltZXNjYWxlV2Vla2VuZExpbmVTdHlsZSgnbm9uZScpXCI+XHJcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPVwidGltZS1zY2FsZS1jZWxsXCIgKm5nRm9yPVwibGV0IGRhdGUgb2YgdGltZVNjYWxlV2Vla2VuZDsgbGV0IGkgPSBpbmRleFwiXHJcbiAgICAgICAgICAgICAgICBbbmdDbGFzc109XCIoaSAlIDIpID8gJ3dlZWtlbmQnIDogJydcIiBbbmdTdHlsZV09XCJzZXRUaW1lc2NhbGVXZWVrZW5kQ2VsbFN0eWxlKClcIj57e2kgKyAxfX08L2Rpdj5cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgPC9kaXY+YCxcclxuICAgIHN0eWxlczogW2BcclxuICAgICAgICAud2Vla2VuZCB7XHJcbiAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6IHdoaXRlc21va2U7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC50aW1lLXNjYWxlIHtcclxuICAgICAgICAgICAgZm9udC1zaXplOiAxMnB4O1xyXG4gICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmO1xyXG4gICAgICAgICAgICBib3JkZXItYm90dG9tOiAxcHggc29saWQgI2NlY2VjZTtcclxuICAgICAgICB9XHJcbiAgICAgICAgLnRpbWUtc2NhbGUtbGluZSB7XHJcbiAgICAgICAgICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XHJcbiAgICAgICAgICAgIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjY2VjZWNlO1xyXG4gICAgICAgIH1cclxuICAgICAgICAudGltZS1zY2FsZS1saW5lOmZpcnN0LWNoaWxkIHtcclxuICAgICAgICAgICAgYm9yZGVyLXRvcDogbm9uZTtcclxuICAgICAgICB9XHJcbiAgICAgICAgLnRpbWUtc2NhbGUtY2VsbCB7XHJcbiAgICAgICAgICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgICAgICAgICAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcclxuICAgICAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgICAgICAgICAgYm9yZGVyLXJpZ2h0OiAxcHggc29saWQgI2NlY2VjZTtcclxuICAgICAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgICAgICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICAgICAgfWBcclxuICAgIF0sXHJcbiAgICBwcm92aWRlcnM6IFtcclxuICAgICAgICBHYW50dFNlcnZpY2VcclxuICAgIF1cclxufSlcclxuZXhwb3J0IGNsYXNzIEdhbnR0VGltZVNjYWxlQ29tcG9uZW50IGltcGxlbWVudHMgT25Jbml0IHtcclxuICAgIEBJbnB1dCgpIHRpbWVTY2FsZU1vbnRoOiBhbnk7XHJcbiAgICBASW5wdXQoKSB0aW1lU2NhbGVXZWVrZW5kOiBhbnk7XHJcbiAgICBASW5wdXQoKSBkaW1lbnNpb25zOiBhbnk7XHJcbiAgICBASW5wdXQoKSBzY2FsZTogSVNjYWxlO1xyXG5cclxuICAgIGNvbnN0cnVjdG9yKHB1YmxpYyBnYW50dFNlcnZpY2U6IEdhbnR0U2VydmljZSkgeyB9XHJcblxyXG4gICAgbmdPbkluaXQoKSB7XHJcbiAgICB9XHJcblxyXG4gICAgc2V0VGltZXNjYWxlU3R5bGUoKSB7XHJcbiAgICAgICAgcmV0dXJuIHtcclxuICAgICAgICAgICAgJ3dpZHRoJzogKHRoaXMuZGltZW5zaW9ucy53aWR0aCArIDM2KSArICdweCdcclxuICAgICAgICB9O1xyXG4gICAgfVxyXG5cclxuICAgIHNldFRpbWVzY2FsZU1vbnRoTGluZVN0eWxlKGJvcmRlclRvcDogc3RyaW5nKSB7XHJcbiAgICAgICAgcmV0dXJuIHtcclxuICAgICAgICAgICAgJ2hlaWdodCc6IHRoaXMuZ2FudHRTZXJ2aWNlLnJvd0hlaWdodCArICdweCcsXHJcbiAgICAgICAgICAgICdsaW5lLWhlaWdodCc6IHRoaXMuZ2FudHRTZXJ2aWNlLnJvd0hlaWdodCArICdweCcsXHJcbiAgICAgICAgICAgICdwb3NpdGlvbic6ICdyZWxhdGl2ZScsXHJcbiAgICAgICAgICAgICdib3JkZXItdG9wJzogYm9yZGVyVG9wXHJcbiAgICAgICAgfTtcclxuICAgIH1cclxuXHJcbiAgICBzZXRUaW1lc2NhbGVNb250aENlbGxTdHlsZSgpIHtcclxuICAgICAgICByZXR1cm4ge1xyXG4gICAgICAgICAgICAnd2lkdGgnOiB0aGlzLmdhbnR0U2VydmljZS5jZWxsV2lkdGggKyAncHgnXHJcbiAgICAgICAgfTtcclxuICAgIH1cclxuXHJcbiAgICBzZXRUaW1lc2NhbGVXZWVrZW5kTGluZVN0eWxlKGJvcmRlclRvcDogc3RyaW5nKSB7XHJcbiAgICAgICAgcmV0dXJuIHtcclxuICAgICAgICAgICAgJ2hlaWdodCc6IHRoaXMuZ2FudHRTZXJ2aWNlLnJvd0hlaWdodCArICdweCcsXHJcbiAgICAgICAgICAgICdsaW5lLWhlaWdodCc6IHRoaXMuZ2FudHRTZXJ2aWNlLnJvd0hlaWdodCArICdweCcsXHJcbiAgICAgICAgICAgICdwb3NpdGlvbic6ICdyZWxhdGl2ZScsXHJcbiAgICAgICAgICAgICdib3JkZXItdG9wJzogYm9yZGVyVG9wXHJcbiAgICAgICAgfTtcclxuICAgIH1cclxuXHJcbiAgICBzZXRUaW1lc2NhbGVXZWVrZW5kQ2VsbFN0eWxlKCkge1xyXG4gICAgICAgIHJldHVybiB7XHJcbiAgICAgICAgICAgICd3aWR0aCc6IHRoaXMuZ2FudHRTZXJ2aWNlLmNlbGxXaWR0aCArICdweCdcclxuICAgICAgICB9O1xyXG4gICAgfVxyXG5cclxuICAgIGlzRGF5V2Vla2VuZChkYXRlOiBEYXRlKTogYm9vbGVhbiB7XHJcbiAgICAgICAgcmV0dXJuIHRoaXMuZ2FudHRTZXJ2aWNlLmlzRGF5V2Vla2VuZChkYXRlKTtcclxuICAgIH1cclxufVxyXG4iXX0=
+/*@__PURE__*/ (function () { i0.ɵsetClassMetadata(GanttTimeScaleComponent, [{
+        type: Component,
+        args: [{
+                selector: 'time-scale',
+                template: "\n        <div class=\"time-scale\" [ngStyle]=\"setTimescaleStyle()\">\n            <!--<div class=\"time-scale-line\" [ngStyle]=\"setTimescaleMonthLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let scale of timeScaleMonth; let i = index\"\n                    [ngClass]=\"(i % 2) ? 'weekend' : ''\" [style.width.px]=\"scale.width\">{{scale.start | date: 'dd-MM'}}</div>\n            </div>-->\n            <div class=\"time-scale-line\" [ngStyle]=\"setTimescaleWeekendLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let date of timeScaleWeekend; let i = index\"\n                    [ngClass]=\"(i % 2) ? 'weekend' : ''\" [ngStyle]=\"setTimescaleWeekendCellStyle()\">{{date | date: 'dd-MM'}}</div>\n            </div>\n            <div class=\"time-scale-line\" [ngStyle]=\"setTimescaleWeekendLineStyle('none')\">\n                <div class=\"time-scale-cell\" *ngFor=\"let date of timeScaleWeekend; let i = index\"\n                [ngClass]=\"(i % 2) ? 'weekend' : ''\" [ngStyle]=\"setTimescaleWeekendCellStyle()\">{{i + 1}}</div>\n            </div>\n        </div>",
+                styles: ["\n        .weekend {\n            background-color: whitesmoke;\n        }\n        .time-scale {\n            font-size: 12px;\n            background-color: #fff;\n            border-bottom: 1px solid #cecece;\n        }\n        .time-scale-line {\n            box-sizing: border-box;\n            border-bottom: 1px solid #cecece;\n        }\n        .time-scale-line:first-child {\n            border-top: none;\n        }\n        .time-scale-cell {\n            display: inline-block;\n            white-space: nowrap;\n            overflow: hidden;\n            border-right: 1px solid #cecece;\n            text-align: center;\n            height: 100%;\n        }"
+                ],
+                providers: [
+                    GanttService
+                ]
+            }]
+    }], function () { return [{ type: i1.GanttService }]; }, { timeScaleMonth: [{
+            type: Input
+        }], timeScaleWeekend: [{
+            type: Input
+        }], dimensions: [{
+            type: Input
+        }], scale: [{
+            type: Input
+        }] }); })();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2FudHQtdGltZS1zY2FsZS5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9hbmd1bGFyLWdhbnR0LyIsInNvdXJjZXMiOlsibGliL2FjdGl2aXR5L3RpbWUtc2NhbGUvZ2FudHQtdGltZS1zY2FsZS5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFNBQVMsRUFBVSxLQUFLLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDekQsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLHFDQUFxQyxDQUFDOzs7OztJQVluRCw4QkFDb0Y7SUFBQSxZQUF3Qjs7SUFBQSxpQkFBTTs7Ozs7SUFBOUcsbURBQW9DLGtEQUFBO0lBQTRDLGVBQXdCO0lBQXhCLDREQUF3Qjs7O0lBRzVHLDhCQUNnRjtJQUFBLFlBQVM7SUFBQSxpQkFBTTs7OztJQUEvRixtREFBb0Msa0RBQUE7SUFBNEMsZUFBUztJQUFULDhCQUFTOztBQWR6RztJQW9ESSxpQ0FBbUIsWUFBMEI7UUFBMUIsaUJBQVksR0FBWixZQUFZLENBQWM7SUFBSSxDQUFDO0lBRWxELDBDQUFRLEdBQVI7SUFDQSxDQUFDO0lBRUQsbURBQWlCLEdBQWpCO1FBQ0ksT0FBTztZQUNILE9BQU8sRUFBRSxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsS0FBSyxHQUFHLEVBQUUsQ0FBQyxHQUFHLElBQUk7U0FDL0MsQ0FBQztJQUNOLENBQUM7SUFFRCw0REFBMEIsR0FBMUIsVUFBMkIsU0FBaUI7UUFDeEMsT0FBTztZQUNILFFBQVEsRUFBRSxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsR0FBRyxJQUFJO1lBQzVDLGFBQWEsRUFBRSxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsR0FBRyxJQUFJO1lBQ2pELFVBQVUsRUFBRSxVQUFVO1lBQ3RCLFlBQVksRUFBRSxTQUFTO1NBQzFCLENBQUM7SUFDTixDQUFDO0lBRUQsNERBQTBCLEdBQTFCO1FBQ0ksT0FBTztZQUNILE9BQU8sRUFBRSxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsR0FBRyxJQUFJO1NBQzlDLENBQUM7SUFDTixDQUFDO0lBRUQsOERBQTRCLEdBQTVCLFVBQTZCLFNBQWlCO1FBQzFDLE9BQU87WUFDSCxRQUFRLEVBQUUsSUFBSSxDQUFDLFlBQVksQ0FBQyxTQUFTLEdBQUcsSUFBSTtZQUM1QyxhQUFhLEVBQUUsSUFBSSxDQUFDLFlBQVksQ0FBQyxTQUFTLEdBQUcsSUFBSTtZQUNqRCxVQUFVLEVBQUUsVUFBVTtZQUN0QixZQUFZLEVBQUUsU0FBUztTQUMxQixDQUFDO0lBQ04sQ0FBQztJQUVELDhEQUE0QixHQUE1QjtRQUNJLE9BQU87WUFDSCxPQUFPLEVBQUUsSUFBSSxDQUFDLFlBQVksQ0FBQyxTQUFTLEdBQUcsSUFBSTtTQUM5QyxDQUFDO0lBQ04sQ0FBQztJQUVELDhDQUFZLEdBQVosVUFBYSxJQUFVO1FBQ25CLE9BQU8sSUFBSSxDQUFDLFlBQVksQ0FBQyxZQUFZLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDaEQsQ0FBQztxSEFqRFEsdUJBQXVCO21GQUF2Qix1QkFBdUIsOExBSnJCO2dCQUNQLFlBQVk7YUFDZjtZQXpDRyw4QkFDSTtZQUlBLDhCQUNJO1lBQUEsd0VBQ29GO1lBQ3hGLGlCQUFNO1lBQ04sOEJBQ0k7WUFBQSx3RUFDZ0Y7WUFDcEYsaUJBQU07WUFDVixpQkFBTTs7WUFia0IsaURBQStCO1lBS3RCLGVBQWdEO1lBQWhELGtFQUFnRDtZQUM1QyxlQUFvRDtZQUFwRCw4Q0FBb0Q7WUFHeEQsZUFBZ0Q7WUFBaEQsa0VBQWdEO1lBQzVDLGVBQW9EO1lBQXBELDhDQUFvRDs7a0NBakJqRztDQW9HQyxBQWhHRCxJQWdHQztTQWxEWSx1QkFBdUI7a0RBQXZCLHVCQUF1QjtjQTlDbkMsU0FBUztlQUFDO2dCQUNQLFFBQVEsRUFBRSxZQUFZO2dCQUN0QixRQUFRLEVBQUUsNm1DQWNDO2dCQUNYLE1BQU0sRUFBRSxDQUFDLG1xQkF1Qkg7aUJBQ0w7Z0JBQ0QsU0FBUyxFQUFFO29CQUNQLFlBQVk7aUJBQ2Y7YUFDSjs7a0JBRUksS0FBSzs7a0JBQ0wsS0FBSzs7a0JBQ0wsS0FBSzs7a0JBQ0wsS0FBSyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCwgT25Jbml0LCBJbnB1dCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG5pbXBvcnQgeyBHYW50dFNlcnZpY2UgfSBmcm9tICcuLi8uLi9zaGFyZWQvc2VydmljZXMvZ2FudHQuc2VydmljZSc7XHJcbmltcG9ydCB7IElTY2FsZSB9IGZyb20gJy4uLy4uL3NoYXJlZC9pbnRlcmZhY2VzJztcclxuXHJcbkBDb21wb25lbnQoe1xyXG4gICAgc2VsZWN0b3I6ICd0aW1lLXNjYWxlJyxcclxuICAgIHRlbXBsYXRlOiBgXHJcbiAgICAgICAgPGRpdiBjbGFzcz1cInRpbWUtc2NhbGVcIiBbbmdTdHlsZV09XCJzZXRUaW1lc2NhbGVTdHlsZSgpXCI+XHJcbiAgICAgICAgICAgIDwhLS08ZGl2IGNsYXNzPVwidGltZS1zY2FsZS1saW5lXCIgW25nU3R5bGVdPVwic2V0VGltZXNjYWxlTW9udGhMaW5lU3R5bGUoJ25vbmUnKVwiPlxyXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cInRpbWUtc2NhbGUtY2VsbFwiICpuZ0Zvcj1cImxldCBzY2FsZSBvZiB0aW1lU2NhbGVNb250aDsgbGV0IGkgPSBpbmRleFwiXHJcbiAgICAgICAgICAgICAgICAgICAgW25nQ2xhc3NdPVwiKGkgJSAyKSA/ICd3ZWVrZW5kJyA6ICcnXCIgW3N0eWxlLndpZHRoLnB4XT1cInNjYWxlLndpZHRoXCI+e3tzY2FsZS5zdGFydCB8IGRhdGU6ICdkZC1NTSd9fTwvZGl2PlxyXG4gICAgICAgICAgICA8L2Rpdj4tLT5cclxuICAgICAgICAgICAgPGRpdiBjbGFzcz1cInRpbWUtc2NhbGUtbGluZVwiIFtuZ1N0eWxlXT1cInNldFRpbWVzY2FsZVdlZWtlbmRMaW5lU3R5bGUoJ25vbmUnKVwiPlxyXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cInRpbWUtc2NhbGUtY2VsbFwiICpuZ0Zvcj1cImxldCBkYXRlIG9mIHRpbWVTY2FsZVdlZWtlbmQ7IGxldCBpID0gaW5kZXhcIlxyXG4gICAgICAgICAgICAgICAgICAgIFtuZ0NsYXNzXT1cIihpICUgMikgPyAnd2Vla2VuZCcgOiAnJ1wiIFtuZ1N0eWxlXT1cInNldFRpbWVzY2FsZVdlZWtlbmRDZWxsU3R5bGUoKVwiPnt7ZGF0ZSB8IGRhdGU6ICdkZC1NTSd9fTwvZGl2PlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgPGRpdiBjbGFzcz1cInRpbWUtc2NhbGUtbGluZVwiIFtuZ1N0eWxlXT1cInNldFRpbWVzY2FsZVdlZWtlbmRMaW5lU3R5bGUoJ25vbmUnKVwiPlxyXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzcz1cInRpbWUtc2NhbGUtY2VsbFwiICpuZ0Zvcj1cImxldCBkYXRlIG9mIHRpbWVTY2FsZVdlZWtlbmQ7IGxldCBpID0gaW5kZXhcIlxyXG4gICAgICAgICAgICAgICAgW25nQ2xhc3NdPVwiKGkgJSAyKSA/ICd3ZWVrZW5kJyA6ICcnXCIgW25nU3R5bGVdPVwic2V0VGltZXNjYWxlV2Vla2VuZENlbGxTdHlsZSgpXCI+e3tpICsgMX19PC9kaXY+XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDwvZGl2PmAsXHJcbiAgICBzdHlsZXM6IFtgXHJcbiAgICAgICAgLndlZWtlbmQge1xyXG4gICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZXNtb2tlO1xyXG4gICAgICAgIH1cclxuICAgICAgICAudGltZS1zY2FsZSB7XHJcbiAgICAgICAgICAgIGZvbnQtc2l6ZTogMTJweDtcclxuICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZjtcclxuICAgICAgICAgICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNjZWNlY2U7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC50aW1lLXNjYWxlLWxpbmUge1xyXG4gICAgICAgICAgICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xyXG4gICAgICAgICAgICBib3JkZXItYm90dG9tOiAxcHggc29saWQgI2NlY2VjZTtcclxuICAgICAgICB9XHJcbiAgICAgICAgLnRpbWUtc2NhbGUtbGluZTpmaXJzdC1jaGlsZCB7XHJcbiAgICAgICAgICAgIGJvcmRlci10b3A6IG5vbmU7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC50aW1lLXNjYWxlLWNlbGwge1xyXG4gICAgICAgICAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgICAgICAgICAgIHdoaXRlLXNwYWNlOiBub3dyYXA7XHJcbiAgICAgICAgICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICAgICAgICAgIGJvcmRlci1yaWdodDogMXB4IHNvbGlkICNjZWNlY2U7XHJcbiAgICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgICAgICAgICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgICAgIH1gXHJcbiAgICBdLFxyXG4gICAgcHJvdmlkZXJzOiBbXHJcbiAgICAgICAgR2FudHRTZXJ2aWNlXHJcbiAgICBdXHJcbn0pXHJcbmV4cG9ydCBjbGFzcyBHYW50dFRpbWVTY2FsZUNvbXBvbmVudCBpbXBsZW1lbnRzIE9uSW5pdCB7XHJcbiAgICBASW5wdXQoKSB0aW1lU2NhbGVNb250aDogYW55O1xyXG4gICAgQElucHV0KCkgdGltZVNjYWxlV2Vla2VuZDogYW55O1xyXG4gICAgQElucHV0KCkgZGltZW5zaW9uczogYW55O1xyXG4gICAgQElucHV0KCkgc2NhbGU6IElTY2FsZTtcclxuXHJcbiAgICBjb25zdHJ1Y3RvcihwdWJsaWMgZ2FudHRTZXJ2aWNlOiBHYW50dFNlcnZpY2UpIHsgfVxyXG5cclxuICAgIG5nT25Jbml0KCkge1xyXG4gICAgfVxyXG5cclxuICAgIHNldFRpbWVzY2FsZVN0eWxlKCkge1xyXG4gICAgICAgIHJldHVybiB7XHJcbiAgICAgICAgICAgICd3aWR0aCc6ICh0aGlzLmRpbWVuc2lvbnMud2lkdGggKyAzNikgKyAncHgnXHJcbiAgICAgICAgfTtcclxuICAgIH1cclxuXHJcbiAgICBzZXRUaW1lc2NhbGVNb250aExpbmVTdHlsZShib3JkZXJUb3A6IHN0cmluZykge1xyXG4gICAgICAgIHJldHVybiB7XHJcbiAgICAgICAgICAgICdoZWlnaHQnOiB0aGlzLmdhbnR0U2VydmljZS5yb3dIZWlnaHQgKyAncHgnLFxyXG4gICAgICAgICAgICAnbGluZS1oZWlnaHQnOiB0aGlzLmdhbnR0U2VydmljZS5yb3dIZWlnaHQgKyAncHgnLFxyXG4gICAgICAgICAgICAncG9zaXRpb24nOiAncmVsYXRpdmUnLFxyXG4gICAgICAgICAgICAnYm9yZGVyLXRvcCc6IGJvcmRlclRvcFxyXG4gICAgICAgIH07XHJcbiAgICB9XHJcblxyXG4gICAgc2V0VGltZXNjYWxlTW9udGhDZWxsU3R5bGUoKSB7XHJcbiAgICAgICAgcmV0dXJuIHtcclxuICAgICAgICAgICAgJ3dpZHRoJzogdGhpcy5nYW50dFNlcnZpY2UuY2VsbFdpZHRoICsgJ3B4J1xyXG4gICAgICAgIH07XHJcbiAgICB9XHJcblxyXG4gICAgc2V0VGltZXNjYWxlV2Vla2VuZExpbmVTdHlsZShib3JkZXJUb3A6IHN0cmluZykge1xyXG4gICAgICAgIHJldHVybiB7XHJcbiAgICAgICAgICAgICdoZWlnaHQnOiB0aGlzLmdhbnR0U2VydmljZS5yb3dIZWlnaHQgKyAncHgnLFxyXG4gICAgICAgICAgICAnbGluZS1oZWlnaHQnOiB0aGlzLmdhbnR0U2VydmljZS5yb3dIZWlnaHQgKyAncHgnLFxyXG4gICAgICAgICAgICAncG9zaXRpb24nOiAncmVsYXRpdmUnLFxyXG4gICAgICAgICAgICAnYm9yZGVyLXRvcCc6IGJvcmRlclRvcFxyXG4gICAgICAgIH07XHJcbiAgICB9XHJcblxyXG4gICAgc2V0VGltZXNjYWxlV2Vla2VuZENlbGxTdHlsZSgpIHtcclxuICAgICAgICByZXR1cm4ge1xyXG4gICAgICAgICAgICAnd2lkdGgnOiB0aGlzLmdhbnR0U2VydmljZS5jZWxsV2lkdGggKyAncHgnXHJcbiAgICAgICAgfTtcclxuICAgIH1cclxuXHJcbiAgICBpc0RheVdlZWtlbmQoZGF0ZTogRGF0ZSk6IGJvb2xlYW4ge1xyXG4gICAgICAgIHJldHVybiB0aGlzLmdhbnR0U2VydmljZS5pc0RheVdlZWtlbmQoZGF0ZSk7XHJcbiAgICB9XHJcbn1cclxuIl19
